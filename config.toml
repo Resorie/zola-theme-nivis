@@ -43,4 +43,7 @@ build_search_index = false
 #
 # author value will be available using {{ config.extra.author }} in templates
 #
+
+[markdown]
+
 [extra]
