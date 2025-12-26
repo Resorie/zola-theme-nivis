@@ -1,5 +1,6 @@
 name = "nivis"
 description = "A clean zola theme for bloggers"
+tags = ["clean"]
 license = "MIT"
 homepage = "https://github.com/Resorie/zola-theme-nivis"
 demo = "https://resorie.github.io/blog/"
