@@ -29,7 +29,7 @@ First, add these contents to your `config.toml`:
 math = "mathjax" # or "katex"
 ```
 
-Due to the weirdsome escape rules of zola, your math contents might not display correctly. I referred to [this post]() for a solution. After adding or changing your post, run `themes/nivis/scripts/wrap_math.py` to process the markdown files. 
+Due to the weirdsome escape rules of zola, your math contents might not display correctly. I referred to [this post](https://zola.discourse.group/t/maths-support-via-mathjax/1000) for a solution. After adding or changing your post, run `themes/nivis/scripts/wrap_math.py` to process the markdown files. 
 
 After running the script, your math contents should be wrapped in code blocks. e.g.:
 `````markdown
