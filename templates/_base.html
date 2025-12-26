@@ -4,16 +4,6 @@
 <html lang="{{ lang }}">
 
 <head>
-  {% if config.extra.google_analytics and config.extra.google_analytics_id -%}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.extra.google_analytics_id }}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '{{ config.extra.google_analytics_id }}');
-    </script>
-  {%- endif %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
@@ -127,10 +117,6 @@
   </script>
   {% endif %}
 
-  {% if config.extra.google_adsense and config.extra.google_adsense_id %}
-    <script data-ad-client="{{ config.extra.google_adsense_id }}" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  {% endif %}
-
   {% block head %}
   {% endblock head %}
 </head>
@@ -175,7 +161,7 @@
     </div>
     <div class="footer">
       <span>Based on theme </span><a href="https://float-theme.netlify.app/">Float</a> & <a href="https://longfangsong.github.io/">anatole</a>
-      <div class="by_zola"><a href="https://www.getzola.org/" target="_blank">Powered by Zola</a></div>
+      <div class="by_zola">Powered by <a href="https://www.getzola.org/" target="_blank">Zola</a></div>
     </div>
   </div>
 
