@@ -1,8 +1,8 @@
 name = "nivis"
 description = "A clean zola theme for bloggers"
 license = "MIT"
-homepage = "https://gitlab.com/float-theme/float/"
-demo = "https://float-theme.netlify.app/"
+homepage = "https://github.com/Resorie/zola-theme-nivis"
+demo = "https://resorie.github.io/blog/"
 # The minimum version of Zola required
 min_version = "0.21.0"
 
@@ -13,26 +13,7 @@ min_version = "0.21.0"
 [extra]
 main_section = "blog"
 
-google_analytics = false
-# google_analytics_id = "UA-XXXXXX-X"
-
-google_adsense = false
-# google_adsense_id = "ca-pub-XXXXXXXXXXXXXXXX"
-
-display_twitter_link = false
-twitter_account = "@xxx"
-twitter_url = "https://www.twitter.com/"
-
-display_facebook_link = false
-facebook_url = "https://www.facebook.com/"
-
-likecoin = false
-# likecoin_name = "xxx"
-
-utterances = false
-# utterances_repo = "xxx/xxx"
-
 # The theme author info: you!
 [author]
 name = "Resory"
-homepage = "https://editor.leonh.space/"
+homepage = "https://resorie.github.io/blog/"

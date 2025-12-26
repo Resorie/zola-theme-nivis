@@ -171,25 +171,8 @@ config.default_language %} {% set section_title = page.components[0] %} {%- else
       /></a>
     </div>
     <!-- AddToAny END -->
-    {% if config.extra.utterances and config.extra.utterances_repo %}
-    <hr />
-    <script
-      src="https://utteranc.es/client.js"
-      repo="{{ config.extra.utterances_repo | safe }}"
-      issue-term="pathname"
-      label="Comment"
-      theme="preferred-color-scheme"
-      crossorigin="anonymous"
-      async
-    ></script>
-    {% endif %}
+    
   </section>
   <br />
-  {% if config.extra.likecoin and config.extra.likecoin_name %}
-  <script
-    src="https://noobtw.github.io/likeco-btn/likeco-btn.js"
-    async
-  ></script>
-  {% endif %}
 </article>
 {% endblock content %}
