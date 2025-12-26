@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+name: Math Display
+scope: text.tex.math.display
+file_extensions:
+  - math-display
+contexts:
+  main:
+    - match: .
+      scope: text.tex.math.display
