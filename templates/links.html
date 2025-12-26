@@ -1,0 +1,33 @@
+{% extends "_base.html" %} {% block title %}{{ page.title }} | {{ config.title
+}}{% endblock title %} {% block content %}
+<article class="content-article links-page">
+  <main class="article-content">
+    <h1 class="heading">{{ page.title }}</h1>
+
+    {{ page.content | safe }} {% set links_data =
+    load_data(path="data/links.toml") %} {% for group in links_data.groups %}
+    <div class="links-group">
+      <h2 class="group-title">{{ group.name }}</h2>
+      <div class="friends-list">
+        {% for item in group.items %}
+        <a
+          href="{{ item.url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="friend-item"
+        >
+          <div class="friend-avatar">
+            <img src="{{ item.avatar }}" alt="{{ item.name }}" />
+          </div>
+          <div class="friend-info">
+            <div class="friend-name">{{ item.name }}</div>
+            <div class="friend-desc">{{ item.description }}</div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </main>
+</article>
+{% endblock content %}
