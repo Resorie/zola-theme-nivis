@@ -33,10 +33,6 @@ matching("[.](jpg|png)$") %}
     {% endif %}
   {% endif %}
 -->
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="{{ config.extra.twitter_account }}" />
-<meta name="twitter:creator" content="{{ config.extra.twitter_account }}" />
 
 <link
   href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap"
@@ -101,6 +97,15 @@ config.default_language %} {% set section_title = page.components[0] %} {%- else
                 {% for h3 in h2.children %}
                 <li>
                   <a href="{{ h3.permalink | safe }}">{{ h3.title }}</a>
+                  {% if h3.children %}
+                  <ul>
+                    {% for h4 in h3.children %}
+                    <li>
+                      <a href="{{ h4.permalink | safe }}">{{ h4.title }}</a>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
                 </li>
                 {% endfor %}
               </ul>
@@ -116,13 +121,6 @@ config.default_language %} {% set section_title = page.components[0] %} {%- else
     {% endif %} {{ page.content | safe }}
   </main>
   <section class="article-action-block">
-    {% if config.extra.likecoin and config.extra.likecoin_name %}
-    <div
-      class="likeco-btn"
-      data-name="{{ config.extra.likecoin_name }}"
-      data-allowed-query-string=""
-    ></div>
-    {% endif %}
     <!-- AddToAny BEGIN -->
     <div class="addtoany-block">
       <a
