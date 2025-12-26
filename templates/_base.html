@@ -1,0 +1,300 @@
+{% import "_macros.html" as macros %}
+
+<!doctype html>
+<html lang="{{ lang }}">
+
+<head>
+  {% if config.extra.google_analytics and config.extra.google_analytics_id -%}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.extra.google_analytics_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ config.extra.google_analytics_id }}');
+    </script>
+  {%- endif %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+
+  {% block feed_link %}
+  {% endblock feed_link %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Noto+Sans+SC:wght@700&family=Noto+Serif+SC:wght@300;400;500;700&family=Playwrite+Norge:wght@100..400&display=swap" rel="stylesheet">
+
+  <link rel='stylesheet' href='https://unpkg.com/ress/dist/ress.min.css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/8.5.10/mmenu.min.css">
+  <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
+
+  {% if config.extra.math_display == "katex" %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          // Unwrap code blocks for KaTeX
+          // 1. Display Math (```math-display ... ```)
+          document.querySelectorAll('code.language-math-display').forEach(el => {
+              const pre = el.parentElement;
+              if (pre.tagName === 'PRE') {
+                  const math = el.textContent.trim();
+                  const div = document.createElement('div');
+                  div.textContent = math;
+                  pre.replaceWith(div);
+              }
+          });
+
+          // 2. Inline Math (`$ ... $`)
+          document.querySelectorAll('code').forEach(el => {
+              if (el.classList.contains('language-math-display')) return;
+              if (el.parentElement.tagName === 'PRE') return;
+
+              const text = el.textContent.trim();
+              // Check if it looks like math: $...$
+              if (text.startsWith('$') && text.endsWith('$') && !text.startsWith('$$')) {
+                  const span = document.createElement('span');
+                  span.textContent = text;
+                  el.replaceWith(span);
+              }
+          });
+
+          renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '\\[', right: '\\]', display: true}
+            ],
+            throwOnError : false,
+            macros: {
+                "\\arraystretch": "1.3"
+            }
+          });
+      });
+  </script>
+  {% elif config.extra.math_display == "mathjax" %}
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          // Unwrap code blocks for MathJax
+          // 1. Display Math (```math-display ... ```)
+          document.querySelectorAll('code.language-math-display').forEach(el => {
+              const pre = el.parentElement;
+              if (pre.tagName === 'PRE') {
+                  const math = el.textContent.trim();
+                  const div = document.createElement('div');
+                  div.textContent = math;
+                  pre.replaceWith(div);
+              }
+          });
+
+          // 2. Inline Math (`$ ... $`)
+          document.querySelectorAll('code').forEach(el => {
+              if (el.classList.contains('language-math-display')) return;
+              if (el.parentElement.tagName === 'PRE') return;
+
+              const text = el.textContent.trim();
+              // Check if it looks like math: $...$
+              if (text.startsWith('$') && text.endsWith('$') && !text.startsWith('$$')) {
+                  const span = document.createElement('span');
+                  span.textContent = text;
+                  el.replaceWith(span);
+              }
+          });
+          
+          // Trigger MathJax to process the new elements
+          if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+              MathJax.typesetPromise();
+          }
+      });
+  </script>
+  {% endif %}
+
+  {% if config.extra.google_adsense and config.extra.google_adsense_id %}
+    <script data-ad-client="{{ config.extra.google_adsense_id }}" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  {% endif %}
+
+  {% block head %}
+  {% endblock head %}
+</head>
+
+<body class="body-block">
+  <div id="sidebar-mask" onclick="toggleSidebar()"></div>
+  <div id="sidebar" class="">
+    <div class="logo-title">
+      <div class="title-inner">
+        {% if config.extra.avatar %}
+        <div class="avatar">
+          <img src="{{ get_url(path=config.extra.avatar) }}" alt="avatar">
+        </div>
+        {% endif %}
+        <div class="title">
+          <h3><a href="{{ get_url(path="@/_index.md", lang=lang) }}">{{ config.title }}</a></h3>
+          <div class="description">
+            <p>{{ config.description }}</p>
+          </div>
+        </div>
+      </div>
+      <ul class="social-links">
+        {%- if config.extra.display_github_link and config.extra.github_url -%}
+        <li><a href="{{ config.extra.github_url | safe }}" aria-label="Go to GitHub profile page"><i class="fab fa-github"></i></a></li>
+        {%- endif -%}
+        {%- if config.extra.display_email_link and config.extra.email_url -%}
+        <li><a href="{{ config.extra.email_url | safe }}" aria-label="Send email"><i class="fas fa-envelope"></i></a></li>
+        {%- endif -%}
+        {%- if config.extra.display_bilibili_link and config.extra.bilibili_url -%}
+        <li><a href="{{ config.extra.bilibili_url | safe }}" aria-label="Go to Bilibili profile page"><i class="fab fa-bilibili"></i></a></li>
+        {%- endif -%}
+        {%- if config.extra.display_twitter_link and config.extra.twitter_url -%}
+        <li><a href="{{ config.extra.twitter_url | safe }}" aria-label="Go to Twitter profile page"><i class="fab fa-twitter"></i></a></li>
+        {%- endif -%}
+        {%- if config.extra.display_facebook_link and config.extra.facebook_url -%}
+        <li><a href="{{ config.extra.facebook_url | safe }}" aria-label="Go to FaceBook profile page"><i class="fab fa-facebook"></i></a></li>
+        {%- endif -%}
+      </ul>
+      <div class="sidebar-action">
+        <a href="{{ get_url(path="@/about/index.md", lang=lang) }}">About Me</a>
+      </div>
+    </div>
+    <div class="footer">
+      <span>Based on theme </span><a href="https://float-theme.netlify.app/">Float</a> & <a href="https://longfangsong.github.io/">anatole</a>
+      <div class="by_zola"><a href="https://www.getzola.org/" target="_blank">Powered by Zola</a></div>
+    </div>
+  </div>
+
+  <div id="main">
+    <div class="page-top animated fadeInDown">
+      <div class="nav">
+        <li><a href="{{ get_url(path="@/_index.md", lang=lang) }}" {% if current_path == "/" %}class="active"{% endif %}>Home</a></li>
+        <li class="separator"></li>
+        <li><a href="{{ get_url(path="@/about/index.md", lang=lang) }}" {% if current_path is starting_with("/about") %}class="active"{% endif %}>About</a></li>
+        <li class="separator"></li>
+        <li><a href="{{ get_url(path="@/archive/index.md", lang=lang) }}" {% if current_path is starting_with("/archive") %}class="active"{% endif %}>Archives</a></li>
+        <li class="separator"></li>
+        <li><a href="{{ get_url(path="@/tags/_index.md", lang=lang) }}" {% if current_path is starting_with("/tags") %}class="active"{% endif %}>Categories</a></li>
+        <li class="separator"></li>
+        <li><a href="{{ get_url(path="@/links/index.md", lang=lang) }}" {% if current_path is starting_with("/links") %}class="active"{% endif %}>Links</a></li>
+      </div>
+      <div class="information">
+        <div class="back_btn">
+          <a onclick="window.history.go(-1)"><i class="fas fa-chevron-left"></i></a>
+        </div>
+        <div class="theme_btn">
+          <a onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></a>
+        </div>
+        <div class="feed_btn">
+          <a class="feed-icon"><i class="fas fa-rss"></i></a>
+          <div class="feed-dropdown">
+            <a href="{{ get_url(path="atom.xml") }}" target="_blank">Atom</a>
+            <a href="{{ get_url(path="rss.xml") }}" target="_blank">RSS</a>
+          </div>
+        </div>
+        <div class="avatar_btn">
+          <a onclick="toggleSidebar()"><i class="fas fa-bars"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="autopagerize_page_element">
+      <div class="content">
+        {% block content %}{% endblock content %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      var sidebar = document.getElementById("sidebar");
+      var mask = document.getElementById("sidebar-mask");
+      sidebar.classList.toggle("open");
+      mask.classList.toggle("open");
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const icon = document.getElementById("theme-icon");
+      if (body.getAttribute("data-theme") === "dark") {
+        body.setAttribute("data-theme", "light");
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+        localStorage.setItem("theme", "light");
+      } else {
+        body.setAttribute("data-theme", "dark");
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+        localStorage.setItem("theme", "dark");
+      }
+    }
+
+    // Initialize theme
+    (function() {
+      const savedTheme = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+        document.body.setAttribute("data-theme", "dark");
+        // Icon update will happen after DOM load if we put this script at the end, 
+        // but since this is inline at the end of body, we might need to wait for DOMContentLoaded if the icon isn't ready?
+        // Actually, this script is at the end of body, so elements should be parsed.
+        const icon = document.getElementById("theme-icon");
+        if (icon) {
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+        }
+      }
+    })();
+
+    // Footnote Navigation
+    document.addEventListener("DOMContentLoaded", function() {
+        const refs = document.querySelectorAll('sup.footnote-reference a');
+        refs.forEach((ref, index) => {
+            if (!ref.id) {
+                ref.id = 'footnote-ref-' + (index + 1);
+            }
+            
+            const href = ref.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                const footnoteId = href.substring(1);
+                const footnote = document.getElementById(footnoteId);
+                
+                if (footnote) {
+                    const backLink = document.createElement('a');
+                    backLink.href = '#' + ref.id;
+                    backLink.className = 'footnote-backref';
+                    backLink.innerHTML = ' ↩';
+                    backLink.style.textDecoration = 'none';
+                    backLink.style.marginLeft = '5px';
+                    backLink.ariaLabel = "Return to text";
+                    
+                    const paragraphs = footnote.querySelectorAll('p');
+                    if (paragraphs.length > 0) {
+                        paragraphs[paragraphs.length - 1].appendChild(backLink);
+                    } else {
+                        footnote.appendChild(backLink);
+                    }
+                }
+            }
+        });
+    });
+  </script>
+
+  <script src="//instant.page/5.1.0" type="module" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+</body>
+
+</html>

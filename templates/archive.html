@@ -1,0 +1,23 @@
+{% extends "_base.html" %} {% block title %}Archives | {{ config.title }}{%
+endblock title %} {% block content %}
+<main class="article-list">
+  <article class="article-block title-block">
+    <h2 class="heading">Archives</h2>
+  </article>
+
+  {% set section = get_section(path="posts/_index.md") %} {% for year, posts in
+  section.pages | group_by(attribute="year") %}
+  <div class="archive-year">
+    <h3 id="{{ year }}">{{ year }}</h3>
+    <ul class="archive-list">
+      {% for post in posts %}
+      <li class="archive-item">
+        <span class="date">{{ post.date | date(format="%m-%d") }}</span>
+        <a href="{{ post.permalink }}" class="link">{{ post.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</main>
+{% endblock content %}

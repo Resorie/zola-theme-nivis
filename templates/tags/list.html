@@ -1,0 +1,25 @@
+{% extends "_base.html" %} {% block title %}Categories | {{ config.title }}{%
+endblock title %} {% block content %}
+<main class="article-list">
+  <article class="article-block title-block">
+    <h2 class="heading">Categories</h2>
+  </article>
+
+  {% if terms %} {% set my_terms = terms %} {% else %} {% set taxonomy =
+  get_taxonomy(kind="tags", lang=lang) %} {% set my_terms = taxonomy.items %} {%
+  endif %}
+
+  <div class="archive-year">
+    <ul class="archive-list">
+      {% for term in my_terms %}
+      <li class="archive-item">
+        <a href="{{ term.permalink }}" class="link">{{ term.name }}</a>
+        <span class="date" style="float: right"
+          >{{ term.pages | length }} posts</span
+        >
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</main>
+{% endblock content %}
