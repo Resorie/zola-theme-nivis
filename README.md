@@ -5,6 +5,18 @@ Nivis: A clean zola theme for bloggers.
 
 Live demo: [my blog](https://resorie.github.io/blog/).
 
+## Installation
+
+Simply clone the repo into your `themes/` directory, or use `git submodule`.
+```bash
+git clone https://github.com/Resorie/zola-theme-nivis.git themes/nivis/
+```
+
+Then, change your theme in `config.toml`:
+```toml
+theme = "nivis"
+```
+
 ## Configurations
 
 ### Math display
@@ -17,7 +29,7 @@ First, add these contents to your `config.toml`:
 math = "mathjax" # or "katex"
 ```
 
-Due to the weirdsome escape rules of zola, your math contents might not display correctly. I referred to [this post]() for a solution. After adding or changing your post, run `scripts/wrap_math.py` to process the markdown files. 
+Due to the weirdsome escape rules of zola, your math contents might not display correctly. I referred to [this post]() for a solution. After adding or changing your post, run `themes/nivis/scripts/wrap_math.py` to process the markdown files. 
 
 After running the script, your math contents should be wrapped in code blocks. e.g.:
 `````markdown
