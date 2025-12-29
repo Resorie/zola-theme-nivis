@@ -5,14 +5,16 @@ Nivis: A clean zola theme for bloggers.
 
 Live demo: [my blog](https://resorie.github.io/blog/).
 
+This theme is derived from theme [Float](https://float-theme.netlify.app/) and [anatole](https://longfangsong.github.io/).
+
 ## Installation
 
-Simply clone the repo into your `themes/` directory, or use `git submodule`.
+Simply clone the repo into your `themes/` directory:
 ```bash
 git clone https://github.com/Resorie/zola-theme-nivis.git themes/nivis/
 ```
 
-Then, change your theme in `config.toml`:
+Then, change your theme config in `config.toml`:
 ```toml
 theme = "nivis"
 ```
@@ -29,9 +31,9 @@ First, add these contents to your `config.toml`:
 math = "mathjax" # or "katex"
 ```
 
-Due to the weirdsome escape rules of zola, your math contents might not display correctly. I referred to [this post](https://zola.discourse.group/t/maths-support-via-mathjax/1000) for a solution. After adding or changing your post, run `themes/nivis/scripts/wrap_math.py` to process the markdown files. 
+Due to the weirdsome escape rules of zola, your math contents might not display correctly. I referred to [this post](https://zola.discourse.group/t/maths-support-via-mathjax/1000) for a solution. 
 
-After running the script, your math contents should be wrapped in code blocks. e.g.:
+After adding or changing your post, run `themes/nivis/scripts/wrap_math.py` to process the markdown files. After running the script, (or of course you can change them manually), your math contents should be wrapped in code blocks, e.g.:
 `````markdown
 This is a inline math example: `$e^{\pi i}=-1$`.
 
