@@ -5,7 +5,7 @@ Nivis: A clean zola theme for bloggers.
 
 Live demo: [my blog](https://resorie.github.io/blog/).
 
-This theme is derived from theme [Float](https://float-theme.netlify.app/) and [anatole](https://longfangsong.github.io/).
+This theme is derived from theme [Float](https://float-theme.netlify.app/) and [anatole](https://longfangsong.github.io/). Really appreciate these two wonderful themes :smile:
 
 ## Installation
 
@@ -23,12 +23,12 @@ theme = "nivis"
 
 ### Math display
 
-Nivis theme supports both Mathjax and Katex for rendering math contents. Follow the steps below to enable math rendering:
+Nivis theme supports Mathjax for rendering math contents. Follow the steps below to enable math rendering:
 
 First, add these contents to your `config.toml`:
 ```toml
 [extra]
-math = "mathjax" # or "katex"
+math = "mathjax"
 ```
 
 Due to the weirdsome escape rules of zola, your math contents might not display correctly. I referred to [this post](https://zola.discourse.group/t/maths-support-via-mathjax/1000) for a solution. 
