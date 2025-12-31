@@ -90,7 +90,7 @@ a:hover {
 }
 
 em, i {
-    font-family: 'STIX Two Text', 'FZKai', 'KaiTi', '楷体', serif;
+    font-family: 'STIX Two Text', 'FZKai', serif;
     font-style: italic;
 }
 
@@ -181,7 +181,7 @@ hr {
     background-color: var(--bg-color);
 
     h1, h2, h3, h4, h5, h6 {
-        font-family: 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif SC', 'Noto Serif CN', serif;
+        font-family: 'STIX Two Text', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif SC', 'Noto Serif CN', serif;
     }
 
     > .content-block {
@@ -287,6 +287,7 @@ hr {
     }
 
     > .title {
+
         > .section {
             font-weight: normal;
         }
@@ -1690,8 +1691,9 @@ hr {
       h3 {
         text-align: center;
         text-transform: none;
-        font-size: 1.5rem;
-        font-weight: bold;
+        font-family: 'Dancing Script', cursive;
+        font-size: 2.5rem;
+        font-weight: 700;
         letter-spacing: 1px;
         line-height: 1;
         margin: 0;
@@ -1740,17 +1742,17 @@ hr {
         display: inline-block;
         padding: 0.6em 1.5em;
         background-color: transparent;
-        color: var(--text-color);
+        color: var(--text-color-light);
         border: 1px solid var(--border-color);
-        border-radius: 2em;
+        border-radius: 4px;
         transition: all 0.3s ease;
         font-size: 0.9em;
         letter-spacing: 1px;
         
         &:hover {
-            background-color: var(--text-color);
-            color: var(--bg-color);
-            border-color: var(--text-color);
+            background-color: var(--border-color);
+            color: white;
+            border-color: var(--border-color);
             text-decoration: none;
         }
     }
@@ -2015,7 +2017,7 @@ sup.footnote-reference {
             flex-direction: column;
 
             .friend-name {
-                font-family: "Source Han Serif SC", "Noto Serif SC", serif;
+                font-family: "STIX Two Text", "Source Han Serif SC", "Noto Serif SC", serif;
                 font-weight: bold;
                 font-size: 1.25em;
                 margin-bottom: 6px;
