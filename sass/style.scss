@@ -152,7 +152,7 @@ dd {
 }
 
 code {
-    font-family: 'FiraCode Nerd Font', 'Fira Code', monospace;
+    font-family: 'Fira Code', monospace;
     font-size: 0.87em;
 }
 
@@ -377,34 +377,13 @@ hr {
 }
 
 .article-list {
-    padding-top: 1em;
-    margin-top: 1em;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 400px);
-    grid-auto-flow: row dense;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
-    justify-content: space-evenly;
-    align-content: start;
-
-    @media screen and (max-width: 1200px) {
-        grid-template-columns: repeat(auto-fit, 300px);
-    }
-
-    @media screen and (max-width: 1000px) {
-        grid-template-columns: repeat(2, 200px);
-    }
-
-    @media screen and (max-width: 900px) {
-        grid-template-columns: repeat(2, 300px);
-    }
-
-    @media screen and (max-width: 700px) {
-        grid-template-columns: repeat(2, 200px);
-    }
+    padding-top: 0;
+    margin-top: 0;
+    display: block;
+    margin-bottom: 0;
+    padding-bottom: 0;
 
     @media screen and (max-width: 500px) {
-        grid-template-columns: auto;
         padding-left: unset;
         padding-right: unset;
     }
@@ -467,224 +446,93 @@ hr {
     }
 }
 
-.article-block {
-    // box-shadow: 0 10px 30px -10px hsla(0, 0%, 70%, 1.0);
-    border-radius: 4px;
-    padding-bottom: 1em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-
-    > .link {
-        display: grid;
-        grid-template-columns: auto;
-
-        .pinned-label {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 8px 12px;
-            z-index: 2;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            
-            i {
-                color: var(--z-keyword);
-                font-size: 1.1em;
-            }
-
-            .pinned-text {
-                max-width: 0;
-                opacity: 0;
-                overflow: hidden;
-                white-space: nowrap;
-                margin-left: 0;
-                transition: all 0.3s ease;
-                font-size: 0.87em;
-                font-weight: bold;
-                color: var(--z-keyword);
-                font-family: 'Noto Sans SC', 'Noto Sans CN', sans-serif;
-            }
-
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.7);
-                padding-right: 16px;
-                
-                .pinned-text {
-                    max-width: 100px;
-                    opacity: 1;
-                    margin-left: 8px;
-                }
-            }
-
-            @media screen and (max-width: 1000px) {
-                top: 10px;
-                right: 10px;
-                padding: 6px 10px;
-                
-                i {
-                    font-size: 1em;
-                }
-            }
-
-            @media screen and (max-width: 500px) {
-                top: 8px;
-                right: 8px;
-                padding: 4px 8px;
-                
-                i {
-                    font-size: 0.9em;
-                }
-            }
-        }
+.meta-line {
+    font-size: 0.8em;
+    color: var(--text-color-light);
+    margin-bottom: 0.2em;
+    font-family: 'Ysabeau', 'LXGW WenKai', sans-serif;
+    font-style: italic;
+    
+    .separator {
+        margin: 0 0.5em;
+        opacity: 0.6;
     }
 
-    [data-theme="dark"] & {
-        .pinned-label {
-            background-color: rgba(0, 0, 0, 0.4);
-            
-            &:hover {
-                background-color: rgba(0, 0, 0, 0.7);
-            }
-        }
+    .pinned-label {
+        color: var(--z-keyword);
+        font-weight: bold;
     }
 
-    > .link > a {
-        position: relative;
-        display: block;
-    }
-
-    > .link > a > .image {
-        width: 400px;
-        height: 300px;
-        object-fit: cover;
-        background-color: var(--code-bg);
-        box-shadow: 0 0 30px -10px var(--border-color);
-        border-radius: 4px;
-
-        @media screen and (max-width: 1200px) {
-            width: 300px;
-            height: 200px;
-        }
-
-        @media screen and (max-width: 1000px) {
-            width: 200px;
-            height: 150px;
-        }
-
-        @media screen and (max-width: 900px) {
-            width: 300px;
-            height: 200px;
-        }
-
-        @media screen and (max-width: 700px) {
-            width: 200px;
-            height: 150px;
-        }
-
-        @media screen and (max-width: 500px) {
-            width: 90vw;
-            height: 60vw;
-        }
-    }
-
-    > .link > .content {
-        width: 400px;
-        margin: 1em auto 0 auto;
-
-        @media screen and (max-width: 1200px) {
-            width: 300px;
-        }
-
-        @media screen and (max-width: 1000px) {
-            width: 200px;
-        }
-
-        @media screen and (max-width: 900px) {
-            width: 300px;
-        }
-
-        @media screen and (max-width: 700px) {
-            width: 200px;
-        }
-
-        @media screen and (max-width: 500px) {
-            width: 90vw;
-            margin: 1em auto 0 auto;
-        }
-
-        > .article-meta {
-            margin-left: 1rem;
-            margin-right: 1rem;
-            color: var(--text-color-light);
-
-            @media screen and (max-width: 500px) {
-                margin-left: 5vw;
-                margin-right: 5vw;
-            }
-
-            a {
-                text-decoration: none;
-                color: var(--text-color-light);
-
-                &:hover {
-                    color: var(--text-color);
-                    text-decoration: underline;
-                }
-            }
-        }
-
-        > a > .heading {
-            padding-bottom: 1em;
-            margin-left: 1rem;
-            margin-right: 1rem;
-            font-size: medium;
+    .tags a {
+        color: var(--text-color-light);
+        text-decoration: none;
+        
+        &:hover {
             color: var(--text-color);
-
-            @media screen and (max-width: 500px) {
-                margin-left: 5vw;
-                margin-right: 5vw;
-            }
-        }
-
-        > a:hover > .heading {
-            color: var(--text-color-light);
-        }
-
-        > .description {
-            margin-left: 1rem;
-            margin-right: 1rem;
-            color: var(--text-color-light);
-
-            @media screen and (max-width: 500px) {
-                margin-left: 5vw;
-                margin-right: 5vw;
-            }
+            text-decoration: underline;
         }
     }
 }
 
-.title-block {
-    padding: 0;
+.article-block {
+    border-radius: 4px;
+    padding-bottom: 0.5em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    border-bottom: none;
+    position: relative;
 
-    > .heading {
-        font-weight: normal;
+    &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(to right, var(--border-color), transparent);
+        margin: 0.5em 0 0 0;
+    }
 
-        @media screen and (max-width: 900px) {
-            text-align: center;
+    &:last-child::after {
+        display: none;
+    }
+
+    .article-content {
+        width: 100%;
+        margin: 0;
+    }
+
+    .article-header {
+        margin-bottom: 0.5em;
+
+        &::after {
+            display: none;
         }
     }
 
-    > .page {
-        font-weight: lighter;
+    .title-link {
+        text-decoration: none;
+        display: block;
+        
+        .heading {
+            font-size: 1.4em;
+            color: var(--text-color);
+            font-weight: bold;
+            margin: 0;
+            line-height: 1.3;
+            transition: color 0.2s ease;
+        }
 
-        @media screen and (max-width: 900px) {
-            text-align: center;
+        &:hover .heading {
+            color: var(--text-color-light);
+        }
+    }
+
+    .article-summary {
+        .description {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 0.95em;
+            line-height: 1.6;
+            opacity: 0.9;
         }
     }
 }
@@ -739,9 +587,9 @@ hr {
 }
 
 .content-article {
-    padding-top: 1em;
-    padding-left: 4em;
-    padding-right: 4em;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
 
     @media screen and (max-width: 900px) {
         padding-left: 0;
@@ -791,7 +639,7 @@ hr {
     }
 }
 
-.article-content {
+.content-article .article-content {
     .article-meta {
         font-size: small;
         margin-bottom: 2em;
@@ -835,10 +683,25 @@ hr {
             border-radius: 4px;
         }
     }
+}
 
-    > .heading {
+.article-header {
+    margin-bottom: 2em;
+    position: relative;
+
+    &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(to right, var(--border-color), transparent);
+        margin: 0.5em 0 0 0;
+    }
+
+    .heading {
         font-size: xx-large;
         padding: 0 0 0.5em 0;
+        margin: 0;
 
         @media screen and (max-width: 900px) {
             padding-left: calc((100vw - 600px)/3);
@@ -858,7 +721,9 @@ hr {
             padding-right: unset;
         }
     }
+}
 
+.content-article .article-content {
     > .description {
         font-size: large;
         border-left: 2px solid var(--text-color);
@@ -1202,7 +1067,7 @@ hr {
         color: var(--z-text);
 
         code {
-            font-family: 'FiraCode Nerd Font', 'Fira Code', monospace;
+            font-family: 'Fira Code', monospace;
             background-color: transparent;
             padding: 0;
             border-radius: 0;
@@ -1428,6 +1293,55 @@ hr {
     }
 }
 
+.page-footer {
+  clear: both;
+  width: 100%;
+  margin: 0;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  text-align: center;
+  color: var(--text-color-light);
+  font-size: small;
+  font-family: 'Ysabeau', sans-serif;
+  font-style: italic;
+  position: relative;
+
+  &::before {
+      content: "";
+      position: absolute;
+      top: 1.5em;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 33.33%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-color), transparent);
+  }
+
+  .footer-content {
+    display: inline-block;
+    position: relative;
+    padding-top: 1em;
+  }
+
+  .separator {
+    margin: 0 1em;
+  }
+
+  a {
+    color: var(--text-color-light);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--text-color);
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+
 /* Imported from anatole-zola for sidebar and page-top */
 
 /*animation starts*/
@@ -1512,23 +1426,33 @@ hr {
 .content {
   height: auto;
   float: right;
-  width: 75%;
-  margin-top: 60px;
+  width: 58.333%;
+  margin-right: 8.333%;
+  margin-top: 120px;
+  padding-left: 4vw;
+  box-sizing: border-box;
+  min-height: calc(100vh - 120px - 100px); /* Ensure footer stays at bottom */
   
   @media screen and (max-width: 960px) {
     width: 100%;
     float: none;
+    margin-right: 0;
+    padding-left: 0;
   }
 }
 
 .page-top {
-  width: 75%;
+  width: 100%;
   position: fixed;
   right: 0;
   z-index: 5;
   height: 60px;
   background-color: var(--bg-color); /* Ensure it has background */
   border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
 
   @media screen and (max-width: 960px) {
     width: 100%;
@@ -1538,8 +1462,7 @@ hr {
 
   .nav {
     list-style: none;
-    padding: 18px 8px 18px 18px;
-    float: left;
+    padding: 0;
     font-size: 14px;
 
     li {
@@ -1574,9 +1497,9 @@ hr {
       }
     }
   }
-
   .information {
-    float: right;
+    position: absolute;
+    right: 0;
     height: 100%;
     display: flex;
     align-items: center;
@@ -1690,19 +1613,38 @@ hr {
   background-size: cover;
   height: 100%;
   top: 0;
-  left: 0;
+  left: 8.333%;
   position: fixed;
   z-index: 4;
   background-color: var(--sidebar-bg);
-  border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.3s ease-in-out;
+  padding-right: 4vw;
+  padding-top: 120px;
+  box-sizing: border-box;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 50%;
+    border-right: 4px double var(--border-color);
+  }
 
   @media screen and (max-width: 960px) {
     width: 250px;
+    left: 0;
     transform: translateX(-100%);
+    border-right: 1px solid var(--border-color);
+    padding-right: 0;
+
+    &::after {
+        display: none;
+    }
     
     &.open {
         transform: translateX(0);
@@ -1895,7 +1837,7 @@ sup.footnote-reference {
 
 .footnote-backref {
     color: var(--btn-bg);
-    font-family: 'FiraCode Nerd Font', 'Fira Code', monospace;
+    font-family: 'Fira Code', monospace;
     
     &:hover {
         color: var(--btn-hover);

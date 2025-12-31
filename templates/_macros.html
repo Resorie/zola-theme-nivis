@@ -2,90 +2,37 @@
 <article class="article-block">
   {%- if post.extra.link %} {% set link = post.extra.link %} {% else %} {% set
   link = post.permalink %} {% endif %}
-  <div class="link">
-    <a href="{{ link | safe }}">
-    {% if post.extra.pinned %}
-    <div class="pinned-label">
-      <i class="fa-solid fa-thumbtack"></i>
-      <span class="pinned-text">Pinned</span>
+  
+  <div class="article-content">
+    <div class="article-header">
+        <div class="meta-line">
+            {% if post.extra.pinned %}
+            <span class="pinned-label"><i class="fa-solid fa-thumbtack"></i></span>
+            <span class="separator">/</span>
+            {% endif %}
+            
+            {% if post.date %}
+            <span class="date">{{ post.date | date(format="%b. %d, %Y") }}</span>
+            {% endif %}
+            
+            {% if post.taxonomies.tags %}
+            <span class="separator">/</span>
+            <span class="tags">
+            {% for tag in post.taxonomies.tags %}
+            <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
+            {% endfor %}
+            </span>
+            {% endif %}
+        </div>
+        
+        <a href="{{ link | safe }}" class="title-link">
+            <h2 class="heading">{{ post.title }}</h2>
+        </a>
     </div>
-    {% endif %}
-    {% if post.extra.feature_image is matching("^http[s]?://") %}
-    <img
-      class="image"
-      loading="lazy"
-      alt="{{ post.title }}"
-      src="{{ post.extra.feature_image }}"
-    />
-    {% elif post.extra.feature_image is matching("[.](jpg|jpeg|png|gif)$") %} {%
-    set post_relative_path_array = post.relative_path | split(pat="/") %} {%- if
-    lang == config.default_language %} {% set feature_image =
-    post_relative_path_array[0] ~ "/" ~ post_relative_path_array[1] ~ "/" ~
-    post_relative_path_array[2] ~ "/" ~ post.extra.feature_image %} {% set
-    feature_image_300 = resize_image(path=feature_image, width=300, height=150,
-    format="webp") %} {% set feature_image_600 =
-    resize_image(path=feature_image, width=600, height=300, format="webp") %} {%
-    set feature_image_900 = resize_image(path=feature_image, width=900,
-    height=450, format="webp") %} {% set feature_image_1200 =
-    resize_image(path=feature_image, width=1200, height=600, format="webp") %}
-    {% set feature_image_1500 = resize_image(path=feature_image, width=1500,
-    height=750, format="webp") %} {% set feature_image_1800 =
-    resize_image(path=feature_image, width=1800, height=900, format="webp") %}
-    {% set feature_image_2100 = resize_image(path=feature_image, width=2100,
-    height=1050, format="webp") %} {% else %} {% set feature_image =
-    post.components[1] ~ "/" ~ post.year ~ "/" ~ post.date ~ "-" ~ post.title ~
-    "/" ~ post.extra.feature_image %} {% endif %}
-    <img
-      class="image"
-      loading="lazy"
-      alt="{{ post.title }}"
-      srcset="{{ feature_image_300.url | safe }} 300w,
-                        {{ feature_image_600.url | safe }} 600w,
-                        {{ feature_image_900.url | safe }} 900w,
-                        {{ feature_image_1200.url | safe }} 1200w,
-                        {{ feature_image_1500.url | safe }} 1500w,
-                        {{ feature_image_1800.url | safe }} 1800w,
-                        {{ feature_image_2100.url | safe }} 2100w,"
-      sizes="(max-width: 500px) 90vw,
-                        (max-width: 700px) 200px,
-                        (max-width: 900px) 300px,
-                        (max-width: 1000px) 200px,
-                        (max-width: 1200px) 300px,
-                        400px"
-    />
-    {% elif post.extra.feature_image is matching("[.](svg)$") %}
-    <img
-      class="image"
-      loading="lazy"
-      alt="{{ post.title }}"
-      src="{{ post.permalink | safe }}{{ post.extra.feature_image }}"
-    />
-    {% else %}
-    <img
-      class="image"
-      loading="lazy"
-      alt="{{ post.title }}"
-      src="https://www.dmoe.cc/random.php?key={{ post.title | slugify }}"
-    />
-    {% endif %}
-    </a>
-    <section class="content">
-      <div class="article-meta" style="margin-bottom: 1em; color: var(--text-color-light);">
-        {% if post.date %}
-        {{ post.date | date(format="%b. %d") }}, <a href="{{ get_url(path='@/archive/index.md') }}#{{ post.year }}">{{ post.year }}</a>
-        {% endif %}
-        {% if post.taxonomies.tags %}
-        &nbsp;&nbsp;
-        {% for tag in post.taxonomies.tags %}
-        <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>&nbsp;
-        {% endfor %}
-        {% endif %}
-      </div>
-      <a href="{{ link | safe }}">
-        <h2 class="heading">{{ post.title }}</h2>
-      </a>
-      <p class="description">{{ post.description }}</p>
-    </section>
+    
+    <div class="article-summary">
+        <p class="description">{{ post.description }}</p>
+    </div>
   </div>
 </article>
 {% endmacro article_block %} {% macro paginator_block() %}

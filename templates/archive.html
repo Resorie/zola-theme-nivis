@@ -1,9 +1,9 @@
 {% extends "_base.html" %} {% block title %}Archives | {{ config.title }}{%
 endblock title %} {% block content %}
 <main class="article-list">
-  <article class="article-block title-block">
-    <h2 class="heading">Archives</h2>
-  </article>
+  <div class="article-header">
+    <h1 class="heading">Archives</h1>
+  </div>
 
   {% set section = get_section(path="posts/_index.md") %} {% for year, posts in
   section.pages | group_by(attribute="year") %}

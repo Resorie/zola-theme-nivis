@@ -1,9 +1,9 @@
 {% extends "_base.html" %} {% block title %}Categories | {{ config.title }}{%
 endblock title %} {% block content %}
 <main class="article-list">
-  <article class="article-block title-block">
-    <h2 class="heading">Categories</h2>
-  </article>
+  <div class="article-header">
+    <h1 class="heading">Categories</h1>
+  </div>
 
   {% if terms %} {% set my_terms = terms %} {% else %} {% set taxonomy =
   get_taxonomy(kind="tags", lang=lang) %} {% set my_terms = taxonomy.items %} {%
