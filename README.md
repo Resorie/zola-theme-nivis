@@ -5,7 +5,7 @@ Nivis: A clean zola theme for bloggers.
 
 Live demo: [my blog](https://resorie.github.io/blog/).
 
-This theme is derived from theme [Float](https://float-theme.netlify.app/) and [anatole](https://longfangsong.github.io/). Really appreciate these two wonderful themes :smile:
+This theme is inspired by and derived from themes [Float](https://float-theme.netlify.app/) and [anatole](https://longfangsong.github.io/). Really appreciate these two wonderful themes :smile:
 
 ## Installation
 
