@@ -5,7 +5,7 @@ Nivis: A clean zola theme for bloggers.
 
 Live demo: [my blog](https://resorie.github.io/blog/).
 
-This theme is inspired by and derived from themes [Float](https://float-theme.netlify.app/) and [anatole](https://longfangsong.github.io/). Really appreciate these two wonderful themes :smile:
+This theme is inspired by (and derived from) themes [Float](https://float-theme.netlify.app/) and [anatole](https://longfangsong.github.io/). Really appreciate these two wonderful themes :smile:
 
 ## Installation
 
@@ -35,7 +35,7 @@ Due to the weirdsome escape rules of zola, your math contents might not display 
 
 After adding or changing your post, run `themes/nivis/scripts/wrap_math.py` to process the markdown files. After running the script, (or of course you can change them manually), your math contents should be wrapped in code blocks, e.g.:
 `````markdown
-This is a inline math example: `$e^{\pi i}=-1$`.
+This is an inline math example: `$e^{\pi i}=-1$`.
 
 And this is a display math example:
 ```math-display
