@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: 'Source Han Serif SC';
+    src: url('fonts/SourceHanSerifSC-VF.otf');
+}
+
+@font-face {
     font-family: 'FZKai';
     src: url('fonts/FZKai.ttf');
 }
@@ -1693,7 +1698,7 @@ hr {
         text-transform: none;
         font-family: 'Dancing Script', cursive;
         font-size: 2.5rem;
-        font-weight: 700;
+        font-weight: 800;
         line-height: 1;
         margin: 0;
         
