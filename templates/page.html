@@ -79,7 +79,7 @@ config.default_language %} {% set section_title = page.components[0] %} {%- else
       </div>
       <h1 class="heading">{{ page.title }}</h1>
     </div>
-    <p class="description">{{ page.description }}</p>
+    {% if page.description %} <p class="description">{{ page.description }}</p> {% endif %}
     {% if page.toc and page.extra.toc | default(value=true) %}
     <div class="toc">
       <h3>Table of Contents</h3>

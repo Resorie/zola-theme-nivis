@@ -734,24 +734,28 @@ hr {
 
 .content-article .article-content {
     > .description {
-        font-size: large;
-        border-left: 2px solid var(--text-color);
-        padding: 0 0 0 1em !important;
-        margin-bottom: 1em;
+        font-family: 'FZKai', serif;
+        font-size: 1.1em;
+        color: var(--text-color);
+        background-color: var(--social-bg);
+        padding: 1em;
+        border-radius: 6px;
+        margin-bottom: 2em;
+        border-left: 4px solid var(--border-color);
+        line-height: 1.6;
 
         @media screen and (max-width: 900px) {
-            margin-left: calc(((100vw - 600px)/3) - 1em - 2px);
+            margin-left: calc((100vw - 600px)/3);
             margin-right: calc((100vw - 600px)/3);
         }
 
         @media screen and (max-width: 700px) {
-            margin-left: calc(((100vw - 400px)/3) - 1em - 2px);
+            margin-left: calc((100vw - 400px)/3);
             margin-right: calc((100vw - 400px)/3);
         }
 
         @media screen and (max-width: 500px) {
             width: 90vw;
-            padding-right: unset;
             margin-left: auto;
             margin-right: auto;
         }
