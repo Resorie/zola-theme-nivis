@@ -116,38 +116,34 @@
 
   <div id="main">
     <div class="page-top animated fadeInDown">
-      <div class="nav">
-        <li><a href="{{ get_url(path="@/_index.md", lang=lang) }}" {% if current_path == "/" %}class="active"{% endif %}>Home</a></li>
-        <li class="separator"></li>
-        <li><a href="{{ get_url(path="@/about/index.md", lang=lang) }}" {% if current_path is starting_with("/about") %}class="active"{% endif %}>About</a></li>
-        <li class="separator"></li>
-        <li><a href="{{ get_url(path="@/archive/index.md", lang=lang) }}" {% if current_path is starting_with("/archive") %}class="active"{% endif %}>Archives</a></li>
-        <li class="separator"></li>
-        <li><a href="{{ get_url(path="@/tags/_index.md", lang=lang) }}" {% if current_path is starting_with("/tags") %}class="active"{% endif %}>Categories</a></li>
-        <li class="separator"></li>
-        <li><a href="{{ get_url(path="@/links/index.md", lang=lang) }}" {% if current_path is starting_with("/links") %}class="active"{% endif %}>Links</a></li>
-      </div>
+      <nav class="nav">
+        <a href="{{ get_url(path="@/_index.md", lang=lang) }}" {% if current_path == "/" %}class="active"{% endif %}>Home</a>
+        <a href="{{ get_url(path="@/about/index.md", lang=lang) }}" {% if current_path is starting_with("/about") %}class="active"{% endif %}>About</a>
+        <a href="{{ get_url(path="@/archive/index.md", lang=lang) }}" {% if current_path is starting_with("/archive") %}class="active"{% endif %}>Archives</a>
+        <a href="{{ get_url(path="@/tags/_index.md", lang=lang) }}" {% if current_path is starting_with("/tags") %}class="active"{% endif %}>Categories</a>
+        <a href="{{ get_url(path="@/links/index.md", lang=lang) }}" {% if current_path is starting_with("/links") %}class="active"{% endif %}>Links</a>
+      </nav>
       <div class="information">
         <div class="back_btn">
-          <a onclick="window.history.go(-1)"><i class="fas fa-chevron-left"></i></a>
+          <a onclick="window.history.go(-1)" aria-label="Go back"><i class="fas fa-chevron-left"></i></a>
         </div>
         <div class="theme_btn">
-          <a onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></a>
+          <a onclick="toggleTheme()" aria-label="Toggle theme"><i class="fas fa-moon" id="theme-icon"></i></a>
         </div>
         <div class="feed_btn">
-          <a class="feed-icon"><i class="fas fa-rss"></i></a>
+          <a class="feed-icon" aria-label="RSS Feed"><i class="fas fa-rss"></i></a>
           <div class="feed-dropdown">
             <a href="{{ get_url(path="atom.xml") }}" target="_blank">Atom</a>
             <a href="{{ get_url(path="rss.xml") }}" target="_blank">RSS</a>
           </div>
         </div>
         <div class="avatar_btn">
-          <a onclick="toggleSidebar()"><i class="fas fa-bars"></i></a>
+          <a onclick="toggleSidebar()" aria-label="Toggle sidebar"><i class="fas fa-bars"></i></a>
         </div>
       </div>
     </div>
     <div class="autopagerize_page_element">
-      <div class="content">
+      <div class="content animated fadeIn">
         {% block content %}{% endblock content %}
       </div>
     </div>
