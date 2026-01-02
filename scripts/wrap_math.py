@@ -2,32 +2,14 @@ import os
 import re
 import glob
 
-# Configuration
 CONTENT_DIR = "../../../content"
 
 def process_content(content):
-    # Regex patterns
-    # 1. Code blocks: ``` ... ``` (greedy matching for content, but non-greedy for the block?)
-    #    Actually, ``` followed by anything until ```.
-    #    We use [\s\S]*? to match across lines non-greedily.
-    # 2. Inline code: ` ... ` (no backticks inside)
-    # 3. Display math: $$ ... $$
-    # 4. Inline math: $ ... $ (no newlines usually, but let's allow it if standard markdown allows? 
-    #    Usually inline math is on one line. Let's stick to one line for safety).
-    
-    # We use a tokenizer approach: match the earliest occurring pattern.
-    # The order in the regex OR matters.
-    
     token_pattern = re.compile(r"""
-        (```[\s\S]*?```) |                # Group 1: Code block
-        (`[^`\n]+`) |                     # Group 2: Inline code
-        (\$\$[\s\S]*?\$\$) |              # Group 3: Display math
-        ((?<!\\)\$(?![\s$])[^\$\n]+(?<![\s\\])\$)  # Group 4: Inline math
-        # Inline math regex explanation:
-        # (?<!\\)\$      : Starts with $, not preceded by \
-        # (?![\s$])      : Next char is not whitespace or $ (avoids matching $$ or $ space)
-        # [^\$\n]+       : Content (no $ or newline)
-        # (?<![\s\\])\$  : Ends with $, previous char not whitespace or \
+        (```[\s\S]*?```) |                
+        (`[^`\n]+`) |                     
+        (\$\$[\s\S]*?\$\$) |              
+        ((?<!\\)\$(?![\s$])[^\$\n]+(?<![\s\\])\$)
     """, re.VERBOSE)
 
     def replace_func(match):
@@ -38,10 +20,8 @@ def process_content(content):
         if inline_code:
             return inline_code
         if display_math:
-            # Wrap display math in a specific code block
             return f"\n```math-display\n{display_math}\n```\n"
         if inline_math:
-            # Wrap inline math in inline code
             return f"`{inline_math}`"
             
         return match.group(0)
@@ -52,7 +32,6 @@ def process_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # Check if front matter exists
     if not content.startswith("+++"):
         return
 
@@ -60,6 +39,9 @@ def process_file(filepath):
     if len(parts) < 3:
         return
     
+    rel_path = filepath.split("../")[-1]
+    print(f"Detected file: {rel_path}; ", end="")
+
     front_matter = parts[1]
     body = parts[2]
     
@@ -69,12 +51,11 @@ def process_file(filepath):
         new_content = f"+++{front_matter}+++{new_body}"
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(new_content)
-        print(f"Processed {filepath}")
+        print(f"Processed Successfully")
     else:
-        print(f"No changes in {filepath}")
+        print(f"No changes")
 
 def main():
-    # Walk through all markdown files in content directory
     base_dir = os.path.dirname(os.path.abspath(__file__))
     content_path = os.path.join(base_dir, CONTENT_DIR)
     
