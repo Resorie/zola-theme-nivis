@@ -80,7 +80,7 @@ a:hover {
 }
 
 em, i {
-    font-family: 'STIX Two Text', 'LXGW Wenkai Screen', serif;
+    font-family: 'STIX Two Text', 'LXGW Bright', serif;
     font-style: italic;
 }
 
@@ -167,11 +167,11 @@ hr {
 .body-block {
     margin: 0 auto 0 auto;
     color: var(--text-color);
-    font-family: 'STIX Two Text', 'Noto Serif SC', 'Noto Serif CN', 'Noto Serif SC', 'Noto Serif CN', serif;
+    font-family: 'STIX Two Text', 'Source Han Serif CN VF', 'Noto Serif SC', 'Noto Serif CN', serif;
     background-color: var(--bg-color);
 
     h1, h2, h3, h4, h5, h6 {
-        font-family: 'STIX Two Text', 'Noto Serif SC', 'Noto Serif CN', 'Noto Serif SC', 'Noto Serif CN', serif;
+        font-family: 'STIX Two Text', 'Source Han Serif CN VF', 'Noto Serif SC', 'Noto Serif CN', serif;
     }
 
     > .content-block {
@@ -441,7 +441,7 @@ hr {
     font-size: 0.8em;
     color: var(--text-color-light);
     margin-bottom: 0.2em;
-    font-family: 'Ysabeau', 'LXGW WenKai Screen', sans-serif;
+    font-family: 'Ysabeau', 'LXGW Bright', sans-serif;
     font-style: italic;
     
     .separator {
@@ -545,7 +545,7 @@ hr {
         .description {
             margin: 0;
             color: var(--text-color-light);
-            font-family: 'LXGW Wenkai Screen', sans-serif;
+            font-family: 'LXGW Bright', sans-serif;
             font-size: 0.95em;
             line-height: 1.6;
             text-align: justify;
@@ -748,7 +748,7 @@ hr {
 
 .content-article .article-content {
     > .description {
-        font-family: 'LXGW Wenkai Screen', serif;
+        font-family: 'LXGW Bright', serif;
         font-size: 1.1em;
         color: var(--text-color);
         background-color: var(--social-bg);
@@ -1593,7 +1593,7 @@ hr {
     
     a {
       color: var(--text-color-light);
-      font-family: 'Noto Serif SC', serif;
+      font-family: 'Source Han Serif CN VF', serif;
       font-size: 1rem;
       text-decoration: none;
       position: relative;
@@ -2155,7 +2155,7 @@ sup.footnote-reference {
             flex-direction: column;
 
             .friend-name {
-                font-family: "STIX Two Text", "Noto Serif SC", "Noto Serif SC", serif;
+                font-family: "STIX Two Text", "Source Han Serif CN VF", serif;
                 font-weight: bold;
                 font-size: 1.25em;
                 margin-bottom: 6px;
