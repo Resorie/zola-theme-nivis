@@ -2213,15 +2213,8 @@ sup.footnote-reference {
 } Removed to match About page margin */
 
 .links-group {
-    margin-bottom: 3em;
-}
+    margin-bottom: 4em;
 
-.group-title {
-    font-size: 1.5em;
-    margin-bottom: 1em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    
     /* Responsive margins matching other content */
     @media screen and (max-width: 900px) {
         padding-left: calc((100vw - 600px)/3);
@@ -2240,85 +2233,99 @@ sup.footnote-reference {
         padding-left: unset;
         padding-right: unset;
     }
+}
+
+.group-title {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 2px solid var(--border-color);
+    display: inline-block;
+    font-family: 'STIX Two Text', 'Noto Serif SC', serif;
+}
+
+.group-desc {
+    margin-bottom: 2em;
+    color: var(--text-color-light);
+    font-style: italic;
+    font-size: 0.95em;
+    line-height: 1.6;
 }
 
 .friends-list {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5em;
     margin-top: 1em;
-
-    /* Responsive margins matching other content */
-    @media screen and (max-width: 900px) {
-        padding-left: calc((100vw - 600px)/3);
-        padding-right: calc((100vw - 600px)/3);
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    @media screen and (max-width: 700px) {
-        padding-left: calc((100vw - 400px)/3);
-        padding-right: calc((100vw - 400px)/3);
-    }
-
-    @media screen and (max-width: 500px) {
-        width: 90vw;
-        padding-left: unset;
-        padding-right: unset;
-    }
 
     .friend-item {
         display: flex;
         align-items: center;
-        text-decoration: none; /* Specificity: .friends-list .friend-item (0-2-0) > .article-content a (0-1-1) */
-        padding-bottom: 15px;
-        border-bottom: 1px dashed var(--border-color);
-        transition: opacity 0.2s;
-
-        &:last-child {
-            border-bottom: none;
-        }
+        text-decoration: none !important;
+        padding: 1.2em;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        background-color: var(--bg-color);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        height: 100%;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
 
         &:hover {
-            opacity: 0.8;
-            text-decoration: none; /* Ensure container doesn't get underlined */
-            .friend-name {
-                text-decoration: underline;
-            }
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px var(--shadow-color);
+            border-color: var(--text-color-light);
+            text-decoration: none !important;
         }
 
         .friend-avatar {
             flex-shrink: 0;
-            width: 56px;
-            height: 56px;
-            margin-right: 20px;
+            width: 64px;
+            height: 64px;
+            margin-right: 16px;
             
             img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
                 border-radius: 50%;
-                box-shadow: 0 2px 8px var(--shadow-color);
+                border: 2px solid var(--border-color);
+                transition: border-color 0.3s;
+                background-color: var(--bg-color);
             }
+        }
+
+        &:hover .friend-avatar img {
+            border-color: var(--text-color);
         }
 
         .friend-info {
             flex-grow: 1;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-
+            justify-content: center;
+            
             .friend-name {
-                font-family: "STIX Two Text", "Source Han Serif CN VF", serif;
                 font-weight: bold;
-                font-size: 1.25em;
-                margin-bottom: 6px;
+                font-size: 1.1em;
                 color: var(--text-color);
+                margin-bottom: 0.3em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-family: 'STIX Two Text', 'Noto Serif SC', serif;
             }
 
             .friend-desc {
-                font-size: 0.95em;
+                font-size: 0.85em;
                 color: var(--text-color-light);
                 line-height: 1.4;
+                display: -webkit-box;
+                line-clamp: 2;
+                box-orient: vertical;
+                overflow: hidden;
             }
         }
     }
