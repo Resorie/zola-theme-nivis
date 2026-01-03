@@ -4,9 +4,11 @@ items = [
     # Add your friends here
     { name = "Resory's blog", url = "https://resorie.github.io/blog/", description = "Runtime Error", avatar = "https://avatars.githubusercontent.com/u/49238603" },
 ]
+desc = "My Friends"
 
 [[groups]]
 name = "Projects"
 items = [
     { name = "Zola", url = "https://www.getzola.org/", description = "The static site generator used for this blog.", avatar = "https://avatars.githubusercontent.com/u/43047029" },
 ]
+desc = "Useful Projects"
