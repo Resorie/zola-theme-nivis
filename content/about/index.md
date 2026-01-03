@@ -1,6 +1,6 @@
 +++
 title = "About Me"
-template = "page.html"
+template = "about.html"
 +++
 
 This is Nivis, a clean zola theme for bloggers.
