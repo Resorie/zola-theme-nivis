@@ -2,8 +2,8 @@
 base_url = "https://resorie.github.io/blog"
 
 # The site title and description; used in feeds by default.
-title = "Runtime Error"
-description = "Resory's blog"
+title = "Nivis"
+description = "A clean zola theme for bloggers"
 
 # When set to "true", a feed is automatically generated.
 generate_feeds = true
@@ -47,6 +47,8 @@ highlight_code = true
 highlight_theme = "css"
 
 github_alerts = true
+bottom_footnotes = true
+render_emoji = true
 
 extra_syntaxes_and_themes = ["syntaxes/"]
 
@@ -55,8 +57,8 @@ main_section = "posts"
 math_display = "mathjax"
 avatar = ""
 
-display_github_link = false
-github_url = ""
+display_github_link = true
+github_url = "https://github.com/Resorie/zola-theme-nivis"
 display_email_link = false
 email_url = ""
 display_bilibili_link = false
