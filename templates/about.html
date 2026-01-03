@@ -1,0 +1,48 @@
+{% extends "_base.html" %} {% block title %}{{ page.title }} | {{ config.title
+}}{% endblock title %} {% block head %}
+<!-- Primary Meta Tags -->
+{% if page.description %} {% set description = page.description %} {%- elif
+page.summary %} {% set description = page.summary %} {% else %} {% set
+description = page.content %} {% endif %}
+<meta
+  name="description"
+  content="{{ description | striptags | truncate(length=100) | safe }}"
+/>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content="{{ page.title }} | {{ config.title }}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ page.permalink | safe }}" />
+{% if page.date %}
+<meta property="article:published_time" content="{{ page.date }}" />
+<meta property="article:modified_time" content="{{ page.date }}" />
+{% endif %}
+<meta property="article:section" content="{{ page.components | first }}" />
+<!--
+  {% if page.taxonomies is defined %}
+    {% if page.taxonomies.tags is defined %}
+      {% for tag in page.taxonomies.tags %}
+        <meta property="article:tag" content="{{ tag }}">
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+-->
+
+{% endblock head %} {% block page_heading %} {%- if lang ==
+config.default_language %} {% set section_title = page.components[0] %} {%- else
+%} {% set section_title = page.components[1] %} {%- endif -%}
+<h1 class="title">
+  <a href="{{ get_url(path="@/_index.md", lang=lang) }}">{{ config.title }}</a>
+</h1>
+{% endblock page_heading %} {% block content %}
+
+<article class="content-article">
+  <main class="article-content">
+    <div class="article-header">
+    <h1 class="heading">About</h1>
+  </div>
+    
+    {{ page.content | safe }}
+  </main>
+</article>
+{% endblock content %}
