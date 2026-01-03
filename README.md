@@ -9,14 +9,18 @@ This theme is inspired by (and derived from) themes [Float](https://float-theme.
 
 ## Getting Started
 
-Simply clone the repo into your `themes/` directory:
+### Installation
+
+Use `git submodule` to add the theme to your site:
 ```bash
-git clone https://github.com/Resorie/zola-theme-nivis.git themes/nivis/
+git submodule add -b master --depth=1 https://github.com/Resorie/zola-theme-nivis.git themes/nivis/
 ```
 
 Then, change your theme config in `config.toml`:
 ```toml
 theme = "nivis"
 ```
+
+### Configuration
 
 Move on to the [example site](https://resorie.github.io/zola-theme-nivis/) for more info. Enjoy it! :kissing_heart:
