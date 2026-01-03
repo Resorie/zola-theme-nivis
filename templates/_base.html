@@ -199,6 +199,20 @@
 
     // Footnote Navigation
     document.addEventListener("DOMContentLoaded", function() {
+        // Code Block Language Label
+        document.querySelectorAll('pre code').forEach(code => {
+            const pre = code.parentElement;
+            if (!pre.hasAttribute('data-lang')) {
+                const classes = code.className.split(' ');
+                for (const cls of classes) {
+                    if (cls.startsWith('language-')) {
+                        pre.setAttribute('data-lang', cls.replace('language-', ''));
+                        break;
+                    }
+                }
+            }
+        });
+
         const refs = document.querySelectorAll('sup.footnote-reference a');
         refs.forEach((ref, index) => {
             if (!ref.id) {
