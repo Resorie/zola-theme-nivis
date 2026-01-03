@@ -92,6 +92,7 @@ config.default_language %} {% set section_title = page.components[0] %} {%- else
             {% if page.toc and page.extra.toc | default(value=true) %}
             <details class="intro-toc">
                 <summary class="toc-title">CONTENTS</summary>
+                <div class="toc-wrapper">
                 <ul class="toc-list">
                     <li class="toc-root">
                         <a href="#" class="active-toc">{{ page.title }}</a>
@@ -124,6 +125,7 @@ config.default_language %} {% set section_title = page.components[0] %} {%- else
                         {% endif %}
                     </li>
                 </ul>
+                </div>
             </details>
             {% endif %}
         </div>
