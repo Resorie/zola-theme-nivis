@@ -171,7 +171,7 @@ hr {
     background-color: var(--bg-color);
 
     h1, h2, h3, h4, h5, h6 {
-        font-family: 'STIX Two Text', 'Source Han Serif CN VF', 'Noto Serif SC', 'Noto Serif CN', serif;
+        font-family: 'STIX Two Text', 'Noto Serif SC', serif;
     }
 
     > .content-block {
@@ -504,6 +504,7 @@ hr {
         display: block;
         
         .heading {
+            font-family: 'STIX Two Text', 'Noto Serif SC', serif;
             font-size: 1.5em;
             color: var(--text-color);
             font-weight: 900;
@@ -722,6 +723,7 @@ hr {
     }
 
     .heading {
+        font-family: 'STIX Two Text', 'Noto Serif SC', serif;
         font-size: xx-large;
         padding: 0 0 0.5em 0;
         margin: 0;
@@ -1726,6 +1728,155 @@ hr {
         }
     }
   }
+}
+
+/* Article Intro Container */
+.article-intro-container {
+    margin-bottom: 3em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2em;
+
+    .intro-header {
+        margin-bottom: 2em;
+
+        .heading {
+            font-family: 'STIX Two Text', 'Noto Serif SC', serif;
+            font-size: 2.5em;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 0.3em;
+            color: var(--text-color);
+        }
+
+        .meta-line {
+            font-family: 'Ysabeau', 'LXGW WenKai', sans-serif;
+            font-size: 0.9em;
+            color: var(--text-color-light);
+            font-style: italic;
+            
+            .separator {
+                margin: 0 0.5em;
+                opacity: 0.6;
+            }
+
+            .tags a {
+                color: var(--text-color-light);
+                text-decoration: none;
+                &:hover { color: var(--text-color); }
+            }
+        }
+    }
+
+    .intro-body {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+        padding-left: 1.5em;
+        border-left: 3px solid var(--border-color);
+
+        .intro-abstract {
+            position: relative;
+
+            .abstract-title {
+                font-family: 'Fira Code', monospace;
+                font-size: 0.75em;
+                color: var(--text-color-light);
+                letter-spacing: 0.1em;
+                margin-bottom: 0.5em;
+                opacity: 0.7;
+                font-weight: bold;
+            }
+
+            .description {
+                font-family: 'LXGW Bright', sans-serif;
+                font-size: 1.05em;
+                line-height: 1.8;
+                color: var(--text-color);
+                margin: 0;
+                text-align: justify;
+                padding-left: 1em;
+            }
+        }
+
+        .intro-toc {
+            width: 100%;
+
+            summary.toc-title {
+                font-family: 'Fira Code', monospace;
+                font-size: 0.75em;
+                color: var(--text-color-light);
+                letter-spacing: 0.05em;
+                opacity: 0.7;
+                font-weight: bold;
+                cursor: pointer;
+                list-style: none;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                user-select: none;
+                margin-bottom: 0.5em;
+
+                &::-webkit-details-marker {
+                    display: none;
+                }
+
+                &::after {
+                    content: "expand +";
+                    font-size: 0.9em;
+                    font-weight: normal;
+                    margin-left: 1em;
+                    opacity: 0.8;
+                }
+            }
+
+            &[open] summary.toc-title {
+                margin-bottom: 1em;
+
+                &::after {
+                    content: "collapse -";
+                }
+            }
+
+            .toc-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                padding-left: 1.2em;
+                font-size: 0.9em;
+                line-height: 1.5;
+
+                ul {
+                    list-style: none;
+                    margin: 0;
+                    padding-left: 1.5em;
+                    border-left: 1px solid var(--border-color);
+                }
+
+                li {
+                    margin: 0.4em 0;
+                    text-align: left; /* Force left align */
+                }
+
+                a {
+                    text-decoration: none;
+                    color: var(--text-color-light);
+                    transition: color 0.2s;
+                    display: block;
+                    
+                    &:hover {
+                        color: var(--text-color);
+                    }
+                }
+
+                .toc-root > a {
+                    font-weight: bold;
+                    color: var(--text-color);
+                    margin-bottom: 0.5em;
+                    font-size: 1em;
+                }
+            }
+        }
+    }
 }
 
 #sidebar-mask {

@@ -57,68 +57,79 @@ config.default_language %} {% set section_title = page.components[0] %} {%- else
 
 <article class="content-article">
   <main class="article-content">
-    <div class="article-header">
-      <div class="meta-line">
-          {% if page.extra.pinned %}
-          <span class="pinned-label"><i class="fa-solid fa-thumbtack"></i></span>
-          <span class="separator">/</span>
-          {% endif %}
-          
-          {% if page.date %}
-          <span class="date">{{ page.date | date(format="%b. %d, %Y") }}</span>
-          {% endif %}
-          
-          {% if page.taxonomies.tags %}
-          <span class="separator">/</span>
-          <span class="tags">
-          {% for tag in page.taxonomies.tags %}
-          <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
-          {% endfor %}
-          </span>
-          {% endif %}
-      </div>
-      <h1 class="heading">{{ page.title }}</h1>
-    </div>
-    {% if page.description %} <p class="description">{{ page.description }}</p> {% endif %}
-    {% if page.toc and page.extra.toc | default(value=true) %}
-    <div class="toc">
-      <h3>Table of Contents</h3>
-      <ul>
-        {% for h1 in page.toc %}
-        <li>
-          <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
-          {% if h1.children %}
-          <ul>
-            {% for h2 in h1.children %}
-            <li>
-              <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
-              {% if h2.children %}
-              <ul>
-                {% for h3 in h2.children %}
-                <li>
-                  <a href="{{ h3.permalink | safe }}">{{ h3.title }}</a>
-                  {% if h3.children %}
-                  <ul>
-                    {% for h4 in h3.children %}
-                    <li>
-                      <a href="{{ h4.permalink | safe }}">{{ h4.title }}</a>
-                    </li>
-                    {% endfor %}
-                  </ul>
-                  {% endif %}
-                </li>
+    <div class="article-intro-container">
+        <div class="intro-header">
+            <h1 class="heading">{{ page.title }}</h1>
+            <div class="meta-line">
+                {% if page.extra.pinned %}
+                <span class="pinned-label"><i class="fa-solid fa-thumbtack"></i></span>
+                <span class="separator">/</span>
+                {% endif %}
+                
+                {% if page.date %}
+                <span class="date">{{ page.date | date(format="%b. %d, %Y") }}</span>
+                {% endif %}
+                
+                {% if page.taxonomies.tags %}
+                <span class="separator">/</span>
+                <span class="tags">
+                {% for tag in page.taxonomies.tags %}
+                <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
                 {% endfor %}
-              </ul>
-              {% endif %}
-            </li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </li>
-        {% endfor %}
-      </ul>
+                </span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="intro-body">
+            {% if page.description %}
+            <div class="intro-abstract">
+                <div class="abstract-title">ABSTRACT</div>
+                <p class="description">{{ page.description }}</p>
+            </div>
+            {% endif %}
+
+            {% if page.toc and page.extra.toc | default(value=true) %}
+            <details class="intro-toc">
+                <summary class="toc-title">CONTENTS</summary>
+                <ul class="toc-list">
+                    <li class="toc-root">
+                        <a href="#" class="active-toc">{{ page.title }}</a>
+                        {% if page.toc %}
+                        <ul>
+                            {% for h1 in page.toc %}
+                            <li>
+                                <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
+                                {% if h1.children %}
+                                <ul>
+                                    {% for h2 in h1.children %}
+                                    <li>
+                                        <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+                                        {% if h2.children %}
+                                        <ul>
+                                            {% for h3 in h2.children %}
+                                            <li>
+                                                <a href="{{ h3.permalink | safe }}">{{ h3.title }}</a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                </ul>
+            </details>
+            {% endif %}
+        </div>
     </div>
-    {% endif %} {{ page.content | safe }}
+    
+    {{ page.content | safe }}
   </main>
   <section class="article-action-block">
     <!-- AddToAny BEGIN -->
