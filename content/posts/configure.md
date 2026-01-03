@@ -11,7 +11,7 @@ toc = true
 pinned = true
 +++
 
-### Math display
+## Math display
 
 Nivis theme supports Mathjax for rendering math contents. Follow the steps below to enable math rendering:
 
@@ -41,7 +41,19 @@ Finally, zola would warn that it fails to find a render rule for language `math-
 extra_syntaxes_and_themes = ["themes/nivis/syntaxes/"]
 ```
 
-### Friend Links
+## About Page
+
+Nivis Provides an about page to introduce yourself. Create `content/about/index.md`:
+`````markdown
++++
+title = "About Me"
+template = "about.html"
++++
+
+Show yourself! :smile:
+`````
+
+## Friend Links
 
 Nivis suppors a page to display links to your friends' site. First, create `content/links/index.md`:
 ```markdown
