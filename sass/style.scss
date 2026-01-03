@@ -2138,15 +2138,6 @@ sup.footnote-reference {
     }
 }
 
-.footnote-backref {
-    color: var(--btn-bg);
-    font-family: 'Fira Code', monospace;
-    
-    &:hover {
-        color: var(--btn-hover);
-    }
-}
-
 /* Friends Page */
 .friends-list {
     display: grid;
