@@ -23,4 +23,9 @@ theme = "nivis"
 
 ### Configuration
 
+Start your site by copying the example content into your site folder:
+```bash
+cp -r themes/nivis/content content
+```
+
 Move on to the [example site](https://resorie.github.io/zola-theme-nivis/) for more info. Enjoy it! :kissing_heart:
