@@ -2440,3 +2440,211 @@ sup.footnote-reference {
         opacity: 1;
     }
 }
+
+// Archive Timeline Styles
+.timeline-wrapper {
+    position: relative;
+    padding-left: 1.5em;
+    margin-top: 2em;
+    padding-top: 2em;
+    padding-bottom: 0.6em;
+    
+    // The Straight Line
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 10px; 
+        width: 2px;
+        background-color: var(--border-color);
+        opacity: 0.6;
+        transition: background-color 0.3s ease;
+    }
+
+    // The Top Cap
+    &::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: 5px; 
+        width: 12px;
+        height: 12px;
+        border: 2px solid var(--border-color);
+        border-radius: 50%;
+        background-color: var(--bg-color);
+        z-index: 2;
+        box-shadow: 0 0 0 4px var(--bg-color);
+        transition: border-color 0.3s ease;
+    }
+}
+
+.timeline-end-marker {
+    position: absolute;
+    left: calc(-1.5em + 10px); 
+    top: calc(0.45em + 0.72em); 
+    width: 2px;
+    height: 0.72em;
+    background: transparent;
+    z-index: 2;
+
+    // Mask to hide the solid line below
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -10px; 
+        width: 22px;
+        height: 100vh; 
+        background-color: var(--bg-color);
+        z-index: -1; 
+    }
+}
+
+.timeline-year-group {
+    position: relative;
+    margin-bottom: 2.5em;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+.timeline-year-node {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5em;
+    
+    // The Year Dot
+    &::before {
+        content: "";
+        position: absolute;
+        left: calc(-1.5em + 4px); // Line center 11px - Dot center 7px = 4px
+        width: 14px;
+        height: 14px;
+        background-color: var(--bg-color);
+        border: 3px solid var(--text-color);
+        border-radius: 50%;
+        z-index: 1;
+        box-shadow: 0 0 0 4px var(--bg-color); // Clear the line behind
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .year-label {
+        font-family: 'STIX Two Text', 'Noto Serif SC', serif;
+        font-size: 1.8em;
+        font-weight: bold;
+        color: var(--text-color);
+        margin-left: 1em;
+        line-height: 1;
+    }
+}
+
+.timeline-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2em;
+}
+
+.timeline-post-item {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    padding-left: 1.5em;
+    transition: transform 0.2s ease;
+
+    // The Date Connector
+    &::before {
+        content: "";
+        position: absolute;
+        left: calc(-1.5em + 11px); // Start from line center
+        top: 0.6em;
+        width: 1em;
+        height: 1px;
+        background-color: var(--border-color);
+        transition: background-color 0.3s ease;
+    }
+
+    // The Date Dot
+    &::after {
+        content: "";
+        position: absolute;
+        left: calc(-1.5em + 7px); // Line center 11px - Dot center 4px = 7px
+        top: 0.45em;
+        width: 8px;
+        height: 8px;
+        background-color: var(--border-color);
+        border-radius: 50%;
+        z-index: 1;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 0 0 2px var(--bg-color);
+    }
+
+    &:hover {
+        &::after {
+            background-color: var(--text-color);
+            transform: scale(1.2);
+        }
+        
+        .post-date-node .date-text {
+            color: var(--text-color);
+            transform: translateX(4px);
+        }
+
+        .post-link {
+            color: var(--text-color);
+            transform: translateX(4px);
+        }
+    }
+
+    .post-date-node {
+        min-width: 3.5em;
+        margin-right: 1em;
+        
+        .date-text {
+            font-family: 'Ysabeau', 'LXGW Bright', sans-serif;
+            font-style: italic;
+            font-size: 0.9em;
+            color: var(--text-color-light);
+            transition: color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+    }
+
+    .post-link {
+        font-family: 'STIX Two Text', 'Noto Serif SC', serif;
+        font-size: 1.05em;
+        color: var(--text-color);
+        text-decoration: none;
+        line-height: 1.4;
+        transition: color 0.3s ease, transform 0.2s ease;
+        border-bottom: 1px solid transparent;
+        display: inline-block;
+
+        &:hover {
+            border-color: var(--text-color);
+        }
+    }
+}
+
+// Responsive adjustments
+@media screen and (max-width: 700px) {
+    .timeline-wrapper {
+        padding-left: 1em;
+    }
+    
+    .timeline-post-item {
+        flex-direction: column;
+        gap: 0.2em;
+        padding-left: 1.5em;
+        
+        &::before {
+            width: 0.8em;
+        }
+        
+        .post-date-node {
+            margin-bottom: 0.2em;
+        }
+    }
+}

@@ -5,19 +5,30 @@ endblock title %} {% block content %}
     <h1 class="heading">Archives</h1>
   </div>
 
-  {% set section = get_section(path="posts/_index.md") %} {% for year, posts in
-  section.pages | group_by(attribute="year") %}
-  <div class="archive-year">
-    <h3 id="{{ year }}">{{ year }}</h3>
-    <ul class="archive-list">
-      {% for post in posts %}
-      <li class="archive-item">
-        <span class="date">{{ post.date | date(format="%m-%d") }}</span>
-        <a href="{{ post.permalink }}" class="link">{{ post.title }}</a>
-      </li>
-      {% endfor %}
-    </ul>
+  <div class="timeline-wrapper">
+    {% set section = get_section(path="posts/_index.md") %} {% for year, posts
+    in section.pages | group_by(attribute="year") %}
+    <div class="timeline-year-group">
+      <div class="timeline-year-node" id="{{ year }}">
+        <span class="year-label">{{ year }}</span>
+      </div>
+      <div class="timeline-posts">
+        {% for post in posts %}
+        <div class="timeline-post-item">
+          <div class="post-date-node">
+            <span class="date-text"
+              >{{ post.date | date(format="%b. %d") }}</span
+            >
+          </div>
+          <a href="{{ post.permalink }}" class="post-link">{{ post.title }}</a>
+          {% if loop.last and loop.parent.loop.last %}
+          <div class="timeline-end-marker"></div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </main>
 {% endblock content %}
