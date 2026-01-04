@@ -77,10 +77,25 @@
 a {
     text-decoration: none;
     color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 a:hover {
     color: var(--text-color-light);
+}
+
+/* MathJax Transitions */
+mjx-container {
+    transition: color 0.3s ease !important;
+}
+
+mjx-container svg {
+    transition: fill 0.3s ease, stroke 0.3s ease !important;
+}
+
+/* KaTeX Transitions */
+.katex {
+    transition: color 0.3s ease;
 }
 
 em, i {
@@ -148,6 +163,7 @@ dd {
 code {
     font-family: 'Fira Code', monospace;
     font-size: 0.87em;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 hr {
@@ -156,6 +172,7 @@ hr {
     border-style: solid;
     border-width: thin;
     background-color: var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .google-auto-placed {
@@ -173,6 +190,7 @@ hr {
     color: var(--text-color);
     font-family: 'STIX Two Text', 'Source Han Serif CN VF', 'Noto Serif SC', 'Noto Serif CN', serif;
     background-color: var(--bg-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 
     h1, h2, h3, h4, h5, h6 {
         font-family: 'STIX Two Text', 'Noto Serif SC', serif;
@@ -341,7 +359,7 @@ hr {
         border-radius: 50%;
         background-color: var(--social-bg);
         color: var(--text-color-light);
-        transition: all 0.2s ease;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
         border: 1px solid var(--social-border);
 
         &:hover {
@@ -447,6 +465,7 @@ hr {
     margin-bottom: 0.2em;
     font-family: 'Ysabeau', 'LXGW Bright', sans-serif;
     font-style: italic;
+    transition: color 0.3s ease;
     
     .separator {
         margin: 0 0.5em;
@@ -763,6 +782,7 @@ hr {
         margin-bottom: 2em;
         border-left: 4px solid var(--border-color);
         line-height: 1.6;
+        transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 
         @media screen and (max-width: 900px) {
             margin-left: calc((100vw - 600px)/3);
@@ -790,6 +810,7 @@ hr {
         display: inline-block;
         width: 100%;
         position: relative;
+        transition: border-color 0.3s ease;
 
         &::before {
             content: "#";
@@ -798,6 +819,7 @@ hr {
             font-weight: normal;
             font-size: 0.9em;
             letter-spacing: -2px;
+            transition: color 0.3s ease;
         }
 
         @media screen and (max-width: 900px) {
@@ -826,6 +848,7 @@ hr {
         font-size: 1.4em;
         position: relative;
         border-bottom: 2px solid var(--social-bg);
+        transition: border-color 0.3s ease;
 
         &::before {
             content: "##";
@@ -834,6 +857,7 @@ hr {
             font-weight: normal;
             font-size: 0.9em;
             letter-spacing: -2px;
+            transition: color 0.3s ease;
         }
 
         @media screen and (max-width: 900px) {
@@ -863,6 +887,7 @@ hr {
         position: relative;
         font-style: italic;
         color: var(--text-color-light);
+        transition: color 0.3s ease;
 
         &::before {
             content: "###";
@@ -872,6 +897,7 @@ hr {
             font-size: 0.9em;
             letter-spacing: -2px;
             font-style: normal;
+            transition: color 0.3s ease;
         }
 
         @media screen and (max-width: 900px) {
@@ -948,6 +974,7 @@ hr {
         margin-bottom: 0.8em;
         margin-left: 0;
         position: relative;
+        transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease;
 
         @media screen and (max-width: 900px) {
             margin-left: calc((100vw - 600px)/3);
@@ -980,6 +1007,7 @@ hr {
             padding-left: 1.6em;
             width: fit-content;
             margin-bottom: 0.5em;
+            transition: color 0.3s ease;
         }
 
         &::after {
@@ -993,6 +1021,7 @@ hr {
             -webkit-mask-size: contain;
             -webkit-mask-repeat: no-repeat;
             -webkit-mask-position: center;
+            transition: background-color 0.3s ease;
             mask-size: contain;
             mask-repeat: no-repeat;
             mask-position: center;
@@ -1146,6 +1175,7 @@ hr {
         background-color: var(--code-bg);
         color: var(--z-text);
         position: relative;
+        transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 
         &::before {
             content: "";
@@ -1304,6 +1334,7 @@ hr {
         background-color: var(--table-header-bg);
         color: var(--text-color);
         padding: 1em;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     > table td {
@@ -1311,6 +1342,7 @@ hr {
         color: var(--text-color);
         padding: 1em;
         border: 1px solid var(--border-color);
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     > table {
@@ -1925,7 +1957,7 @@ hr {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease, color 0.3s ease;
   padding-right: 4vw;
   box-sizing: border-box;
 
@@ -2048,7 +2080,7 @@ hr {
         color: var(--text-color-light);
         border: 1px solid var(--border-color);
         border-radius: 4px;
-        transition: all 0.3s ease;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         font-size: 0.9em;
         letter-spacing: 1px;
         
