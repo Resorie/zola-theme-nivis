@@ -73,7 +73,7 @@ numbers.forEach(num => console.log(num));
 
 ## Math Formulas (LaTeX)
 
-Markdown renders math using LaTeX syntax. Refer to the [configuration post](/posts/configure) for how to use it.
+Markdown renders math using LaTeX syntax. Refer to the [configuration post](@/posts/configure) for how to use it.
 
 **Inline:** The mass-energy equivalence is `$e=mc^2$`.
 
