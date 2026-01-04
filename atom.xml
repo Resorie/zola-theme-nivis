@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Nivis</title>
+	<subtitle>A clean zola theme for bloggers</subtitle>
+	<link href="https://resorie.github.io/zola-theme-nivis/atom.xml" rel="self" type="application/atom+xml"/>
+	<link href="https://resorie.github.io/zola-theme-nivis/"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>1980-01-01T00:00:00+00:00</updated>
+	<id>https://resorie.github.io/zola-theme-nivis/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Configuration</title>
+		<published>1980-01-01T00:00:00+00:00</published>
+		<updated>1980-01-01T00:00:00+00:00</updated>
+		<link href="https://resorie.github.io/zola-theme-nivis/posts/configure/" type="text/html"/>
+		<id>https://resorie.github.io/zola-theme-nivis/posts/configure/</id>
+		<summary>configuration guide</summary>
+		
+	</entry>
+	<entry xml:lang="en">
+		<title>Markdown Example</title>
+		<published>1980-01-01T00:00:00+00:00</published>
+		<updated>1980-01-01T00:00:00+00:00</updated>
+		<link href="https://resorie.github.io/zola-theme-nivis/posts/md-example/" type="text/html"/>
+		<id>https://resorie.github.io/zola-theme-nivis/posts/md-example/</id>
+		<summary>markdown examples</summary>
+		
+	</entry>
+</feed>
