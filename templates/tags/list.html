@@ -9,17 +9,14 @@ endblock title %} {% block content %}
   get_taxonomy(kind="tags", lang=lang) %} {% set my_terms = taxonomy.items %} {%
   endif %}
 
-  <div class="archive-year">
-    <ul class="archive-list">
-      {% for term in my_terms %}
-      <li class="archive-item">
-        <a href="{{ term.permalink }}" class="link">{{ term.name }}</a>
-        <span class="date" style="float: right"
-          >{{ term.pages | length }} posts</span
-        >
-      </li>
-      {% endfor %}
-    </ul>
+  <div class="category-cloud">
+    {% for term in my_terms %}
+    <a href="{{ term.permalink }}" class="category-chip">
+      <span class="category-prefix">#</span>
+      <span class="category-name">{{ term.name }}</span>
+      <span class="category-count">{{ term.pages | length }}</span>
+    </a>
+    {% endfor %}
   </div>
 </main>
 {% endblock content %}
