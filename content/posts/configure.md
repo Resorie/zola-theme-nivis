@@ -13,15 +13,13 @@ pinned = true
 
 ## Math display
 
-Nivis theme supports Mathjax for rendering math contents. Follow the steps below to enable math rendering:
-
-First, add these contents to your `config.toml`:
+Nivis theme supports Mathjax for rendering math contents. Add these contents to your `config.toml` to enable math rendering:
 ```toml
 [extra]
 math = "mathjax"
 ```
 
-Due to the weirdsome escape rules of zola, your math contents might not display correctly. I referred to [this post](https://zola.discourse.group/t/maths-support-via-mathjax/1000) for a solution. 
+Due to the weirdsome escape rules of zola, some of your math content might not display correctly. I referred to [this post](https://zola.discourse.group/t/maths-support-via-mathjax/1000) for a solution. If your math content fails to display, follow the steps below:
 
 After adding or changing your post, run `themes/nivis/scripts/wrap_math.py` to process the markdown files. After running the script, (or of course you can change them manually), your math contents should be wrapped in code blocks, e.g.:
 `````markdown
@@ -35,7 +33,7 @@ $$
 ```
 `````
 
-Finally, zola would warn that it fails to find a render rule for language `math-display`. Of course, we don't need these warnings. Add the following lines to your `config.toml` to get rid of these warnings:
+When building the site, zola would warn that it fails to find a render rule for language `math-display`. Of course, we don't need these warnings. Add the following lines to your `config.toml` to get rid of these warnings:
 ```toml
 [markdown]
 extra_syntaxes_and_themes = ["themes/nivis/syntaxes/"]
