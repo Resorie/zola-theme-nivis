@@ -6,6 +6,11 @@ This theme is inspired by (and derived from) themes [Float](https://float-theme.
 
 ## Features :star:
 
+- Clean & Minimalist Design
+- Elegant Typography
+- Responsive Layout
+- Dark/Light Mode Support
+
 ## Getting Started :rocket:
 
 ### Installation
@@ -31,5 +36,5 @@ Move on to the [example site](https://resorie.github.io/zola-theme-nivis/) for m
 
 ## Known Bugs :poop:
 
-[ ] Unable to switch post list pages in homepage
-[ ] When switching light/dark mode, some elements blink
+- [ ] Unable to switch post list pages in homepage
+- [ ] When switching light/dark mode, some elements blink
