@@ -38,11 +38,26 @@
       </ul>
       
       <nav class="home-nav">
+
+        {% if config.extra.sections.posts %}
         <a href="{{ get_url(path="@/posts/_index.md", lang=lang) }}" {% if current_path is starting_with("/posts") %}class="active"{% endif %}>Posts</a>
+        {% endif %}
+
+        {% if config.extra.sections.about %}
         <a href="{{ get_url(path="@/about/index.md", lang=lang) }}" {% if current_path is starting_with("/about") %}class="active"{% endif %}>About</a>
+        {% endif %}
+
+        {% if config.extra.sections.archive %}
         <a href="{{ get_url(path="@/archive/index.md", lang=lang) }}" {% if current_path is starting_with("/archive") %}class="active"{% endif %}>Archives</a>
+        {% endif %}
+
+        {% if config.extra.sections.tags %}
         <a href="{{ get_url(path="@/tags/_index.md", lang=lang) }}" {% if current_path is starting_with("/tags") %}class="active"{% endif %}>Categories</a>
+        {% endif %}
+
+        {% if config.extra.sections.links %}
         <a href="{{ get_url(path="@/links/index.md", lang=lang) }}" {% if current_path is starting_with("/links") %}class="active"{% endif %}>Links</a>
+        {% endif %}
       </nav>
     </div>
   </div>
