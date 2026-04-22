@@ -42,7 +42,7 @@ pinned_posts = [
 Nivis theme supports Mathjax for rendering math contents. Add these contents to your `config.toml` to enable math rendering:
 ```toml
 [extra]
-math = "mathjax"
+math_display = "mathjax"
 ```
 
 Due to the weirdsome escape rules of zola, some of your math content might not display correctly. I referred to [this post](https://zola.discourse.group/t/maths-support-via-mathjax/1000) for a solution. If your math content fails to display, follow the steps below:
