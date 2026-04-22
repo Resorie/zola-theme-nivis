@@ -59,3 +59,12 @@ avatar = ""
 social_links = [
     { name = "github", url = "https://github.com/Resorie/zola-theme-nivis" }
 ]
+
+[extra.sections]
+posts = true
+links = true
+archive = true
+about = true
+tags = true
+
+
