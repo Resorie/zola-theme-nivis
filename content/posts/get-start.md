@@ -22,9 +22,10 @@ Then, change your theme config in `config.toml`:
 theme = "nivis"
 ```
 
-Start your site by copying the example content into your site folder:
+Start your site by copying the example content and data into your site folder:
 ```bash
 cp -r themes/nivis/content content
+cp -r themes/nivis/data data
 ```
 
 If you want to update the nivis theme, run the following command:
