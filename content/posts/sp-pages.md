@@ -12,6 +12,17 @@ toc = true
 
 Nivis theme provides About page, Archives page, Categories page and Links page to help you fully customize your site.
 
+## Enable/Disable Sections
+
+Defaultly, there are 5 sections enabled: posts, archives, tags, about, links. If you want to disable a specific section, edit `config.toml` and set the corresponding variable to `false`. e.g:
+
+```toml
+[extra]
+
+[extra.sections]
+links = false
+```
+
 ## About Page
 
 Nivis provides an about page to introduce yourself. Create `content/about/index.md`:
