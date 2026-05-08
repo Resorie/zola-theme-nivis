@@ -129,55 +129,38 @@ config.default_language %} {% set section_title = page.components[0] %} {%- else
     {{ page.content | safe }}
   </main>
   <section class="article-action-block">
-    <!-- AddToAny BEGIN -->
-    <div class="addtoany-block">
+    <div class="share-block">
       <a
-        href="https://www.addtoany.com/share#url={{ page.permalink }}&amp;title={{ page.title }}"
+        href="https://mastodon.social/share?text={{ page.title }}%20{{ page.permalink }}"
         target="_blank"
         rel="noopener noreferrer nofollow"
-        ><img class="button" src="https://static.addtoany.com/buttons/a2a.svg"
-      /></a>
+        title="Mastodon"
+        ><i class="fa-brands fa-mastodon"></i></a>
       <a
-        href="https://www.addtoany.com/add_to/mastodon?linkurl={{ page.permalink }}&amp;linkname={{ page.title }}"
+        href="https://twitter.com/intent/tweet?text={{ page.title }}&amp;url={{ page.permalink }}"
         target="_blank"
         rel="noopener noreferrer nofollow"
-        ><img
-          class="button"
-          src="https://static.addtoany.com/buttons/mastodon.svg"
-      /></a>
+        title="X / Twitter"
+        ><i class="fa-brands fa-x-twitter"></i></a>
       <a
-        href="https://www.addtoany.com/add_to/telegram?linkurl={{ page.permalink }}&amp;linkname={{ page.title }}"
+        href="https://t.me/share/url?url={{ page.permalink }}&amp;text={{ page.title }}"
         target="_blank"
         rel="noopener noreferrer nofollow"
-        ><img
-          class="button"
-          src="https://static.addtoany.com/buttons/telegram.svg"
-      /></a>
+        title="Telegram"
+        ><i class="fa-brands fa-telegram"></i></a>
       <a
-        href="https://www.addtoany.com/add_to/twitter?linkurl={{ page.permalink }}&amp;linkname={{ page.title }}"
+        href="https://www.facebook.com/sharer/sharer.php?u={{ page.permalink }}"
         target="_blank"
         rel="noopener noreferrer nofollow"
-        ><img
-          class="button"
-          src="https://static.addtoany.com/buttons/twitter.svg"
-      /></a>
+        title="Facebook"
+        ><i class="fa-brands fa-facebook-f"></i></a>
       <a
-        href="https://www.addtoany.com/add_to/facebook?linkurl={{ page.permalink }}&amp;linkname={{ page.title }}"
+        href="https://social-plugins.line.me/lineit/share?url={{ page.permalink }}"
         target="_blank"
         rel="noopener noreferrer nofollow"
-        ><img
-          class="button"
-          src="https://static.addtoany.com/buttons/facebook.svg"
-      /></a>
-      <a
-        href="https://www.addtoany.com/add_to/line?linkurl={{ page.permalink }}&amp;linkname={{ page.title }}"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        ><img class="button" src="https://static.addtoany.com/buttons/line.svg"
-      /></a>
+        title="LINE"
+        ><i class="fa-brands fa-line"></i></a>
     </div>
-    <!-- AddToAny END -->
-    
   </section>
   <br />
 </article>
