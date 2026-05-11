@@ -11,8 +11,25 @@ min_version = "0.21.0"
 # You don't need to prefix variables by the theme name but as this will
 # be merged with user data, some kind of prefix or nesting is preferable
 # Use snake_casing to be consistent with the rest of Zola
+[markdown]
+github_alerts = true
+bottom_footnotes = true
+render_emoji = true
+
+[markdown.highlighting]
+style = "class"
+light_theme = "one-light"
+dark_theme = "one-dark-pro"
+
 [extra]
-main_section = "blog"
+main_section = "posts"
+
+[extra.sections]
+posts = true
+about = true
+archive = true
+tags = true
+links = true
 
 # The theme author info: you!
 [author]

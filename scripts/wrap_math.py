@@ -43,13 +43,19 @@ def process_content(content):
             return inline_code
         if display_math:
             escaped = escape_html(display_math)
-            return f'\n<div class="math-display">{escaped}</div>\n'
+            return f'<div class="math-display">{escaped}</div>'
         if inline_math:
             return f"`{inline_math}`"
 
         return match.group(0)
 
-    return token_pattern.sub(replace_func, content)
+    content = token_pattern.sub(replace_func, content)
+
+    # Step 4: Normalize excessive blank lines around math-display divs
+    content = re.sub(r'\n{3,}(<div class="math-display">)', r'\n\n\1', content)
+    content = re.sub(r'(</div>)\n{3,}', r'\1\n\n', content)
+
+    return content
 
 
 def process_file(filepath):

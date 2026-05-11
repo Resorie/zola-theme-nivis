@@ -40,17 +40,6 @@ build_search_index = false
 # author value will be available using {{ config.extra.author }} in templates
 #
 
-[markdown]
-github_alerts = true
-bottom_footnotes = true
-render_emoji = true
-
-[markdown.highlighting]
-style = "class"
-light_theme = "one-light"
-dark_theme = "one-dark-pro"
-extra_grammars = [ "syntaxes/math-display.json" ]
-
 [extra]
 main_section = "posts"
 math_display = "mathjax"
@@ -59,12 +48,5 @@ avatar = ""
 social_links = [
     { name = "github", url = "https://github.com/Resorie/zola-theme-nivis" }
 ]
-
-[extra.sections]
-posts = true
-links = true
-archive = true
-about = true
-tags = true
 
 

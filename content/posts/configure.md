@@ -39,31 +39,36 @@ pinned_posts = [
 
 ## Math display
 
-Nivis theme supports Mathjax for rendering math contents. Add these contents to your `config.toml` to enable math rendering:
+Nivis theme supports MathJax for rendering math contents. Add this to your `config.toml` to enable math rendering:
 ```toml
 [extra]
 math_display = "mathjax"
 ```
 
-Due to the weirdsome escape rules of zola, some of your math content might not display correctly. I referred to [this post](https://zola.discourse.group/t/maths-support-via-mathjax/1000) for a solution. If your math content fails to display, follow the steps below:
+Due to Zola's markdown escaping, some math content (especially `<`, `>`, `*` in LaTeX) may not render correctly. To handle this, run the provided script after adding or editing posts:
 
-After adding or changing your post, run `themes/nivis/scripts/wrap_math.py` to process the markdown files. After running the script, (or of course you can change them manually), your math contents should be wrapped in code blocks, e.g.:
+```bash
+python themes/nivis/scripts/wrap_math.py
+```
+
+The script processes all markdown files in `content/` and:
+- Wraps inline math `$...$` in backticks (`` `$...$` ``)
+- Wraps display math `$$...$$` in HTML `<div class="math-display">` tags
+- HTML-escapes special characters (`<`, `>`, `&`) inside display math
+- Can be safely re-run (idempotent)
+
+After processing, your math content will look like:
 `````markdown
 This is an inline math example: `$e^{\pi i}=-1$`.
 
 And this is a display math example:
-```math-display
-$$
+
+<div class="math-display">$$
 \sum_{i=1}^n i^3=\frac{n^2(n+1)^2}{4}
-$$
-```
+$$</div>
 `````
 
-To ensure the code block is rendered correctly, we need to tell zola to treat `math-display` as a language. Add the following to your `config.toml`:
-```toml
-[markdown.highlighting]
-extra_grammars = [ "themes/nivis/syntaxes/math-display.json" ]
-```
+If you prefer to process math manually, ensure that `<`, `>`, and `&` in LaTeX are HTML-escaped (`&lt;`, `&gt;`, `&amp;`) when using HTML wrappers.
 
 ## Special Pages
 
