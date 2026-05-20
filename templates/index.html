@@ -25,6 +25,14 @@
           <div class="description">
             <p>{{ config.description }}</p>
           </div>
+          {# --- Motto (between description and social links) --- #}
+          {% if config.extra.motto_mode and config.extra.motto_mode != "hide" %}
+            {% if config.extra.motto_mode == "single" and config.extra.motto %}
+            <p class="motto">{{ config.extra.motto }}</p>
+            {% elif config.extra.motto_mode == "multi" and config.extra.mottos %}
+            <p class="motto" data-mottos='{{ config.extra.mottos | json_encode | safe }}'></p>
+            {% endif %}
+          {% endif %}
         </div>
       </div>
       <ul class="social-links">
@@ -36,7 +44,7 @@
         </li>
         {% endfor %}
       </ul>
-      
+
       <nav class="home-nav">
 
         {% if config.extra.sections.posts | default(value=true) %}
@@ -59,7 +67,9 @@
         <a href="{{ get_url(path="@/links/index.md", lang=lang) }}" {% if current_path is starting_with("/links") %}class="active"{% endif %}>Links</a>
         {% endif %}
       </nav>
+
     </div>
   </div>
 </div>
+
 {% endblock content %}

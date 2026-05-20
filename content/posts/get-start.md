@@ -51,6 +51,16 @@ compile_sass = true
 
 taxonomies = [{ name = "tags", paginate_by = 5 }]
 
+[markdown]
+render_emoji = true
+github_alerts = true
+bottom_footnotes = true
+
+[markdown.highlighting]
+style = "class"
+light_theme = "one-light"
+dark_theme = "one-dark-pro"
+
 [extra]
 main_section = "posts"
 avatar = "images/avatar.jpeg" # In static/ folder
@@ -60,8 +70,6 @@ social_links = [
     { name = "github", url = "https://github.com/your_username" },
 ]
 ```
-
-Markdown settings (emoji, alerts, footnotes, syntax highlighting) are configured by default in `theme.toml`. You can override them in your own `config.toml` if needed.
 
 Move on to [Configuration](@/posts/configure.md) for advanced configurations. 
 

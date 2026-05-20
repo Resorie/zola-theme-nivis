@@ -81,6 +81,13 @@
           <div class="description">
             <p>{{ config.description }}</p>
           </div>
+          {% if config.extra.motto_mode and config.extra.motto_mode != "hide" %}
+            {% if config.extra.motto_mode == "single" and config.extra.motto %}
+            <p class="motto">{{ config.extra.motto }}</p>
+            {% elif config.extra.motto_mode == "multi" and config.extra.mottos %}
+            <p class="motto" data-mottos='{{ config.extra.mottos | json_encode | safe }}'></p>
+            {% endif %}
+          {% endif %}
         </div>
       </div>
       <ul class="social-links">
@@ -310,6 +317,37 @@
                  span.textContent = text;
                  code.replaceWith(span);
             }
+        });
+
+        // Motto typewriter (all [data-mottos] elements)
+        document.querySelectorAll('[data-mottos]').forEach(function(el) {
+            var mottos = JSON.parse(el.dataset.mottos);
+            if (!mottos || mottos.length === 0) return;
+            var idx = 0, charIdx = 0, deleting = false;
+            function tick() {
+                var current = mottos[idx];
+                if (!deleting) {
+                    charIdx++;
+                    el.textContent = current.substring(0, charIdx);
+                    if (charIdx === current.length) {
+                        deleting = true;
+                        setTimeout(tick, 2500);
+                        return;
+                    }
+                    setTimeout(tick, 80 + Math.random() * 40);
+                } else {
+                    charIdx--;
+                    el.textContent = current.substring(0, charIdx);
+                    if (charIdx === 0) {
+                        deleting = false;
+                        idx = (idx + 1) % mottos.length;
+                        setTimeout(tick, 400);
+                        return;
+                    }
+                    setTimeout(tick, 35);
+                }
+            }
+            tick();
         });
     });
   </script>

@@ -52,7 +52,7 @@ python themes/nivis/scripts/wrap_math.py
 ```
 
 The script processes all markdown files in `content/` and:
-- Wraps inline math `$...$` in backticks (`` `$...$` ``)
+- Wraps inline math `$...$` in backticks (`` ``$...$`` ``)
 - Wraps display math `$$...$$` in HTML `<div class="math-display">` tags
 - HTML-escapes special characters (`<`, `>`, `&`) inside display math
 - Can be safely re-run (idempotent)
@@ -63,9 +63,9 @@ This is an inline math example: `$e^{\pi i}=-1$`.
 
 And this is a display math example:
 
-<div class="math-display">$$
+$$
 \sum_{i=1}^n i^3=\frac{n^2(n+1)^2}{4}
-$$</div>
+$$
 `````
 
 If you prefer to process math manually, ensure that `<`, `>`, and `&` in LaTeX are HTML-escaped (`&lt;`, `&gt;`, `&amp;`) when using HTML wrappers.
