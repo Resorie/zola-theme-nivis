@@ -323,6 +323,11 @@
         document.querySelectorAll('[data-mottos]').forEach(function(el) {
             var mottos = JSON.parse(el.dataset.mottos);
             if (!mottos || mottos.length === 0) return;
+            // Reduced motion: render the first motto statically, no typing loop.
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                el.textContent = mottos[0];
+                return;
+            }
             var idx = 0, charIdx = 0, deleting = false;
             function tick() {
                 var current = mottos[idx];

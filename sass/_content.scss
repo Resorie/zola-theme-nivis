@@ -293,7 +293,6 @@
             font-family: 'LXGW Bright', sans-serif;
             font-size: 0.95em;
             line-height: 1.6;
-            text-align: justify;
         }
     }
 
@@ -1219,12 +1218,15 @@
         width: 2em;
         height: 2em;
         border-radius: 50%;
-        background-color: var(--btn-bg);
-        color: var(--bg-color);
-        transition: background-color 0.2s ease;
+        background-color: var(--social-bg);
+        color: var(--text-color-light);
+        border: 1px solid var(--social-border);
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 
         &:hover {
-            background-color: var(--btn-hover);
+            background-color: var(--btn-bg);
+            color: var(--bg-color);
+            border-color: var(--btn-bg);
         }
     }
 }
@@ -1311,7 +1313,6 @@
                 line-height: 1.8;
                 color: var(--text-color);
                 margin: 0;
-                text-align: justify;
                 padding-left: 1em;
             }
         }

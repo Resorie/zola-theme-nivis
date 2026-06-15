@@ -41,7 +41,6 @@ strong, b {
 }
 
 h2, h3, p {
-    text-align: justify;
     overflow-wrap: break-word;
     word-break: normal;
 }
@@ -62,7 +61,6 @@ blockquote {
 
 li {
     line-height: 1.6em;
-    text-align: justify;
 }
 
 dl {
@@ -74,10 +72,6 @@ dl {
 
 dt {
     font-weight: bold;
-}
-
-dd {
-    text-align: justify;
 }
 
 code {
@@ -193,6 +187,17 @@ hr {
 .animated {
   animation-fill-mode: both;
   animation-duration: 1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .animated.hinge {
