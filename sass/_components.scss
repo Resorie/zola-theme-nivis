@@ -66,6 +66,78 @@
         pre {
             width: 100%;
         }
+
+        // Mirror the article-body typography so collapsed prose reads with the
+        // same line-height and spacing as the main content (the article styles
+        // in _content.scss only target direct children of .article-content).
+        > p,
+        > dl,
+        > table {
+            line-height: 1.6em;
+            margin-bottom: var(--space-md);
+        }
+
+        > p:last-child,
+        > dl:last-child,
+        > table:last-child {
+            margin-bottom: 0;
+        }
+
+        > ul,
+        > ol {
+            margin: 0 0 var(--space-md) 2em;
+            padding-left: 0;
+
+            li {
+                line-height: 1.6em;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        > blockquote {
+            border-left: 3px solid var(--border-color);
+            padding: var(--space-sm) 0 var(--space-sm) 1em;
+            line-height: 1.6em;
+            margin-bottom: var(--space-md);
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        > h2,
+        > h3,
+        > h4 {
+            font-family: 'STIX Two Text', 'Noto Serif SC', serif;
+        }
+
+        > h2 {
+            margin-top: var(--space-xl);
+            margin-bottom: var(--space-md);
+            font-size: 1.8em;
+        }
+
+        > h3 {
+            margin-top: var(--space-lg);
+            margin-bottom: var(--space-sm);
+            font-size: 1.4em;
+        }
+
+        > h4 {
+            margin-top: var(--space-md);
+            margin-bottom: var(--space-xs);
+            font-size: 1.2em;
+        }
+
+        // keep code/headers readable if they open as the first child
+        > h2:first-child,
+        > h3:first-child,
+        > h4:first-child {
+            margin-top: 0;
+        }
     }
 }
 
