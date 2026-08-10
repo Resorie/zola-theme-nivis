@@ -45,21 +45,23 @@ Nivis theme supports MathJax for rendering math contents. Add this to your `conf
 math_display = "mathjax"
 ```
 
-Due to Zola's markdown escaping, some math content (especially `<`, `>`, `*` in LaTeX) may not render correctly. To handle this, run the provided script after adding or editing posts:
+Zola's Markdown parser can consume punctuation inside TeX before MathJax sees it. This affects characters such as backslashes, underscores, braces, `<`, `>`, and `*`. Run the provided script after adding or editing posts so that MathJax receives the original formula:
 
 ```bash
-python themes/nivis/scripts/wrap_math.py
+python themes/nivis/scripts/process_math.py
 ```
 
 The script processes all markdown files in `content/` and:
-- Wraps inline math `$...$` in backticks (`` ``$...$`` ``)
-- Wraps display math `$$...$$` in HTML `<div class="math-display">` tags
-- HTML-escapes special characters (`<`, `>`, `&`) inside display math
+- Keeps inline math as `$...$` and display math as `$$...$$`
+- Encodes ASCII punctuation inside formulas as numeric HTML entities, which Zola decodes without interpreting as Markdown
+- Preserves every space and blank line outside formulas
+- Skips fenced code blocks and ordinary inline code
+- Migrates math previously wrapped in inline backticks or `<div class="math-display">`
 - Can be safely re-run (idempotent)
 
-After processing, your math content will look like:
+Write formulas with ordinary dollar delimiters:
 `````markdown
-This is an inline math example: `$e^{\pi i}=-1$`.
+This is an inline math example: $e^{\pi i}=-1$.
 
 And this is a display math example:
 
@@ -68,7 +70,9 @@ $$
 $$
 `````
 
-If you prefer to process math manually, ensure that `<`, `>`, and `&` in LaTeX are HTML-escaped (`&lt;`, `&gt;`, `&amp;`) when using HTML wrappers.
+Blank lines around display math retain their normal Markdown meaning. A blank line starts a new paragraph; omitting it keeps the formula and adjacent text in the same paragraph. `process_math.py` does not add or remove those blank lines.
+
+Use `python themes/nivis/scripts/process_math.py --check` in CI or before publishing to verify that all posts have been processed without rewriting files. `--restore-only` removes legacy wrappers and decodes formula bodies without applying entity encoding; it is intended for migration or recovery, not the normal publishing workflow.
 
 ## Special Pages
 
