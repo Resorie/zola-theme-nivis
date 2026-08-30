@@ -1,4 +1,4 @@
-{% macro article_block(post, pinned=false) %}
+{% component article_block(post, pinned=false) %}
 <article class="article-block">
   {%- if post.extra.link %} {% set link = post.extra.link %} {% else %} {% set
   link = post.permalink %} {% endif %}
@@ -28,16 +28,16 @@
         <span class="separator">/</span>
         <span class="tags">
         {% for tag in post.taxonomies.tags %}
-        <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
+        <a href="{{ get_taxonomy_url(kind="tags", term=tag) }}">#{{ tag }}</a>
         {% endfor %}
         </span>
         {% endif %}
     </div>
   </div>
 </article>
-{% endmacro article_block %} 
+{% endcomponent article_block %}
 
-{% macro social_icon(name) %}
+{% component social_icon(name) %}
     {%- if name == "email" -%}
         fas fa-envelope
     {%- elif name == "rss" -%}
@@ -49,9 +49,9 @@
     {%- else -%}
         fab fa-{{ name }}
     {%- endif -%}
-{% endmacro social_icon %}
+{% endcomponent social_icon %}
 
-{% macro paginator_block() %}
+{% component paginator_block(paginator) %}
 <aside class="paginator">
   {% if paginator.number_pagers <= 5 %} {% set start = 1 %} {% set end =
   paginator.number_pagers %} {% endif %} {% if paginator.number_pagers > 5 %} {%
@@ -74,4 +74,4 @@
   >
   {% endif %} {% endfor %}
 </aside>
-{% endmacro paginator_block %}
+{% endcomponent paginator_block %}

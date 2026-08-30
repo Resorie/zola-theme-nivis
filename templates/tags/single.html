@@ -15,11 +15,7 @@
 <meta property="og:url" content="{{ term.permalink | safe }}" />
 
 <!-- Twitter -->
-{% endblock head %} {% block page_heading %}
-<h1 class="title">
-  <a href="/">{{ config.title }}</a>
-</h1>
-{% endblock page_heading %} {% block content %}
+{% endblock head %} {% block content %}
 <main class="article-list">
   <div class="ad">{% block ad1 %} {% endblock ad1 %}</div>
   <article class="article-block title-block">
@@ -28,7 +24,7 @@
       Page {{ paginator.current_index }} / {{ paginator.number_pagers }}
     </aside>
   </article>
-  {% for post in paginator.pages %} {{ macros::article_block(post=post) }} {%
+  {% for post in paginator.pages %} {{<article_block post={post}/>}} {%
   endfor %}
 
   <div class="ad">{% block ad2 %} {% endblock ad2 %}</div>
@@ -36,7 +32,7 @@
   <div class="pagination-footer">
     {% if paginator.previous %}
     <a href="{{ paginator.previous }}" class="prev-link">← Prev</a>
-    {% endif %} {{ macros::paginator_block() }} {% if paginator.next %}
+    {% endif %} {{<paginator_block paginator={paginator}/>}} {% if paginator.next %}
     <a href="{{ paginator.next }}" class="next-link">Next →</a>
     {% endif %}
   </div>

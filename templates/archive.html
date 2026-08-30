@@ -21,9 +21,6 @@ endblock title %} {% block content %}
             >
           </div>
           <a href="{{ post.permalink }}" class="post-link">{{ post.title }}</a>
-          {% if loop.last and loop.parent.loop.last %}
-          <div class="timeline-end-marker"></div>
-          {% endif %}
         </div>
         {% endfor %}
       </div>

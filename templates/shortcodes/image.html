@@ -1,7 +1,9 @@
+{% component image(src, alt="", caption="", class="") %}
 {% set url = get_url(path=src) %} {% if caption %}
 <figure {% if class %}class="{{ class }}" {% endif %}>
-  <img src="{{ url }}" alt="{{ alt | default(value="") }}" />
+  <img src="{{ url }}" alt="{{ alt }}" />
   <figcaption>{{ caption | safe }}</figcaption>
 </figure>
-{% else %} <img src="{{ url }}" alt="{{ alt | default(value="") }}" {% if class
+{% else %} <img src="{{ url }}" alt="{{ alt }}" {% if class
 %}class="{{ class }}"{% endif %} /> {% endif %}
+{% endcomponent image %}

@@ -70,4 +70,9 @@ social_links = [
     { name = "github", url = "https://github.com/Resorie/zola-theme-nivis" }
 ]
 
-
+[extra.sections]
+posts = true
+about = true
+archive = true
+tags = true
+links = true

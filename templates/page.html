@@ -28,13 +28,7 @@ description = page.content %} {% endif %}
   {% endif %}
 -->
 
-{% endblock head %} {% block page_heading %} {%- if lang ==
-config.default_language %} {% set section_title = page.components[0] %} {%- else
-%} {% set section_title = page.components[1] %} {%- endif -%}
-<h1 class="title">
-  <a href="{{ get_url(path="@/_index.md", lang=lang) }}">{{ config.title }}</a>
-</h1>
-{% endblock page_heading %} {% block content %} {#
+{% endblock head %} {% block content %} {#
 <pre
   style="
     font-size: xx-small;
@@ -69,7 +63,7 @@ config.default_language %} {% set section_title = page.components[0] %} {%- else
                 <span class="separator">/</span>
                 <span class="tags">
                 {% for tag in page.taxonomies.tags %}
-                <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
+                <a href="{{ get_taxonomy_url(kind="tags", term=tag) }}">#{{ tag }}</a>
                 {% endfor %}
                 </span>
                 {% endif %}

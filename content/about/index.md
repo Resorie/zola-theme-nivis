@@ -3,9 +3,9 @@ title = "About Me"
 template = "about.html"
 +++
 
-{{ image(src="images/screenshot.png", alt="screenshot", caption="Screenshot of posts page") }}
+{{<image src="images/screenshot.png" alt="screenshot" caption="Screenshot of posts page"/>}}
 
-{{ image(src="images/screenshot_home.png", alt="screenshot_home", caption="Screenshot of homepage") }}
+{{<image src="images/screenshot_home.png" alt="screenshot_home" caption="Screenshot of homepage"/>}}
 
 This is Nivis, a clean zola theme for bloggers.
 

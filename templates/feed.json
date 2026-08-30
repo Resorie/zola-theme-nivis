@@ -11,8 +11,8 @@
             "url": "{{ page.permalink | safe }}",
             "title": "{{ page.title }}",
             "summary": "{% if page.description %}{{ page.description }}{% else %}{{ page.summary | json_encode(pretty=true) | safe }}{% endif %}",
-            "date_published": "{{ page.date | date(format='%+') }}",
-            "date_modified" : "{{ page.updated | default(value=page.date) | date(format='%+') }}"
+            "date_published": "{{ page.date | date(format='%Y-%m-%dT%H:%M:%S%:z') }}",
+            "date_modified" : "{{ page.updated | default(value=page.date, boolean=true) | date(format='%Y-%m-%dT%H:%M:%S%:z') }}"
         }{% if not loop.last %},{% else %}{% endif %}
         {%- endfor %}
     ]

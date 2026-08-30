@@ -1,5 +1,3 @@
-{% import "_macros.html" as macros %}
-
 <!doctype html>
 <html lang="{{ lang }}">
 
@@ -94,7 +92,7 @@
         {% for link in config.extra.social_links %}
         <li>
           <a href="{{ link.url | safe }}" aria-label="{{ link.name | title }}">
-            <i class="{{ macros::social_icon(name=link.name) }}"></i>
+            <i class="{{<social_icon name={link.name}/>}}"></i>
           </a>
         </li>
         {% endfor %}
@@ -118,7 +116,7 @@
         {% endif %}
 
         {% if config.extra.sections.tags | default(value=true) %}
-        <a href="{{ get_url(path="@/tags/_index.md", lang=lang) }}">Categories</a>
+        <a href="{{ get_url(path="tags", lang=lang, trailing_slash=true) }}">Categories</a>
         {% endif %}
 
         {% if config.extra.sections.links | default(value=true) %}
@@ -136,23 +134,23 @@
         <a href="{{ get_url(path="@/_index.md", lang=lang) }}">Home</a>
 
         {% if config.extra.sections.posts | default(value=true) %}
-        <a href="{{ get_url(path="@/posts/_index.md", lang=lang) }}" {% if current_path is starting_with("/posts") %}class="active"{% endif %}>Posts</a>
+        <a href="{{ get_url(path="@/posts/_index.md", lang=lang) }}" {% if current_path is starting_with(pat="/posts") %}class="active"{% endif %}>Posts</a>
         {% endif %}
 
         {% if config.extra.sections.about | default(value=true) %}
-        <a href="{{ get_url(path="@/about/index.md", lang=lang) }}" {% if current_path is starting_with("/about") %}class="active"{% endif %}>About</a>
+        <a href="{{ get_url(path="@/about/index.md", lang=lang) }}" {% if current_path is starting_with(pat="/about") %}class="active"{% endif %}>About</a>
         {% endif %}
 
         {% if config.extra.sections.archive | default(value=true) %}
-        <a href="{{ get_url(path="@/archive/index.md", lang=lang) }}" {% if current_path is starting_with("/archive") %}class="active"{% endif %}>Archives</a>
+        <a href="{{ get_url(path="@/archive/index.md", lang=lang) }}" {% if current_path is starting_with(pat="/archive") %}class="active"{% endif %}>Archives</a>
         {% endif %}
 
         {% if config.extra.sections.tags | default(value=true) %}
-        <a href="{{ get_url(path="@/tags/_index.md", lang=lang) }}" {% if current_path is starting_with("/tags") %}class="active"{% endif %}>Categories</a>
+        <a href="{{ get_url(path="tags", lang=lang, trailing_slash=true) }}" {% if current_path is starting_with(pat="/tags") %}class="active"{% endif %}>Categories</a>
         {% endif %}
 
         {% if config.extra.sections.links | default(value=true) %}
-        <a href="{{ get_url(path="@/links/index.md", lang=lang) }}" {% if current_path is starting_with("/links") %}class="active"{% endif %}>Links</a>
+        <a href="{{ get_url(path="@/links/index.md", lang=lang) }}" {% if current_path is starting_with(pat="/links") %}class="active"{% endif %}>Links</a>
         {% endif %}
       </nav>
       <div class="information">
