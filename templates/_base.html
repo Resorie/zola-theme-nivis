@@ -11,8 +11,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=Ysabeau:ital,wght@0,1..1000;1,1..1000&display=swap" rel="stylesheet"><link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkaibright/dist/LXGWBright-Regular/result.css' />
-  <link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/syst/dist/SourceHanSerifCN/result.css' />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=Ysabeau:ital,wght@0,1..1000;1,1..1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/lxgwwenkaibright@2.0.0/dist/LXGWBright-Regular/result.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst@3.0.0/dist/SourceHanSerifCN/result.css">
   <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
@@ -63,7 +65,8 @@
   {% endblock head %}
 </head>
 
-<body class="body-block">
+{% set configured_home_layout = config.extra.home_layout | default(value="focus") %}
+<body class="body-block{% if current_path == "/" and configured_home_layout == "horizontal" %} home-layout-horizontal-page{% endif %}">
   <div id="sidebar-mask" onclick="toggleSidebar()"></div>
   {% if current_path != "/" %}
   <div id="sidebar" class="">

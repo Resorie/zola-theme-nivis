@@ -56,6 +56,7 @@ main_section = "posts"
 math_display = "mathjax"
 avatar = ""
 
+# Homepage layout: "focus" (default) or "horizontal"
 home_layout = "focus"
 motto_mode = "multi"
 home_recent_posts = 3

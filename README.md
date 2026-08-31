@@ -24,6 +24,10 @@ git submodule update --init --recursive
 Then, change your theme config in `config.toml`:
 ```toml
 theme = "nivis"
+
+[extra]
+# "focus" is the default; use "horizontal" for the left-aligned layout.
+home_layout = "focus"
 ```
 
 Start your site by copying the example content into your site folder:
