@@ -30,6 +30,18 @@ theme = "nivis"
 home_layout = "focus"
 ```
 
+The optional copyright line is hidden by default. To show it as the second
+line of the site footer, provide the holder and an optional start year:
+
+```toml
+[extra.footer]
+copyright_holder = "Your name"
+copyright_since = 2025
+```
+
+The end year follows the year in which Zola builds the site. The holder name
+links to the site root. Leaving `copyright_holder` empty keeps the line hidden.
+
 Start your site by copying the example content into your site folder:
 ```bash
 cp -r themes/nivis/content content

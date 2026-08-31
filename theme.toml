@@ -18,6 +18,12 @@ motto_mode = "hide"
 home_greeting = false
 home_recent_posts = 0
 
+[extra.footer]
+# Leave this blank to hide the copyright line.
+copyright_holder = ""
+# Set a start year to render a range ending in the current build year.
+copyright_since = 0
+
 [extra.sections]
 posts = true
 about = true

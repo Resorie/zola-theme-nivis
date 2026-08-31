@@ -26,6 +26,18 @@ social_links = [
 
 Supported icons include most brands (e.g., `github`, `twitter`, `bilibili`) and generic names like `email`, `rss`, `link`, `globe`.
 
+## Site Footer
+
+The optional copyright line appears below the Nivis and Zola credits. It is hidden unless you provide a holder:
+
+```toml
+[extra.footer]
+copyright_holder = "Your name"
+copyright_since = 2025
+```
+
+The end year follows the year in which Zola builds the site, and the holder name links to the site root. Set `copyright_since` to `0` or omit it to display only the current year.
+
 ## Pinned Posts
 
 Nivis allows you to pin special posts so that they are placed at the frontmost of the post list. To pin posts, add the following to the front matter of your `posts/_index.md`:
