@@ -284,7 +284,7 @@
 
     .article-summary {
         padding-left: 1em;
-        border-left: 2px solid var(--border-color);
+        border-left: 1px solid var(--border-color);
         margin-bottom: 0.5em;
 
         .description {
@@ -1269,7 +1269,7 @@
         }
 
         .meta-line {
-            font-family: 'Ysabeau', 'LXGW WenKai', sans-serif;
+            font-family: 'Ysabeau', 'LXGW Bright', sans-serif;
             font-size: 0.9em;
             color: var(--text-color-light);
             font-style: italic;
@@ -1292,7 +1292,7 @@
         flex-direction: column;
         gap: var(--space-lg);
         padding-left: 1.5em;
-        border-left: 3px solid var(--border-color);
+        border-left: 1px solid var(--border-color);
 
         .intro-abstract {
             position: relative;
@@ -1413,6 +1413,13 @@
     font-size: 0.95em;
 }
 .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* MathJax Fixes */
+mjx-container[display="true"] {
+    max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
 }

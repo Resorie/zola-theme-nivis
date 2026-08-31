@@ -11,7 +11,8 @@
 <!-- Twitter -->
 
 {% endblock head %} {% block content %}
-<div class="home-container">
+{% set home_layout = config.extra.home_layout | default(value="focus") %}
+<div class="home-container home-layout-{% if home_layout == "horizontal" %}horizontal{% else %}focus{% endif %}">
   <div class="home-intro">
     <div class="logo-title">
       <div class="title-inner">
