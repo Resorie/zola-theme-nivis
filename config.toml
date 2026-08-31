@@ -71,6 +71,12 @@ social_links = [
     { name = "github", url = "https://github.com/Resorie/zola-theme-nivis" }
 ]
 
+[extra.footer]
+# Leave this blank to hide the copyright line.
+copyright_holder = ""
+# Set a start year to render a range ending in the current build year.
+copyright_since = 0
+
 [extra.sections]
 posts = true
 about = true

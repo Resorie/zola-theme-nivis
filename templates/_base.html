@@ -183,7 +183,14 @@
     </div>
     <div class="page-footer">
       <div class="footer-content">
-        <span>With theme <a href="https://github.com/Resorie/zola-theme-nivis">Nivis</a><span class="separator">/</span>Powered by <a href="https://www.getzola.org/" target="_blank">Zola</a></span>
+        <div class="footer-credit">With theme <a href="https://github.com/Resorie/zola-theme-nivis">Nivis</a><span class="separator">/</span>Powered by <a href="https://www.getzola.org/" target="_blank">Zola</a></div>
+        {% set copyright_holder = config.extra.footer.copyright_holder | default(value="") %}
+        {% if copyright_holder %}
+        {% set current_year = now() | date(format="%Y") %}
+        {% set copyright_since = config.extra.footer.copyright_since | default(value=0) %}
+        {% set copyright_since_text = copyright_since | str %}
+        <div class="footer-copyright">Copyright © {% if copyright_since and copyright_since_text != current_year %}{{ copyright_since }}-{{ current_year }}{% else %}{{ current_year }}{% endif %} <a href="{{ get_url(path="@/_index.md", lang=lang) }}">{{ copyright_holder }}</a></div>
+        {% endif %}
       </div>
     </div>
   </div>

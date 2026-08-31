@@ -6,8 +6,11 @@ endblock title %} {% block content %}
   </div>
 
   <div class="timeline-wrapper">
-    {% set section = get_section(path="posts/_index.md") %} {% for year, posts
-    in section.pages | group_by(attribute="year") %}
+    {% set section = get_section(path="posts/_index.md") %}
+    {% set year_groups = section.pages | group_by(attribute="year") %}
+    {% set years = year_groups | keys | sort | reverse %}
+    {% for year in years %}
+    {% set posts = year_groups[year] | sort(attribute="date") | reverse %}
     <div class="timeline-year-group">
       <div class="timeline-year-node" id="{{ year }}">
         <span class="year-label">{{ year }}</span>

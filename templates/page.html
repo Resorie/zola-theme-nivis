@@ -122,40 +122,5 @@ description = page.content %} {% endif %}
     
     {{ page.content | safe }}
   </main>
-  <section class="article-action-block">
-    <div class="share-block">
-      <a
-        href="https://mastodon.social/share?text={{ page.title }}%20{{ page.permalink }}"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        title="Mastodon"
-        ><i class="fa-brands fa-mastodon"></i></a>
-      <a
-        href="https://twitter.com/intent/tweet?text={{ page.title }}&amp;url={{ page.permalink }}"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        title="X / Twitter"
-        ><i class="fa-brands fa-x-twitter"></i></a>
-      <a
-        href="https://t.me/share/url?url={{ page.permalink }}&amp;text={{ page.title }}"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        title="Telegram"
-        ><i class="fa-brands fa-telegram"></i></a>
-      <a
-        href="https://www.facebook.com/sharer/sharer.php?u={{ page.permalink }}"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        title="Facebook"
-        ><i class="fa-brands fa-facebook-f"></i></a>
-      <a
-        href="https://social-plugins.line.me/lineit/share?url={{ page.permalink }}"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        title="LINE"
-        ><i class="fa-brands fa-line"></i></a>
-    </div>
-  </section>
-  <br />
 </article>
 {% endblock content %}
