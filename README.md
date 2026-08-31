@@ -2,7 +2,7 @@ Nivis: A clean zola theme for bloggers.
 
 ![screenshot](screenshot.png)
 
-Live demo: [Example Site](https://resorie.github.io/zola-theme-nivis/) | [My Blog](https://resorie.github.io/blog/).
+Live demo: [Example Site](https://resorie.xyz/zola-theme-nivis/) | [My Blog](https://resorie.xyz/blog/).
 
 This theme is inspired by (and derived from) themes [Float](https://float-theme.netlify.app/) and [anatole](https://longfangsong.github.io/). Check out these two wonderful themes as well! :smile:
 
@@ -36,7 +36,7 @@ cp -r themes/nivis/content content
 cp -r themes/nivis/data data
 ```
 
-Move on to the [example site](https://resorie.github.io/zola-theme-nivis/) for more info. Enjoy it! :kissing_heart:
+Move on to the [example site](https://resorie.xyz/zola-theme-nivis/) for more info. Enjoy it! :kissing_heart:
 
 ## Todo :clipboard:
 

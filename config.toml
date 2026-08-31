@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://resorie.github.io/zola-theme-nivis/"
+base_url = "https://resorie.xyz/zola-theme-nivis"
 
 # The site title and description; used in feeds by default.
 title = "Nivis"
