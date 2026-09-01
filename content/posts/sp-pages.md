@@ -1,6 +1,6 @@
 +++
 title = "Special Pages"
-description = "special pages in Nivis theme"
+description = "Create and configure the posts, about, archive, taxonomy, and friend-links pages used by Nivis."
 date = 1980-01-01
 
 [taxonomies]
@@ -10,72 +10,154 @@ tags = ["guide"]
 toc = true
 +++
 
-Nivis theme provides About page, Archives page, Categories page and Links page to help you fully customize your site.
+Nivis can link to five site sections: posts, about, archives, categories, and friend links. Their navigation switches are independent, but enabled routes must have the content or data expected by their templates.
 
-## Enable/Disable Sections
+## Navigation Switches
 
-By default, all five navigation sections (posts, archives, categories, about, and links) are enabled in `theme.toml`. If you want to hide a specific section, set it to `false` in your `config.toml`:
+All sections are enabled by default:
+
+```toml
+[extra.sections]
+posts = true
+about = true
+archive = true
+tags = true
+links = true
+```
+
+Set only the entries that need to differ from the defaults. For example:
 
 ```toml
 [extra.sections]
 links = false
 ```
 
-You only need to declare sections that you want to hide.
+| Key | Navigation target | Required source when enabled |
+| --- | --- | --- |
+| `posts` | `/posts/` | `content/posts/_index.md` |
+| `about` | `/about/` and the sidebar action | `content/about/index.md` |
+| `archive` | `/archive/` | `content/archive/index.md` and the posts section |
+| `tags` | `/tags/` | Top-level Zola `tags` taxonomy with rendering enabled |
+| `links` | `/links/` | `content/links/index.md` and `data/links.toml` |
+
+Hiding a section removes theme navigation but does not delete its content.
+
+## Posts Page
+
+Create `content/posts/_index.md`:
+
+```toml
++++
+title = "Posts"
+sort_by = "date"
+template = "section.html"
+page_template = "page.html"
+paginate_by = 5
+
+[extra]
+pinned_posts = []
++++
+```
+
+Posts are ordinary Markdown pages below `content/posts/`. To pin pages above the first result page, list their paths relative to `content/`:
+
+```toml
+[extra]
+pinned_posts = [
+    "posts/getting-started.md",
+    "posts/featured-post.md",
+]
+```
 
 ## About Page
 
-Nivis provides an about page to introduce yourself. Create `content/about/index.md`:
+Create `content/about/index.md`:
+
 `````markdown
 +++
 title = "About Me"
 template = "about.html"
 +++
 
-Show yourself! :smile:
+Introduce yourself here.
 `````
+
+The page body supports ordinary Markdown.
 
 ## Archive Page
 
-Nivis shows all your posts sorted by publish time in the archives page. Create `content/archive/index.md`:
-```markdown
+Create `content/archive/index.md`:
+
+```toml
 +++
 title = "Archives"
 template = "archive.html"
 +++
 ```
 
+The archive template reads `content/posts/_index.md` and groups dated posts by year in reverse chronological order.
+
 ## Categories Page
 
-Zola generates the Categories page from the `tags` taxonomy, so no `content/tags/_index.md` file is needed. Nivis can present it as multiple tags, one category per post, or no taxonomy UI. See [Configuration](@/posts/configure.md) for complete examples and the interaction with Zola's `render` option.
+Zola generates the taxonomy index and term pages, so no `content/tags/_index.md` file is required. The default declaration is:
 
-## Friend Links
+```toml
+taxonomies = [{ name = "tags", paginate_by = 5 }]
+```
 
-Nivis supports a page for links to other sites. First, create `content/links/index.md`:
-```markdown
+Nivis can show these values as multiple tags or one category per post. To hide taxonomy UI and stop generating taxonomy pages, use:
+
+```toml
+taxonomies = [{ name = "tags", render = false }]
+
+[extra]
+taxonomy_mode = "none"
+```
+
+See [Configuration](@/posts/configure.md) for all three modes and their front matter rules.
+
+## Friend Links Page
+
+Create `content/links/index.md`:
+
+`````markdown
 +++
 title = "Links"
 template = "links.html"
+
+[extra]
+show_content = true
 +++
 
-Friend Links. 
+Optional introductory text.
+`````
 
-The content here will be shown if `extra.show_content` is set to true in the front matter.
-```
+Set `show_content = false` or omit it to render only the link groups.
 
-Then, create `data/links.toml`. The theme will generate the page from this file. Follow the syntax:
+Then create `data/links.toml`:
+
 ```toml
 [[groups]]
 name = "Friends"
-items = [
-    # Add your friends here
-    { name = "Someone", url = "https://example.site/", description = "Description", avatar = "Your Friend's Avatar" },
-]
+desc = "Personal sites I follow."
+
+[[groups.items]]
+name = "Someone"
+url = "https://example.com/"
+description = "A short description."
+avatar = "https://example.com/avatar.jpg"
 
 [[groups]]
 name = "Projects"
-items = [
-    { name = "Zola", url = "https://www.getzola.org/", description = "The static site generator used for this blog.", avatar = "https://avatars.githubusercontent.com/u/43047029" },
-]
+desc = "Projects worth visiting."
 
+[[groups.items]]
+name = "Zola"
+url = "https://www.getzola.org/"
+description = "The static site generator used by Nivis."
+avatar = "https://avatars.githubusercontent.com/u/43047029"
 ```
+
+Each group needs `name`, `desc`, and `items`. Each item needs `name`, `url`, `description`, and `avatar`. Link cards open in a new tab with `rel="noopener noreferrer"`.
+
+After adding or removing a special page, run `zola build --force` so missing routes or data files are caught before deployment.

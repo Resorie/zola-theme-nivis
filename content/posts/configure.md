@@ -1,6 +1,6 @@
 +++
 title = "Configuration"
-description = "configuration guide"
+description = "Configure Nivis layouts, profile details, taxonomies, article metadata, and math rendering."
 date = 1980-01-01
 
 [taxonomies]
@@ -10,43 +10,105 @@ tags = ["guide"]
 toc = true
 +++
 
+Nivis-specific options are placed below `[extra]` in the site's `config.toml`. Zola's own settings, including feeds, taxonomies, and Markdown highlighting, stay at the top level.
+
+## Homepage Layout
+
+Nivis provides two homepage layouts:
+
+```toml
+[extra]
+home_layout = "focus"
+```
+
+- `focus` centers the profile and navigation in a compact first screen.
+- `horizontal` uses a wider, left-aligned presentation.
+
+`focus` is the default. Unknown values also fall back to it.
+
+## Profile and Avatar
+
+The site `title` and `description` are shown with the optional avatar on the homepage and in the sidebar:
+
+```toml
+title = "Your Site"
+description = "A short site description"
+
+[extra]
+avatar = "images/avatar.jpg"
+```
+
+The avatar path is resolved from `static/`, so this example expects `static/images/avatar.jpg`. Leave `avatar` empty to hide it.
+
+## Motto
+
+Mottos appear between the site description and social links. Hide them by default:
+
+```toml
+[extra]
+motto_mode = "hide"
+```
+
+Show one static motto:
+
+```toml
+[extra]
+motto_mode = "single"
+motto = "Simplicity is the ultimate sophistication."
+```
+
+Rotate through multiple mottos with the built-in typewriter effect:
+
+```toml
+[extra]
+motto_mode = "multi"
+mottos = [
+    "Code is poetry.",
+    "Make the important things clear.",
+]
+```
+
+When the browser requests reduced motion, the main template displays the first motto without the animation.
+
 ## Social Links
 
-Nivis enables you to display some of your social links . Add your social links in `config.toml` according to the following example:
+Each social link needs an icon name and URL:
 
 ```toml
 [extra]
 social_links = [
     { name = "github", url = "https://github.com/username" },
-    { name = "email", url = "mailto:your@email.com" },
-    { name = "twitter", url = "https://twitter.com/username" },
-    { name = "rss", url = "/atom.xml" },
+    { name = "email", url = "mailto:hello@example.com" },
+    { name = "globe", url = "https://example.com" },
 ]
 ```
 
-Supported icons include most brands (e.g., `github`, `twitter`, `bilibili`) and generic names like `email`, `rss`, `link`, `globe`.
+The generic names `email`, `rss`, `link`, and `globe` have dedicated icons. Other names are treated as Font Awesome brand names, including `github`, `mastodon`, and `bilibili`.
 
-## Post Titles and Abstracts
+URLs are rendered exactly as provided. Use complete URLs when the site is deployed below a path prefix. Set `social_links = []` to show no icons.
 
-Use `description` for the short summary shown in post lists and metadata. A post can also provide an optional subtitle and a longer abstract for the article page:
+## Navigation Sections
+
+All five sections are enabled by default. Set individual entries to `false` to remove their links from the homepage, desktop navigation, mobile navigation, sidebar, and 404 page:
 
 ```toml
-description = "A short summary for post lists."
-
-[extra]
-subtitle = "An optional subtitle"
-abstract = "A longer abstract shown only on the article page."
+[extra.sections]
+posts = true
+about = true
+archive = true
+tags = true
+links = false
 ```
 
-If `extra.abstract` is omitted, the article page continues to use `description` as its abstract.
+This only controls theme navigation. It does not remove content or stop Zola from generating taxonomy pages.
 
 ## Taxonomy Modes
 
-Nivis uses Zola's `tags` taxonomy internally and offers three ways to present it. Keeping the same taxonomy name means that switching between multiple tags and a single category does not change `/tags/` or existing front matter.
+Nivis uses Zola's `tags` taxonomy internally and supports three presentation modes. Keeping one taxonomy name preserves existing front matter and `/tags/` URLs while the visible semantics change.
 
 ### Multiple Tags
 
-This is the default mode. Declare the taxonomy in `config.toml` and select `tags`:
+This is the default mode:
 
 ```toml
 taxonomies = [{ name = "tags", paginate_by = 5 }]
@@ -55,18 +117,18 @@ taxonomies = [{ name = "tags", paginate_by = 5 }]
 taxonomy_mode = "tags"
 ```
 
-Each post can contain any number of tags:
+Posts may contain any number of values:
 
 ```toml
 [taxonomies]
 tags = ["Zola", "Design"]
 ```
 
-The Categories page remains a tag cloud, and `#` prefixes appear both there and in post metadata.
+The taxonomy index is displayed as a tag cloud, and each value receives a `#` prefix in taxonomy and post metadata.
 
 ### One Category
 
-Category mode uses the same Zola declaration, but each post should contain no more than one value:
+Category mode keeps the same Zola taxonomy declaration:
 
 ```toml
 taxonomies = [{ name = "tags", paginate_by = 5 }]
@@ -75,16 +137,18 @@ taxonomies = [{ name = "tags", paginate_by = 5 }]
 taxonomy_mode = "category"
 ```
 
+Each post may contain zero or one value:
+
 ```toml
 [taxonomies]
 tags = ["Research"]
 ```
 
-The Categories page keeps the existing layout and item count while omitting `#` prefixes. A post with multiple values causes a clear build error; an uncategorized post remains valid.
+The taxonomy index retains the same URLs and counts but removes `#` prefixes. A post with more than one value stops the build instead of silently choosing a category. An uncategorized post remains valid.
 
 ### No Taxonomy UI
 
-Set both the Nivis mode and Zola's taxonomy rendering option:
+Disable taxonomy rendering in Zola as well as the Nivis UI:
 
 ```toml
 taxonomies = [{ name = "tags", render = false }]
@@ -93,70 +157,140 @@ taxonomies = [{ name = "tags", render = false }]
 taxonomy_mode = "none"
 ```
 
-Nivis then removes Categories from navigation and omits taxonomy metadata from post lists and pages. `render = false` prevents Zola from generating `/tags/` and term pages while still allowing existing `[taxonomies]` front matter.
+`render = false` prevents Zola from generating `/tags/` and term pages while allowing existing `[taxonomies]` front matter to remain valid.
 
-The older `[extra.sections] tags = false` switch remains supported and takes precedence over `taxonomy_mode`. It hides the same theme UI, but does not control whether Zola generates taxonomy pages.
+The older `[extra.sections] tags = false` switch remains supported and takes precedence over `taxonomy_mode`. It hides taxonomy navigation and post metadata but does not control Zola's generated pages.
 
-## Site Footer
+## Post Metadata
 
-The optional copyright line appears below the Nivis and Zola credits. It is hidden unless you provide a holder:
+Use `description` for the short summary shown in post lists and HTML metadata. An article may also define a subtitle and a longer article-page abstract:
 
 ```toml
-[extra.footer]
-copyright_holder = "Your name"
-copyright_since = 2025
++++
+title = "Post title"
+description = "A short summary for post lists."
+date = 2026-01-01
+
+[taxonomies]
+tags = ["Notes"]
+
+[extra]
+subtitle = "An optional subtitle"
+abstract = "A longer abstract shown only on the article page."
+toc = true
++++
 ```
 
-The end year follows the year in which Zola builds the site, and the holder name links to the site root. Set `copyright_since` to `0` or omit it to display only the current year.
+If `extra.abstract` is omitted, the article header uses `description`. Set `extra.toc = false` to suppress the table of contents even when the page has headings.
+
+Set `extra.link` to change only the destination of the title in the post list:
+
+```toml
+[extra]
+link = "https://example.com/external-article"
+```
+
+The local page is still generated and keeps its own permalink.
 
 ## Pinned Posts
 
-Nivis allows you to pin special posts so that they are placed at the frontmost of the post list. To pin posts, add the following to the front matter of your `posts/_index.md`:
+Pinned posts appear before the ordinary post list on its first page. Add paths relative to `content/` in `content/posts/_index.md`:
+
 ```toml
 [extra]
 pinned_posts = [
-    "posts/pinned_post1.md",
-    "posts/pinned_post2.md"
+    "posts/first-post.md",
+    "posts/second-post.md",
 ]
 ```
 
-## Math display
+Each path must identify an existing page. Pinned pages are omitted from their normal positions so they do not appear twice.
 
-Nivis theme supports MathJax for rendering math contents. Add this to your `config.toml` to enable math rendering:
+## Site Footer
+
+The copyright line appears below the Nivis and Zola credits only when a holder is provided:
+
+```toml
+[extra.footer]
+copyright_holder = "Your Name"
+copyright_since = 2025
+```
+
+The end year follows the year in which Zola builds the site. Set `copyright_since` to `0`, or omit it, to display only the current year.
+
+## Math Display
+
+Enable MathJax 4 in `config.toml`:
+
 ```toml
 [extra]
 math_display = "mathjax"
 ```
 
-Zola's Markdown parser can consume punctuation inside TeX before MathJax sees it. This affects characters such as backslashes, underscores, braces, `<`, `>`, and `*`. Run the provided script after adding or editing posts so that MathJax receives the original formula:
-
-```bash
-python themes/nivis/scripts/process_math.py
-```
-
-The script processes all markdown files in `content/` and:
-- Keeps inline math as `$...$` and display math as `$$...$$`
-- Encodes ASCII punctuation inside formulas as numeric HTML entities, which Zola decodes without interpreting as Markdown
-- Preserves every space and blank line outside formulas
-- Skips fenced code blocks and ordinary inline code
-- Migrates math previously wrapped in inline backticks or `<div class="math-display">`
-- Can be safely re-run (idempotent)
-
 Write formulas with ordinary dollar delimiters:
-`````markdown
-This is an inline math example: $e^{\pi i}=-1$.
 
-And this is a display math example:
+`````markdown
+Inline math: $e^{\pi i}=-1$.
+
+Display math:
 
 $$
 \sum_{i=1}^n i^3=\frac{n^2(n+1)^2}{4}
 $$
 `````
 
-Blank lines around display math retain their normal Markdown meaning. A blank line starts a new paragraph; omitting it keeps the formula and adjacent text in the same paragraph. `process_math.py` does not add or remove those blank lines.
+Zola's Markdown parser can consume punctuation inside TeX before MathJax sees it. After adding or editing formulas, run the bundled processor from the site root:
 
-Use `python themes/nivis/scripts/process_math.py --check` in CI or before publishing to verify that all posts have been processed without rewriting files. To inspect or edit the original TeX, run `python themes/nivis/scripts/restore_math.py [paths...]`. The restoration script removes legacy wrappers and decodes formula bodies without changing whitespace or paragraph boundaries; it also supports `--check`.
+```bash
+python3 themes/nivis/scripts/process_math.py content
+```
 
-## Special Pages
+The processor:
 
-Nivis theme provides About page, Archives page, Categories page and Links page to help you fully customize your site. Move on to [Special Pages](@/posts/sp-pages.md) for more information.
+- preserves dollar-delimited inline and display formulas;
+- encodes Markdown-significant ASCII punctuation inside formulas;
+- preserves spaces and blank lines outside formulas;
+- skips fenced code blocks and ordinary inline code;
+- migrates legacy backtick and `math-display` wrappers; and
+- is idempotent, so it can be run repeatedly.
+
+Blank lines around display math keep their normal Markdown meaning. A blank line starts a new paragraph; omitting it keeps the formula and adjacent text in the same paragraph.
+
+Check without rewriting files:
+
+```bash
+python3 themes/nivis/scripts/process_math.py --check content
+```
+
+Restore readable TeX before editing or reviewing processed source:
+
+```bash
+python3 themes/nivis/scripts/restore_math.py content
+```
+
+The restoration command removes legacy wrappers and decodes formula bodies without changing paragraph boundaries. It also supports `--check`.
+
+## Code Highlighting
+
+Nivis ships light and dark class-based highlighting styles. Configure Zola to emit classes instead of inline colors:
+
+```toml
+[markdown.highlighting]
+style = "class"
+light_theme = "one-light"
+dark_theme = "one-dark-pro"
+```
+
+If fenced `math-display` blocks are used, add the bundled grammar. A site with Nivis installed as a submodule uses:
+
+```toml
+extra_grammars = ["themes/nivis/syntaxes/math-display.json"]
+```
+
+The standalone example repository uses `syntaxes/math-display.json` because the theme itself is the site root.
+
+## Legacy Defaults
+
+`extra.main_section`, `extra.home_greeting`, and `extra.home_recent_posts` are still present in `theme.toml` for compatibility. Current templates do not read them, so changing these values has no visible effect.
+
+Continue with [Components](@/posts/components.md) and [Special Pages](@/posts/sp-pages.md) for content-level examples.
