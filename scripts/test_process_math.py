@@ -51,6 +51,16 @@ class ProcessMathTest(unittest.TestCase):
         self.assertIn("before\n$$a&#38;b&#60;c$$\nafter $x&#95;y$", processed)
         self.assertIn("> $$u&#38;v$$", processed)
 
+    def test_restore_fully_decodes_math_wrapped_after_processing(self) -> None:
+        source = document(
+            '<div class="math-display">$$x&amp;#95;y&amp;amp;z$$</div>\n'
+        )
+
+        restored = process_content(source, restore_only=True)
+
+        self.assertIn("$$x_y&z$$", restored)
+        self.assertEqual(restored, process_content(restored, restore_only=True))
+
     def test_leaves_fenced_and_non_math_inline_code_untouched(self) -> None:
         body = (
             "```cpp\n"

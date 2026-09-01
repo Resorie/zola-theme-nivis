@@ -52,10 +52,20 @@ def _find_inline_end(text: str, start: int) -> int:
     return -1
 
 
+def _decode_math_body(body: str) -> str:
+    """Remove every HTML-escaping layer introduced by prior processing."""
+
+    previous = None
+    while body != previous:
+        previous = body
+        body = html.unescape(body)
+    return body
+
+
 def _encode_math_body(body: str) -> str:
     """Encode Markdown-significant ASCII while preserving whitespace."""
 
-    body = html.unescape(body)
+    body = _decode_math_body(body)
     return "".join(
         f"&#{ord(char)};" if char in string.punctuation else char
         for char in body
@@ -66,7 +76,7 @@ def _transform_math_token(token: str, restore_only: bool) -> str:
     delimiter_length = 2 if token.startswith("$$") else 1
     delimiter = "$" * delimiter_length
     body = token[delimiter_length:-delimiter_length]
-    body = html.unescape(body) if restore_only else _encode_math_body(body)
+    body = _decode_math_body(body) if restore_only else _encode_math_body(body)
     return f"{delimiter}{body}{delimiter}"
 
 

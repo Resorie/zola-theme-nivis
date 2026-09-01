@@ -84,7 +84,7 @@ $$
 
 Blank lines around display math retain their normal Markdown meaning. A blank line starts a new paragraph; omitting it keeps the formula and adjacent text in the same paragraph. `process_math.py` does not add or remove those blank lines.
 
-Use `python themes/nivis/scripts/process_math.py --check` in CI or before publishing to verify that all posts have been processed without rewriting files. `--restore-only` removes legacy wrappers and decodes formula bodies without applying entity encoding; it is intended for migration or recovery, not the normal publishing workflow.
+Use `python themes/nivis/scripts/process_math.py --check` in CI or before publishing to verify that all posts have been processed without rewriting files. To inspect or edit the original TeX, run `python themes/nivis/scripts/restore_math.py [paths...]`. The restoration script removes legacy wrappers and decodes formula bodies without changing whitespace or paragraph boundaries; it also supports `--check`.
 
 ## Special Pages
 
