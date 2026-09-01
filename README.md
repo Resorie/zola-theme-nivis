@@ -86,6 +86,22 @@ The older `extra.sections.tags = false` option remains supported. It overrides
 generating taxonomy pages. New configurations should normally use
 `taxonomy_mode` and reserve the section switch for compatibility.
 
+## Post Titles and Abstracts
+
+Use `description` for the short summary shown in post lists and metadata. A
+post can also provide a subtitle and a longer article-page abstract:
+
+```toml
+description = "A short summary for post lists."
+
+[extra]
+subtitle = "An optional subtitle"
+abstract = "A longer abstract shown only on the article page."
+```
+
+If `extra.abstract` is omitted, the article page continues to show
+`description` as its abstract.
+
 The optional copyright line is hidden by default. To show it as the second
 line of the site footer, provide the holder and an optional start year:
 

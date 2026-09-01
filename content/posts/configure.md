@@ -26,6 +26,20 @@ social_links = [
 
 Supported icons include most brands (e.g., `github`, `twitter`, `bilibili`) and generic names like `email`, `rss`, `link`, `globe`.
 
+## Post Titles and Abstracts
+
+Use `description` for the short summary shown in post lists and metadata. A post can also provide an optional subtitle and a longer abstract for the article page:
+
+```toml
+description = "A short summary for post lists."
+
+[extra]
+subtitle = "An optional subtitle"
+abstract = "A longer abstract shown only on the article page."
+```
+
+If `extra.abstract` is omitted, the article page continues to use `description` as its abstract.
+
 ## Taxonomy Modes
 
 Nivis uses Zola's `tags` taxonomy internally and offers three ways to present it. Keeping the same taxonomy name means that switching between multiple tags and a single category does not change `/tags/` or existing front matter.

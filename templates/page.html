@@ -1,5 +1,6 @@
-{% extends "_base.html" %} {% block title %}{{ page.title }} | {{ config.title
-}}{% endblock title %} {% block head %}
+{% extends "_base.html" %} {% block title %}{{ page.title }}{% if
+page.extra.subtitle %}：{{ page.extra.subtitle }}{% endif %} | {{ config.title }}{%
+endblock title %} {% block head %}
 <!-- Primary Meta Tags -->
 {% if page.description %} {% set description = page.description %} {%- elif
 page.summary %} {% set description = page.summary %} {% else %} {% set
@@ -10,7 +11,10 @@ description = page.content %} {% endif %}
 />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:title" content="{{ page.title }} | {{ config.title }}" />
+<meta
+  property="og:title"
+  content="{{ page.title }}{% if page.extra.subtitle %}：{{ page.extra.subtitle }}{% endif %} | {{ config.title }}"
+/>
 <meta property="og:type" content="article" />
 <meta property="og:url" content="{{ page.permalink | safe }}" />
 {% if page.date %}
@@ -47,6 +51,9 @@ description = page.content %} {% endif %}
     <div class="article-intro-container">
         <div class="intro-header">
             <h1 class="heading">{{ page.title }}</h1>
+            {% if page.extra.subtitle %}
+            <p class="subtitle">{{ page.extra.subtitle }}</p>
+            {% endif %}
             <div class="meta-line">
                 {% if page.date %}
                 <span class="date">{{ page.date | date(format="%b. %d, %Y") }}</span>
@@ -57,10 +64,10 @@ description = page.content %} {% endif %}
         </div>
 
         <div class="intro-body">
-            {% if page.description %}
+            {% if page.extra.abstract or page.description %}
             <div class="intro-abstract">
                 <div class="abstract-title">ABSTRACT</div>
-                <p class="description">{{ page.description }}</p>
+                <p class="description">{% if page.extra.abstract %}{{ page.extra.abstract }}{% else %}{{ page.description }}{% endif %}</p>
             </div>
             {% endif %}
 

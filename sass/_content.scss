@@ -237,7 +237,7 @@
     }
 
     .article-header {
-        margin-bottom: 0.6em;
+        margin-bottom: 0.9em;
 
         &::after {
             display: none;
@@ -272,6 +272,16 @@
             }
         }
 
+        .subtitle {
+            margin: -0.05em 0 0;
+            padding-left: 1.65em;
+            color: var(--text-color-light);
+            font-family: 'STIX Two Text', 'Noto Serif SC', serif;
+            font-size: 1em;
+            font-weight: 500;
+            line-height: 1.35;
+        }
+
         &:hover .heading {
             color: var(--text-color-light);
 
@@ -279,6 +289,10 @@
                 background-color: var(--text-color);
                 transform: rotate(225deg);
             }
+        }
+
+        &:hover .subtitle {
+            color: var(--text-color);
         }
     }
 
@@ -1220,6 +1234,19 @@
             line-height: 1.2;
             margin-bottom: 0.3em;
             color: var(--text-color);
+        }
+
+        .subtitle {
+            margin: -0.1em 0 0.8em;
+            color: var(--text-color-light);
+            font-family: 'STIX Two Text', 'Noto Serif SC', serif;
+            font-size: 1.3em;
+            font-weight: 500;
+            line-height: 1.35;
+
+            @media screen and (max-width: 600px) {
+                font-size: 1.1em;
+            }
         }
 
         .meta-line {

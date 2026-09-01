@@ -31,6 +31,9 @@
     <div class="article-header">
         <a href="{{ link | safe }}" class="title-link">
             <h2 class="heading">{{ post.title }}</h2>
+            {% if post.extra.subtitle %}
+            <p class="subtitle">{{ post.extra.subtitle }}</p>
+            {% endif %}
         </a>
     </div>
     
