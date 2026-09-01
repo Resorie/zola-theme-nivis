@@ -18,15 +18,6 @@ description = page.content %} {% endif %}
 <meta property="article:modified_time" content="{{ page.date }}" />
 {% endif %}
 <meta property="article:section" content="{{ page.components | first }}" />
-<!--
-  {% if page.taxonomies is defined %}
-    {% if page.taxonomies.tags is defined %}
-      {% for tag in page.taxonomies.tags %}
-        <meta property="article:tag" content="{{ tag }}">
-      {% endfor %}
-    {% endif %}
-  {% endif %}
--->
 
 {% endblock head %} {% block content %} {#
 <pre
@@ -49,6 +40,8 @@ description = page.content %} {% endif %}
   </pre>
 #}
 
+{% set taxonomy_mode = config.extra.taxonomy_mode | default(value="tags") %}
+{% set taxonomy_section_enabled = config.extra.sections.tags | default(value=true) %}
 <article class="content-article">
   <main class="article-content">
     <div class="article-intro-container">
@@ -59,14 +52,7 @@ description = page.content %} {% endif %}
                 <span class="date">{{ page.date | date(format="%b. %d, %Y") }}</span>
                 {% endif %}
                 
-                {% if page.taxonomies.tags %}
-                <span class="separator">/</span>
-                <span class="tags">
-                {% for tag in page.taxonomies.tags %}
-                <a href="{{ get_taxonomy_url(kind="tags", term=tag) }}">#{{ tag }}</a>
-                {% endfor %}
-                </span>
-                {% endif %}
+                {{<taxonomy_meta item={page} taxonomy_mode={taxonomy_mode} taxonomy_enabled={taxonomy_section_enabled}/>}}
             </div>
         </div>
 

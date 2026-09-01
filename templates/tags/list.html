@@ -1,5 +1,8 @@
 {% extends "_base.html" %} {% block title %}Categories | {{ config.title }}{%
 endblock title %} {% block content %}
+{% set taxonomy_mode = config.extra.taxonomy_mode | default(value="tags") %}
+{% set taxonomy_section_enabled = config.extra.sections.tags | default(value=true) %}
+{% if taxonomy_section_enabled and taxonomy_mode != "none" %}
 <main class="article-list">
   <div class="article-header">
     <h1 class="heading">Categories</h1>
@@ -12,11 +15,14 @@ endblock title %} {% block content %}
   <div class="category-cloud">
     {% for term in my_terms %}
     <a href="{{ term.permalink }}" class="category-chip">
+      {% if taxonomy_mode == "tags" %}
       <span class="category-prefix">#</span>
+      {% endif %}
       <span class="category-name">{{ term.name }}</span>
       <span class="category-count">{{ term.pages | length }}</span>
     </a>
     {% endfor %}
   </div>
 </main>
+{% endif %}
 {% endblock content %}

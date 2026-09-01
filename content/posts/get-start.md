@@ -64,6 +64,7 @@ dark_theme = "one-dark-pro"
 [extra]
 main_section = "posts"
 avatar = "images/avatar.jpeg" # In static/ folder
+taxonomy_mode = "tags"
 
 # Social links
 social_links = [

@@ -16,15 +16,18 @@
 
 <!-- Twitter -->
 {% endblock head %} {% block content %}
+{% set taxonomy_mode = config.extra.taxonomy_mode | default(value="tags") %}
+{% set taxonomy_section_enabled = config.extra.sections.tags | default(value=true) %}
+{% if taxonomy_section_enabled and taxonomy_mode != "none" %}
 <main class="article-list">
   <div class="ad">{% block ad1 %} {% endblock ad1 %}</div>
   <article class="article-block title-block">
-    <h2 class="heading"><span class="hash">#</span>{{ term.name }}</h2>
+    <h2 class="heading">{% if taxonomy_mode == "tags" %}<span class="hash">#</span>{% endif %}{{ term.name }}</h2>
     <aside class="page">
       Page {{ paginator.current_index }} / {{ paginator.number_pagers }}
     </aside>
   </article>
-  {% for post in paginator.pages %} {{<article_block post={post}/>}} {%
+  {% for post in paginator.pages %} {{<article_block post={post} taxonomy_mode={taxonomy_mode} taxonomy_enabled={taxonomy_section_enabled}/>}} {%
   endfor %}
 
   <div class="ad">{% block ad2 %} {% endblock ad2 %}</div>
@@ -37,4 +40,5 @@
     {% endif %}
   </div>
 </main>
+{% endif %}
 {% endblock content %}

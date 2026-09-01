@@ -12,6 +12,8 @@
 
 {% endblock head %} {% block content %}
 {% set home_layout = config.extra.home_layout | default(value="focus") %}
+{% set taxonomy_mode = config.extra.taxonomy_mode | default(value="tags") %}
+{% set taxonomy_section_enabled = config.extra.sections.tags | default(value=true) %}
 <div class="home-container home-layout-{% if home_layout == "horizontal" %}horizontal{% else %}focus{% endif %}">
   <div class="home-intro">
     <div class="logo-title">
@@ -60,7 +62,7 @@
         <a href="{{ get_url(path="@/archive/index.md", lang=lang) }}" {% if current_path is starting_with(pat="/archive") %}class="active"{% endif %}>Archives</a>
         {% endif %}
 
-        {% if config.extra.sections.tags | default(value=true) %}
+        {% if taxonomy_section_enabled and taxonomy_mode != "none" %}
         <a href="{{ get_url(path="tags", lang=lang, trailing_slash=true) }}" {% if current_path is starting_with(pat="/tags") %}class="active"{% endif %}>Categories</a>
         {% endif %}
 

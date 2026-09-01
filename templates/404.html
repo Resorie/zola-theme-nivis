@@ -19,6 +19,9 @@
     </script>
 </head>
 <body class="body-block">
+    {% set taxonomy_mode = config.extra.taxonomy_mode | default(value="tags") %}
+    {% set taxonomy_section_enabled = config.extra.sections.tags | default(value=true) %}
+    {{<validate_taxonomy_mode taxonomy_mode={taxonomy_mode}/>}}
     <div id="sidebar-mask" onclick="toggleSidebar()"></div>
     <div id="sidebar">
         <div class="logo-title">
@@ -66,7 +69,7 @@
                 {% if config.extra.sections.archive | default(value=true) %}
                 <a href="{{ config.base_url | safe }}/archive/">Archives</a>
                 {% endif %}
-                {% if config.extra.sections.tags | default(value=true) %}
+                {% if taxonomy_section_enabled and taxonomy_mode != "none" %}
                 <a href="{{ config.base_url | safe }}/tags/">Categories</a>
                 {% endif %}
                 {% if config.extra.sections.links | default(value=true) %}
@@ -88,7 +91,7 @@
             {% if config.extra.sections.archive | default(value=true) %}
             <a href="{{ config.base_url | safe }}/archive/">Archives</a>
             {% endif %}
-            {% if config.extra.sections.tags | default(value=true) %}
+            {% if taxonomy_section_enabled and taxonomy_mode != "none" %}
             <a href="{{ config.base_url | safe }}/tags/">Categories</a>
             {% endif %}
             {% if config.extra.sections.links | default(value=true) %}

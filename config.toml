@@ -58,6 +58,8 @@ avatar = ""
 
 # Homepage layout: "focus" (default) or "horizontal"
 home_layout = "focus"
+# Taxonomy display: "tags" (default), "category", or "none"
+taxonomy_mode = "tags"
 motto_mode = "multi"
 home_recent_posts = 3
 

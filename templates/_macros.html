@@ -1,4 +1,28 @@
-{% component article_block(post, pinned=false) %}
+{% component validate_taxonomy_mode(taxonomy_mode) -%}
+{% if taxonomy_mode != "tags" and taxonomy_mode != "category" and taxonomy_mode != "none" %}
+{{ throw(message="Nivis: extra.taxonomy_mode must be \"tags\", \"category\", or \"none\".") }}
+{% endif %}
+{%- endcomponent validate_taxonomy_mode %}
+
+{% component taxonomy_meta(item, taxonomy_mode="tags", taxonomy_enabled=true) %}
+{% if taxonomy_enabled and taxonomy_mode != "none" %}
+  {% if item.taxonomies is defined and item.taxonomies.tags is defined and item.taxonomies.tags %}
+    {% if taxonomy_mode == "category" %}
+      {% if item.taxonomies.tags | length > 1 %}
+        {{ throw(message="Nivis: category mode accepts at most one entry in taxonomies.tags per page.") }}
+      {% endif %}
+    {% endif %}
+    <span class="separator">/</span>
+    <span class="tags">
+    {% for term in item.taxonomies.tags %}
+      <a href="{{ get_taxonomy_url(kind="tags", term=term) }}">{% if taxonomy_mode == "tags" %}#{% endif %}{{ term }}</a>
+    {% endfor %}
+    </span>
+  {% endif %}
+{% endif %}
+{% endcomponent taxonomy_meta %}
+
+{% component article_block(post, pinned=false, taxonomy_mode="tags", taxonomy_enabled=true) %}
 <article class="article-block">
   {%- if post.extra.link %} {% set link = post.extra.link %} {% else %} {% set
   link = post.permalink %} {% endif %}
@@ -24,14 +48,7 @@
         <span class="date">{{ post.date | date(format="%b. %d, %Y") }}</span>
         {% endif %}
         
-        {% if post.taxonomies.tags %}
-        <span class="separator">/</span>
-        <span class="tags">
-        {% for tag in post.taxonomies.tags %}
-        <a href="{{ get_taxonomy_url(kind="tags", term=tag) }}">#{{ tag }}</a>
-        {% endfor %}
-        </span>
-        {% endif %}
+        {{<taxonomy_meta item={post} taxonomy_mode={taxonomy_mode} taxonomy_enabled={taxonomy_enabled}/>}}
     </div>
   </div>
 </article>

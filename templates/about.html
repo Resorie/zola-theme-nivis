@@ -18,15 +18,6 @@ description = page.content %} {% endif %}
 <meta property="article:modified_time" content="{{ page.date }}" />
 {% endif %}
 <meta property="article:section" content="{{ page.components | first }}" />
-<!--
-  {% if page.taxonomies is defined %}
-    {% if page.taxonomies.tags is defined %}
-      {% for tag in page.taxonomies.tags %}
-        <meta property="article:tag" content="{{ tag }}">
-      {% endfor %}
-    {% endif %}
-  {% endif %}
--->
 
 {% endblock head %} {% block content %}
 

@@ -14,14 +14,14 @@ Nivis theme provides About page, Archives page, Categories page and Links page t
 
 ## Enable/Disable Sections
 
-By default, all 5 sections (posts, archives, tags, about, links) are enabled in `theme.toml`. They appear in the navigation bar automatically. If you want to disable a specific section, set it to `false` in your `config.toml`:
+By default, all five navigation sections (posts, archives, categories, about, and links) are enabled in `theme.toml`. If you want to hide a specific section, set it to `false` in your `config.toml`:
 
 ```toml
 [extra.sections]
 links = false
 ```
 
-You don't need to declare sections you want to keep enabled — only override the ones you want to hide.
+You only need to declare sections that you want to hide.
 
 ## About Page
 
@@ -47,17 +47,11 @@ template = "archive.html"
 
 ## Categories Page
 
-Nivis lists all your post tags in categories page. Clicking on the tag directs you to the lists of all posts with the tag. Create `content/tags/_index.md`:
-```markdown
-+++
-title = "Categories"
-template = "tags/list.html"
-+++
-```
+Zola generates the Categories page from the `tags` taxonomy, so no `content/tags/_index.md` file is needed. Nivis can present it as multiple tags, one category per post, or no taxonomy UI. See [Configuration](@/posts/configure.md) for complete examples and the interaction with Zola's `render` option.
 
 ## Friend Links
 
-Nivis suppors a page to display links to your friends' site. First, create `content/links/index.md`:
+Nivis supports a page for links to other sites. First, create `content/links/index.md`:
 ```markdown
 +++
 title = "Links"

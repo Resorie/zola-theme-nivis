@@ -26,6 +26,63 @@ social_links = [
 
 Supported icons include most brands (e.g., `github`, `twitter`, `bilibili`) and generic names like `email`, `rss`, `link`, `globe`.
 
+## Taxonomy Modes
+
+Nivis uses Zola's `tags` taxonomy internally and offers three ways to present it. Keeping the same taxonomy name means that switching between multiple tags and a single category does not change `/tags/` or existing front matter.
+
+### Multiple Tags
+
+This is the default mode. Declare the taxonomy in `config.toml` and select `tags`:
+
+```toml
+taxonomies = [{ name = "tags", paginate_by = 5 }]
+
+[extra]
+taxonomy_mode = "tags"
+```
+
+Each post can contain any number of tags:
+
+```toml
+[taxonomies]
+tags = ["Zola", "Design"]
+```
+
+The Categories page remains a tag cloud, and `#` prefixes appear both there and in post metadata.
+
+### One Category
+
+Category mode uses the same Zola declaration, but each post should contain no more than one value:
+
+```toml
+taxonomies = [{ name = "tags", paginate_by = 5 }]
+
+[extra]
+taxonomy_mode = "category"
+```
+
+```toml
+[taxonomies]
+tags = ["Research"]
+```
+
+The Categories page keeps the existing layout and item count while omitting `#` prefixes. A post with multiple values causes a clear build error; an uncategorized post remains valid.
+
+### No Taxonomy UI
+
+Set both the Nivis mode and Zola's taxonomy rendering option:
+
+```toml
+taxonomies = [{ name = "tags", render = false }]
+
+[extra]
+taxonomy_mode = "none"
+```
+
+Nivis then removes Categories from navigation and omits taxonomy metadata from post lists and pages. `render = false` prevents Zola from generating `/tags/` and term pages while still allowing existing `[taxonomies]` front matter.
+
+The older `[extra.sections] tags = false` switch remains supported and takes precedence over `taxonomy_mode`. It hides the same theme UI, but does not control whether Zola generates taxonomy pages.
+
 ## Site Footer
 
 The optional copyright line appears below the Nivis and Zola credits. It is hidden unless you provide a holder:
