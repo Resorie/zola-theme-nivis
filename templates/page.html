@@ -19,7 +19,7 @@ description = page.content %} {% endif %}
 <meta property="og:url" content="{{ page.permalink | safe }}" />
 {% if page.date %}
 <meta property="article:published_time" content="{{ page.date }}" />
-<meta property="article:modified_time" content="{{ page.date }}" />
+<meta property="article:modified_time" content="{{ page.updated | default(value=page.date, boolean=true) }}" />
 {% endif %}
 <meta property="article:section" content="{{ page.components | first }}" />
 
