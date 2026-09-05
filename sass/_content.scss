@@ -189,6 +189,11 @@
     font-family: 'Ysabeau', 'LXGW Bright', sans-serif;
     font-style: italic;
 
+    .date,
+    .updated {
+        display: inline-block;
+    }
+
     .separator {
         margin: 0 0.5em;
         opacity: 0.6;

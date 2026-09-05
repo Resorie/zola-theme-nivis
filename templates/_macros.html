@@ -22,8 +22,18 @@
 {% endif %}
 {% endcomponent taxonomy_meta %}
 
-{% component article_block(post, pinned=false, taxonomy_mode="tags", taxonomy_enabled=true) %}
-<article class="article-block">
+{% component date_meta(item) %}
+{% if item.date %}
+<time class="date" datetime="{{ item.date }}">{{ item.date | date(format="%b. %d, %Y") }}</time>
+{% endif %}
+{% if item.updated %}
+{% if item.date %}<span class="separator">/</span>{% endif %}
+<span class="updated">Updated <time datetime="{{ item.updated }}">{{ item.updated | date(format="%b. %d, %Y") }}</time></span>
+{% endif %}
+{% endcomponent date_meta %}
+
+{% component article_block(post, pinned=false, taxonomy_mode="tags", taxonomy_enabled=true, content_lang="") %}
+<article class="article-block" lang="{{ post.extra.content_lang | default(value=content_lang, boolean=true) | default(value=post.lang, boolean=true) }}">
   {%- if post.extra.link %} {% set link = post.extra.link %} {% else %} {% set
   link = post.permalink %} {% endif %}
   
@@ -47,9 +57,7 @@
         <span class="separator">/</span>
         {% endif %}
         
-        {% if post.date %}
-        <span class="date">{{ post.date | date(format="%b. %d, %Y") }}</span>
-        {% endif %}
+        {{<date_meta item={post}/>}}
         
         {{<taxonomy_meta item={post} taxonomy_mode={taxonomy_mode} taxonomy_enabled={taxonomy_enabled}/>}}
     </div>

@@ -45,10 +45,22 @@
 
   @media screen and (max-width: 960px) {
     width: 250px;
+    top: var(--topbar-h);
+    height: calc(100% - var(--topbar-h));
     left: 0;
     transform: translateX(-100%);
+    visibility: hidden;
     border-right: 1px solid var(--border-color);
     padding-right: 0;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    .logo-title {
+        flex: 0 0 auto;
+        margin-block: auto;
+        padding-block: var(--space-lg);
+    }
 
     &::after {
         display: none;
@@ -56,6 +68,7 @@
 
     &.open {
         transform: translateX(0);
+        visibility: visible;
     }
   }
 

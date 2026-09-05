@@ -8,11 +8,15 @@
     width: 250px;
     left: 0;
     transform: translateX(-100%);
+    visibility: hidden;
     border-right: 1px solid var(--border-color);
     padding-right: 0;
 
     &::after { display: none; }
-    &.open { transform: translateX(0); }
+    &.open {
+        transform: translateX(0);
+        visibility: visible;
+    }
 }
 
 // 404 page body

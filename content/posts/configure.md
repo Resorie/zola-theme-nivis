@@ -192,6 +192,14 @@ link = "https://example.com/external-article"
 
 The local page is still generated and keeps its own permalink.
 
+### Content Language And Sharing
+
+> **AIGC disclosure:** This subsection was written with AI assistance and checked against the theme templates and local builds.
+
+Set `[extra] content_lang = "zh-CN"` in the site's configuration to mark article pages and post-list entries as Chinese. A post can override this with its own `[extra] content_lang = "en"`. Empty or omitted values fall back to the site-level setting, then Zola's page language. This only changes the article container's HTML `lang` attribute; it does not change the surrounding navigation, `default_language`, URLs, feed languages or search configuration.
+
+Article pages share the same plain-text description through `meta[name="description"]` and `og:description`, with the site title in `og:site_name`. The description uses `description`, then `summary`, then the article body, strips HTML, trims surrounding whitespace and truncates to 100 characters before HTML escaping. These metadata tags do not add a share button or preview image, and the receiving platform decides how to display a link preview.
+
 ## Pinned Posts
 
 Pinned posts appear before the ordinary post list on its first page. Add paths relative to `content/` in `content/posts/_index.md`:

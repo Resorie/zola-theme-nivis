@@ -79,7 +79,7 @@
 
 {% set configured_home_layout = config.extra.home_layout | default(value="focus") %}
 <body class="body-block{% if current_path == "/" and configured_home_layout == "horizontal" %} home-layout-horizontal-page{% endif %}">
-  <div id="sidebar-mask" onclick="toggleSidebar()"></div>
+  <div id="sidebar-mask" onclick="toggleSidebar()" aria-hidden="true"></div>
   {% if current_path != "/" %}
   <div id="sidebar" class="">
     <div class="logo-title">
@@ -168,24 +168,7 @@
         <a href="{{ get_url(path="@/links/index.md", lang=lang) }}" {% if current_path is starting_with(pat="/links") %}class="active"{% endif %}>Links</a>
         {% endif %}
       </nav>
-      <div class="information">
-        <div class="back_btn">
-          <a onclick="window.history.go(-1)" aria-label="Go back"><i class="fas fa-chevron-left"></i></a>
-        </div>
-        <div class="theme_btn">
-          <a onclick="toggleTheme()" aria-label="Toggle theme"><i class="fas fa-moon" id="theme-icon"></i></a>
-        </div>
-        <div class="feed_btn">
-          <a class="feed-icon" aria-label="RSS Feed"><i class="fas fa-rss"></i></a>
-          <div class="feed-dropdown">
-            <a href="{{ get_url(path="atom.xml") }}" target="_blank">Atom</a>
-            <a href="{{ get_url(path="rss.xml") }}" target="_blank">RSS</a>
-          </div>
-        </div>
-        <div class="avatar_btn">
-          <a onclick="toggleSidebar()" aria-label="Toggle sidebar"><i class="fas fa-bars"></i></a>
-        </div>
-      </div>
+      {% include "_topbar_controls.html" %}
     </div>
     {% endif %}
     <div class="autopagerize_page_element">
@@ -207,51 +190,8 @@
     </div>
   </div>
 
+  {% include "_topbar_script.html" %}
   <script>
-    function toggleSidebar() {
-      var sidebar = document.getElementById("sidebar");
-      var mask = document.getElementById("sidebar-mask");
-      sidebar.classList.toggle("open");
-      mask.classList.toggle("open");
-    }
-
-    const getPreferredScheme = () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-
-    function updateThemeIcon(scheme) {
-      const themeIcon = document.getElementById("theme-icon");
-      if (themeIcon) {
-        if (scheme === 'dark') {
-          themeIcon.classList.remove("fa-moon");
-          themeIcon.classList.add("fa-sun");
-        } else {
-          themeIcon.classList.remove("fa-sun");
-          themeIcon.classList.add("fa-moon");
-        }
-      }
-    }
-
-    function toggleTheme() {
-      const root = document.documentElement;
-      const effectiveScheme = root.style.colorScheme || getPreferredScheme();
-      const targetScheme = effectiveScheme === 'dark' ? 'light' : 'dark';
-
-      root.style.colorScheme = targetScheme;
-      localStorage.setItem("theme", targetScheme);
-      updateThemeIcon(targetScheme);
-    }
-
-    // Initialize theme icon
-    (function() {
-      const savedTheme = localStorage.getItem("theme");
-      const systemTheme = getPreferredScheme();
-      updateThemeIcon(savedTheme || systemTheme);
-
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem("theme")) {
-          updateThemeIcon(e.matches ? 'dark' : 'light');
-        }
-      });
-    })();
 
     // Footnote Navigation & Code Block Processing
     document.addEventListener("DOMContentLoaded", function() {

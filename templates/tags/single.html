@@ -27,7 +27,8 @@
       Page {{ paginator.current_index }} / {{ paginator.number_pagers }}
     </aside>
   </article>
-  {% for post in paginator.pages %} {{<article_block post={post} taxonomy_mode={taxonomy_mode} taxonomy_enabled={taxonomy_section_enabled}/>}} {%
+  {% set content_lang = config.extra.content_lang | default(value="", boolean=true) %}
+  {% for post in paginator.pages %} {{<article_block post={post} taxonomy_mode={taxonomy_mode} taxonomy_enabled={taxonomy_section_enabled} content_lang={content_lang}/>}} {%
   endfor %}
 
   <div class="ad">{% block ad2 %} {% endblock ad2 %}</div>

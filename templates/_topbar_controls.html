@@ -1,0 +1,26 @@
+{% set feed_lang = lang | default(value=config.default_language) %}
+      <div class="information">
+        <div class="back_btn">
+          <button type="button" class="icon-button" onclick="window.history.go(-1)" aria-label="Go back" title="Go back"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+        </div>
+        <div class="theme_btn">
+          <button type="button" class="icon-button" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false"><i class="fas fa-moon" id="theme-icon" aria-hidden="true"></i></button>
+        </div>
+        {% if config.generate_feeds and ("atom.xml" in config.feed_filenames or "rss.xml" in config.feed_filenames) %}
+        <div class="feed_btn">
+          <button type="button" class="icon-button feed-icon" aria-label="RSS Feed" title="RSS Feed" aria-expanded="false" aria-controls="feed-dropdown"><i class="fas fa-rss" aria-hidden="true"></i></button>
+          <div class="feed-dropdown" id="feed-dropdown" hidden>
+            {% for filename in config.feed_filenames %}
+            {% if filename == "atom.xml" %}
+            <a href="{{ get_url(path=filename, lang=feed_lang) }}" target="_blank" rel="noopener">Atom</a>
+            {% elif filename == "rss.xml" %}
+            <a href="{{ get_url(path=filename, lang=feed_lang) }}" target="_blank" rel="noopener">RSS</a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+        <div class="avatar_btn">
+          <button type="button" class="icon-button" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar" title="Toggle sidebar" aria-expanded="false" aria-controls="sidebar"><i class="fas fa-bars" aria-hidden="true"></i></button>
+        </div>
+      </div>

@@ -16,6 +16,8 @@ main_section = "posts"
 home_layout = "focus"
 # "tags" (default), "category", or "none"
 taxonomy_mode = "tags"
+# Empty inherits Zola's page language; individual posts can override this.
+content_lang = ""
 motto_mode = "hide"
 home_greeting = false
 home_recent_posts = 0

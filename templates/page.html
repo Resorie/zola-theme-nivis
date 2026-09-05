@@ -2,12 +2,17 @@
 page.extra.subtitle %}：{{ page.extra.subtitle }}{% endif %} | {{ config.title }}{%
 endblock title %} {% block head %}
 <!-- Primary Meta Tags -->
-{% if page.description %} {% set description = page.description %} {%- elif
-page.summary %} {% set description = page.summary %} {% else %} {% set
-description = page.content %} {% endif %}
+{% if page.description %}
+{% set description = page.description | striptags %}
+{% else %}
+{% set description = page.summary | default(value=page.content, boolean=true) | striptags %}
+{# Decode rendered HTML entities once, before attribute auto-escaping. Ampersands must be last. #}
+{% set description = description | replace(from="&lt;", to="<") | replace(from="&gt;", to=">") | replace(from="&quot;", to='"') | replace(from="&#39;", to="'") | replace(from="&#x27;", to="'") | replace(from="&amp;", to="&") %}
+{% endif %}
+{% set description = description | trim | truncate(length=100) %}
 <meta
   name="description"
-  content="{{ description | striptags | truncate(length=100) | safe }}"
+  content="{{ description }}"
 />
 
 <!-- Open Graph / Facebook -->
@@ -17,6 +22,8 @@ description = page.content %} {% endif %}
 />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="{{ page.permalink | safe }}" />
+<meta property="og:description" content="{{ description }}" />
+<meta property="og:site_name" content="{{ config.title }}" />
 {% if page.date %}
 <meta property="article:published_time" content="{{ page.date }}" />
 <meta property="article:modified_time" content="{{ page.updated | default(value=page.date, boolean=true) }}" />
@@ -46,7 +53,8 @@ description = page.content %} {% endif %}
 
 {% set taxonomy_mode = config.extra.taxonomy_mode | default(value="tags") %}
 {% set taxonomy_section_enabled = config.extra.sections.tags | default(value=true) %}
-<article class="content-article">
+{% set default_content_lang = config.extra.content_lang | default(value=lang, boolean=true) %}
+<article class="content-article" lang="{{ page.extra.content_lang | default(value=default_content_lang, boolean=true) }}">
   <main class="article-content">
     <div class="article-intro-container">
         <div class="intro-header">
@@ -55,9 +63,7 @@ description = page.content %} {% endif %}
             <p class="subtitle">{{ page.extra.subtitle }}</p>
             {% endif %}
             <div class="meta-line">
-                {% if page.date %}
-                <span class="date">{{ page.date | date(format="%b. %d, %Y") }}</span>
-                {% endif %}
+                {{<date_meta item={page}/>}}
                 
                 {{<taxonomy_meta item={page} taxonomy_mode={taxonomy_mode} taxonomy_enabled={taxonomy_section_enabled}/>}}
             </div>

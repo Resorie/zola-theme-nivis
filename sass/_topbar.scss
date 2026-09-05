@@ -80,7 +80,6 @@
     height: 100%;
 
     .back_btn, .theme_btn, .feed_btn, .avatar_btn {
-      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -88,27 +87,36 @@
       transition: color 0.2s ease;
       font-size: 1.1rem;
       width: 1.4em;
-
-      a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+      flex-shrink: 0;
 
       &:hover {
         color: var(--text-color);
       }
     }
 
+    .icon-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+
+      &:focus:not(:focus-visible) {
+        outline: none;
+      }
+    }
+
     .feed_btn {
       position: relative;
       height: 100%;
-
-      &:hover .feed-dropdown {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
 
       .feed-dropdown {
         position: absolute;
@@ -121,10 +129,6 @@
         min-width: 5.5rem;
         box-shadow: 0 4px 16px var(--shadow-color);
         z-index: 10;
-        opacity: 0;
-        transform: translateY(-4px);
-        transition: opacity 0.15s ease, transform 0.15s ease;
-        pointer-events: none;
 
         &::before {
             content: "";
@@ -144,13 +148,15 @@
           align-items: center;
           gap: 6px;
           padding: 6px 10px;
+          min-height: 44px;
           border-radius: 4px;
           font-size: 0.85rem;
           color: var(--text-color-light);
           white-space: nowrap;
           text-decoration: none;
 
-          &:hover {
+          &:hover,
+          &:focus-visible {
             background-color: var(--social-bg);
             color: var(--text-color);
           }
@@ -159,11 +165,10 @@
     }
 
     .avatar_btn {
-        cursor: pointer;
         display: none;
         font-size: 1.2rem;
         @media screen and (max-width: 960px) {
-            display: inline-block;
+            display: flex;
         }
     }
   }
