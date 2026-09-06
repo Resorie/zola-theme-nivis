@@ -442,6 +442,8 @@
 }
 
 .content-article {
+    max-width: 64rem;
+    margin-inline: auto;
     padding-top: 0;
     padding-bottom: var(--space-xl);
     padding-left: 0;

@@ -27,6 +27,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=Ysabeau:ital,wght@0,1..1000;1,1..1000&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/lxgwwenkaibright@2.0.0/dist/LXGWBright-Regular/result.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst@3.0.0/dist/SourceHanSerifCN/result.css">
+  {% if config.markdown.highlighting.style == "class" %}
+  <link rel="stylesheet" href="{{ get_url(path='giallo-dark.css') }}" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="{{ get_url(path='giallo-light.css') }}" media="(prefers-color-scheme: light)">
+  {% endif %}
   <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
@@ -39,42 +43,10 @@
     })();
   </script>
 
-  {% if config.extra.math_display == "mathjax" %}
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        processEscapes: true,
-        processEnvironments: true
-      },
-      options: {
-        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-      }
-    };
-  </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
-  <script>
-      document.addEventListener("DOMContentLoaded", function() {
-          // Inline Math: unwrap `$...$` from <code> tags
-          document.querySelectorAll('code').forEach(el => {
-              if (el.parentElement.tagName === 'PRE') return;
-              const text = el.textContent.trim();
-              if (text.startsWith('$') && text.endsWith('$') && !text.startsWith('$$')) {
-                  const span = document.createElement('span');
-                  span.textContent = text;
-                  el.replaceWith(span);
-              }
-          });
-          if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
-              MathJax.typesetPromise();
-          }
-      });
-  </script>
-  {% endif %}
 
   {% block head %}
   {% endblock head %}
+  {% include "_topbar_script.html" %}
 </head>
 
 {% set configured_home_layout = config.extra.home_layout | default(value="focus") %}
@@ -194,133 +166,8 @@
     </div>
   </div>
 
-  {% include "_topbar_script.html" %}
   {% include "_search_assets.html" %}
-  <script>
-
-    // Footnote Navigation & Code Block Processing
-    document.addEventListener("DOMContentLoaded", function() {
-        const MATH_LANGS = ['math', 'math-display', 'tex', 'latex'];
-
-        // Process code blocks: create sticky headers
-        document.querySelectorAll('pre code').forEach(code => {
-            const pre = code.parentElement;
-            let lang = pre.getAttribute('data-lang');
-
-            if (!lang) {
-                const codeLang = code.getAttribute('data-lang');
-                if (codeLang) {
-                    lang = codeLang;
-                } else {
-                    const classes = code.className.split(' ');
-                    for (const cls of classes) {
-                        if (cls.startsWith('language-')) {
-                            lang = cls.replace('language-', '');
-                            break;
-                        }
-                    }
-                }
-                if (lang) pre.setAttribute('data-lang', lang);
-            }
-
-            // Skip math blocks
-            if (lang && MATH_LANGS.includes(lang.toLowerCase())) {
-                const div = document.createElement('div');
-                div.classList.add('math-display');
-                let mathContent = code.textContent.trim();
-                if (!mathContent.startsWith('$$') && !mathContent.startsWith('\\[')) {
-                    mathContent = '$$' + mathContent + '$$';
-                }
-                div.textContent = mathContent;
-                pre.replaceWith(div);
-                return;
-            }
-
-            // Create sticky header
-            if (!pre.querySelector('.code-header')) {
-                const header = document.createElement('div');
-                header.className = 'code-header';
-
-                const dots = document.createElement('span');
-                dots.className = 'code-dots';
-                dots.innerHTML = '<span></span><span></span><span></span>';
-
-                const right = document.createElement('span');
-                right.className = 'code-header-right';
-
-                if (lang) {
-                    const langLabel = document.createElement('span');
-                    langLabel.className = 'code-lang';
-                    langLabel.textContent = lang.toUpperCase();
-                    right.appendChild(langLabel);
-                }
-
-                const btn = document.createElement('button');
-                btn.className = 'code-copy-btn';
-                btn.setAttribute('aria-label', 'Copy code');
-                btn.innerHTML = '<i class="fa-regular fa-copy"></i>';
-                btn.addEventListener('click', () => {
-                    navigator.clipboard.writeText(code.textContent).then(() => {
-                        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
-                        setTimeout(() => btn.innerHTML = '<i class="fa-regular fa-copy"></i>', 1500);
-                    });
-                });
-                right.appendChild(btn);
-
-                header.appendChild(dots);
-                header.appendChild(right);
-                pre.insertBefore(header, code);
-            }
-        });
-
-        // Process Inline Math
-        document.querySelectorAll(':not(pre) > code').forEach(code => {
-            const text = code.textContent.trim();
-            if ( (text.startsWith('$') && text.endsWith('$') && !text.startsWith('$$')) ||
-                 (text.startsWith('\\(') && text.endsWith('\\)')) ) {
-                 const span = document.createElement('span');
-                 span.textContent = text;
-                 code.replaceWith(span);
-            }
-        });
-
-        // Motto typewriter (all [data-mottos] elements)
-        document.querySelectorAll('[data-mottos]').forEach(function(el) {
-            var mottos = JSON.parse(el.dataset.mottos);
-            if (!mottos || mottos.length === 0) return;
-            // Reduced motion: render the first motto statically, no typing loop.
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                el.textContent = mottos[0];
-                return;
-            }
-            var idx = 0, charIdx = 0, deleting = false;
-            function tick() {
-                var current = mottos[idx];
-                if (!deleting) {
-                    charIdx++;
-                    el.textContent = current.substring(0, charIdx);
-                    if (charIdx === current.length) {
-                        deleting = true;
-                        setTimeout(tick, 2500);
-                        return;
-                    }
-                    setTimeout(tick, 80 + Math.random() * 40);
-                } else {
-                    charIdx--;
-                    el.textContent = current.substring(0, charIdx);
-                    if (charIdx === 0) {
-                        deleting = false;
-                        idx = (idx + 1) % mottos.length;
-                        setTimeout(tick, 400);
-                        return;
-                    }
-                    setTimeout(tick, 35);
-                }
-            }
-            tick();
-        });
-    });
-  </script>
+  <script id="content-script" type="module" src="{{ get_url(path='content.mjs', cachebust=true) }}" data-mathjax="{{ config.extra.math_display == 'mathjax' }}"></script>
 
   <script src="//instant.page/5.1.0" type="module" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
 </body>

@@ -1,12 +1,16 @@
 {% extends "_base.html" %} {% block title %}{{ page.title }} | {{ config.title
 }}{% endblock title %} {% block head %}
 <!-- Primary Meta Tags -->
-{% if page.description %} {% set description = page.description %} {%- elif
-page.summary %} {% set description = page.summary %} {% else %} {% set
-description = page.content %} {% endif %}
+{% if page.description %}
+{% set description = page.description | striptags %}
+{% else %}
+{% set description = page.summary | default(value=page.content, boolean=true) | striptags %}
+{# Decode rendered HTML once, matching the article description before attribute escaping. #}
+{% set description = description | replace(from="&lt;", to="<") | replace(from="&gt;", to=">") | replace(from="&quot;", to='"') | replace(from="&#39;", to="'") | replace(from="&#x27;", to="'") | replace(from="&amp;", to="&") %}
+{% endif %}
 <meta
   name="description"
-  content="{{ description | striptags | truncate(length=100) | safe }}"
+  content="{{ description | trim | truncate(length=100) }}"
 />
 
 <!-- Open Graph / Facebook -->

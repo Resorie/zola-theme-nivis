@@ -265,12 +265,16 @@ The end year follows the year in which Zola builds the site. Set `copyright_sinc
 
 ## Math Display
 
+> **AIGC disclosure:** The loading and startup notes below were written with AI assistance and verified against local builds and browser tests.
+
 Enable MathJax 4 in `config.toml`:
 
 ```toml
 [extra]
 math_display = "mathjax"
 ```
+
+When enabled, Nivis checks the rendered content for TeX and downloads MathJax only on pages that need it, including formulas in list summaries. Plain pages and ordinary code blocks do not download the renderer. Legacy math code wrappers and `math`, `math-display`, `tex`, or `latex` fences are converted before MathJax starts; one automatic typesetting pass handles the content area. Omit this option or use `"none"` to disable both math normalization and loading. If the CDN is unavailable, the TeX source remains visible and other page controls continue working.
 
 Write formulas with ordinary dollar delimiters:
 

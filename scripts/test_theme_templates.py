@@ -89,7 +89,10 @@ class ThemeTemplatesTest(unittest.TestCase):
                 'taxonomies = [{ name = "tags", paginate_by = 5 }]\n'
                 f"build_search_index = {str(name == 'both').lower()}\n"
                 f"{feeds}\n{search_settings}"
-                '[extra]\nmath_display = "none"\nsocial_links = []\n'
+                + ('[markdown.highlighting]\nstyle = "class"\nlight_theme = "one-light"\ndark_theme = "one-dark-pro"\n' if name == "both" else '') +
+                '[extra]\n'
+                + ('math_display = "mathjax"\n' if name == "both" else 'math_display = "none"\n') +
+                'social_links = []\n'
                 'taxonomy_mode = "category"\n'
                 + ('content_lang = "zh-CN"\n' if name == "both" else "") +
                 '[extra.sections]\nabout = false\narchive = false\n'
@@ -125,6 +128,9 @@ class ThemeTemplatesTest(unittest.TestCase):
                     encoding="utf-8",
                 )
             additional_pages = {
+                "about-description": '+++\ntitle = "About"\ntemplate = "about.html"\ndescription = \'A "quote" & <em>emphasis</em>.\'\n+++\nBody.\n',
+                "about-body": '+++\ntitle = "About"\ntemplate = "about.html"\n+++\n`<tag>` and `&lt;` and `"quoted"`.\n',
+                "fixture-links": '+++\ntitle = "Links"\ntemplate = "links.html"\n+++\n',
                 "metadata-description": (
                     '+++\ntitle = \'A "quoted" & title\'\n'
                     'description = \' A "quote" & <em>emphasis</em>. \'\n'
@@ -147,6 +153,13 @@ class ThemeTemplatesTest(unittest.TestCase):
             }
             for slug, source in additional_pages.items():
                 (root / "content" / f"{slug}.md").write_text(source, encoding="utf-8")
+            (root / "data").mkdir()
+            (root / "data" / "links.toml").write_text(
+                '[[groups]]\nname = "Friends"\ndesc = "People"\n'
+                '[[groups.items]]\nname = "Friend"\nurl = "https://example.net"\n'
+                'avatar = "https://example.net/avatar.png"\ndescription = "A friend"\n',
+                encoding="utf-8",
+            )
             if name == "localized":
                 for language in ("fr", "de"):
                     for path in ("_index.md", "posts/_index.md", "revised.md"):
@@ -183,6 +196,70 @@ class ThemeTemplatesTest(unittest.TestCase):
         self.assertGreater(item["body"].index("Pohlig-Hellman"), 1000)
         self.assertNotIn("FENCED_CODE_ONLY", item["body"])
         self.assertFalse(any(item["url"].endswith(("/search-excluded/", "/search-draft/")) for item in index))
+
+    def test_content_runtime_is_cached_and_math_is_not_loaded_by_the_template(self) -> None:
+        for variant, enabled in (("both", "true"), ("default", "false")):
+            for path in ("index.html", "posts/index.html", "original/index.html"):
+                with self.subTest(variant=variant, path=path):
+                    elements = self.head(variant, path).elements
+                    scripts = [attrs for tag, attrs in elements if tag == "script"]
+                    runtime = [attrs for attrs in scripts if attrs.get("id") == "content-script"]
+                    self.assertEqual(len(runtime), 1)
+                    self.assertEqual(runtime[0]["type"], "module")
+                    self.assertEqual(runtime[0]["data-mathjax"], enabled)
+                    self.assertTrue(runtime[0]["src"].startswith("https://example.org/blog/content.mjs?h="))
+                    self.assertFalse(any("mathjax@" in attrs.get("src", "") for attrs in scripts))
+            self.assertTrue((self.outputs[variant] / "content.mjs").is_file())
+
+    def test_topbar_runtime_is_deferred_and_shared_by_regular_and_404_pages(self) -> None:
+        for path in ("index.html", "original/index.html", "404.html"):
+            with self.subTest(path=path):
+                scripts = [attrs for tag, attrs in self.head("both", path).elements if tag == "script"]
+                topbar = [attrs for attrs in scripts if "/topbar.js?h=" in attrs.get("src", "")]
+                self.assertEqual(len(topbar), 1)
+                self.assertIn("defer", topbar[0])
+                self.assertNotIn("async", topbar[0])
+                self.assertNotEqual(topbar[0].get("type"), "module")
+        self.assertTrue((self.outputs["both"] / "topbar.js").is_file())
+        html = (self.outputs["both"] / "404.html").read_text(encoding="utf-8")
+        runtime = next(attrs for tag, attrs in HeadParser(html).elements if attrs.get("id") == "content-script")
+        self.assertEqual(runtime["data-mathjax"], "false")
+        self.assertNotIn("function tick()", html)
+
+    def test_highlight_styles_are_discovered_from_html_only_for_class_highlighting(self) -> None:
+        for variant in ("both", "default"):
+            links = [attrs for tag, attrs in self.head(variant).elements if tag == "link" and "/giallo-" in attrs.get("href", "")]
+            if variant == "both":
+                styles = [attrs["href"] for tag, attrs in self.head(variant).elements if tag == "link" and attrs.get("rel") == "stylesheet"]
+                self.assertLess(styles.index("https://example.org/blog/giallo-light.css"), styles.index("https://example.org/blog/style.css"))
+                self.assertEqual({(link["href"], link["media"]) for link in links}, {
+                    ("https://example.org/blog/giallo-dark.css", "(prefers-color-scheme: dark)"),
+                    ("https://example.org/blog/giallo-light.css", "(prefers-color-scheme: light)"),
+                })
+                for filename in ("giallo-dark.css", "giallo-light.css"):
+                    self.assertTrue((self.outputs[variant] / filename).is_file())
+            else:
+                self.assertEqual(links, [])
+            css = (self.outputs[variant] / "style.css").read_text(encoding="utf-8")
+            self.assertNotIn("giallo-dark.css", css)
+            self.assertNotIn("giallo-light.css", css)
+
+    def test_friend_avatars_have_native_loading_hints_and_reserved_dimensions(self) -> None:
+        images = [attrs for tag, attrs in self.head("both", "fixture-links/index.html").elements if tag == "img"]
+        self.assertEqual(len(images), 1)
+        image = images[0]
+        self.assertEqual(image["loading"], "lazy")
+        self.assertEqual(image["decoding"], "async")
+        self.assertEqual((image["width"], image["height"]), ("64", "64"))
+
+    def test_about_descriptions_are_decoded_once_and_attribute_safe(self) -> None:
+        for slug, expected in (("about-description", 'A "quote" & emphasis.'), ("about-body", '<tag> and &lt; and "quoted".')):
+            with self.subTest(slug=slug):
+                head = self.head("both", f"{slug}/index.html")
+                self.assertEqual(head.meta["description"], expected)
+                for tag, attrs in head.elements:
+                    if tag == "meta":
+                        self.assertTrue(set(attrs) <= {"property", "name", "content", "charset"}, attrs)
 
     def test_feed_links_match_generated_formats_and_base_path(self) -> None:
         expected = {
