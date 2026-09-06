@@ -5,6 +5,9 @@ base_url = "https://resorie.xyz/zola-theme-nivis"
 title = "Nivis"
 description = "A clean zola theme for bloggers"
 
+# Zola's site language. Use extra.content_lang for article-only language markup.
+default_language = "en"
+
 # When set to "true", a feed is automatically generated.
 generate_feeds = true
 
@@ -27,8 +30,7 @@ taxonomies = [{ name = "tags", paginate_by = 5 }]
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
-# When set to "true", a search index is built from the pages and section
-# content for `default_language`.
+# Enable the native search index and Nivis search interface.
 build_search_index = false
 
 # You can put any kind of data here. The data
@@ -39,6 +41,13 @@ build_search_index = false
 #
 # author value will be available using {{ config.extra.author }} in templates
 #
+
+[search]
+index_format = "fuse_json"
+include_title = true
+include_description = true
+include_content = true
+# Leave truncate_content_length unset to retain the full indexed body text.
 
 [markdown]
 render_emoji = true
@@ -60,6 +69,9 @@ avatar = ""
 home_layout = "focus"
 # Taxonomy display: "tags" (default), "category", or "none"
 taxonomy_mode = "tags"
+# Empty inherits Zola's page language. Use "zh-CN" for Chinese articles.
+# An individual post can override this through its own extra.content_lang.
+content_lang = ""
 motto_mode = "multi"
 home_recent_posts = 3
 

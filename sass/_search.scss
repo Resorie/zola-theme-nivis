@@ -1,0 +1,181 @@
+.page-top {
+  &.home-search-bar {
+    background: transparent;
+    backdrop-filter: none;
+    pointer-events: none;
+
+    .site-search { pointer-events: auto; }
+
+    &:has(#search-toggle[aria-expanded="true"]) { background: var(--sidebar-bg); }
+  }
+
+  @media (max-width: 1100px) {
+    &:has(#search-toggle[aria-expanded="true"]) .nav { visibility: hidden; }
+  }
+
+  .site-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    height: 44px;
+    color: var(--text-color-light);
+    font-size: 1.1rem;
+
+    [hidden] { display: none !important; }
+    .search-close-icon { display: none; }
+
+    .search-field {
+      order: -1;
+      display: flex;
+      align-items: center;
+      width: 0;
+      height: 44px;
+      overflow: hidden;
+      visibility: hidden;
+      opacity: 0;
+      background: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+      transition: width 180ms ease, opacity 180ms ease;
+
+      &:focus-within { border-bottom-color: var(--text-color); }
+    }
+
+    &:has(#search-toggle[aria-expanded="true"]) .search-field {
+      width: 14rem;
+      visibility: visible;
+      opacity: 1;
+    }
+
+    &:has(#search-toggle[aria-expanded="true"]) {
+      .search-open-icon { display: none; }
+      .search-close-icon { display: inline-block; }
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      height: 44px;
+      padding: 8px 10px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--text-color);
+      font: inherit;
+      font-size: 1rem;
+      letter-spacing: 0;
+      outline: none;
+
+      &::placeholder { color: var(--text-color-light); }
+      &::-webkit-search-cancel-button { display: none; }
+    }
+
+    .search-clear { font-size: 0.9rem; }
+
+    .search-panel {
+      position: absolute;
+      right: 0;
+      top: calc((var(--topbar-h) + 44px) / 2);
+      width: min(30rem, calc(100vw - 40px));
+      max-height: calc(100dvh - var(--topbar-h) - 16px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      box-shadow: 0 6px 20px var(--shadow-color);
+      text-align: left;
+    }
+
+    .search-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 44px;
+      padding: 0 14px;
+    }
+
+    .search-status {
+      margin: 0;
+      padding: 10px 0;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .search-results {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li { margin: 0; padding: 0; border-top: 1px solid var(--border-color); }
+
+      a {
+        display: block;
+        padding: 12px 14px;
+        color: var(--text-color);
+        text-decoration: none;
+        outline-offset: -3px;
+
+        &:hover, &:focus-visible { background: var(--social-bg); }
+      }
+    }
+
+    .search-result-title {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.5;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .search-result-snippet {
+      display: block;
+      margin-top: 5px;
+      color: var(--text-color-light);
+      font-size: 0.85rem;
+      line-height: 1.65;
+      overflow-wrap: anywhere;
+    }
+
+    mark {
+      color: var(--text-color);
+      background: transparent;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .information { height: calc(var(--topbar-h) - 1px); align-self: flex-start; }
+
+    &:has(#search-toggle[aria-expanded="true"]) {
+      height: calc(var(--topbar-h) + 52px);
+      background: var(--sidebar-bg);
+    }
+
+    .site-search {
+      position: static;
+
+      .search-field {
+        position: absolute;
+        right: 20px;
+        top: var(--topbar-h);
+      }
+
+      &:has(#search-toggle[aria-expanded="true"]) .search-field {
+        width: min(14rem, calc(100vw - 40px));
+      }
+
+      .search-panel {
+        right: 20px;
+        top: calc(var(--topbar-h) + 52px);
+        max-height: calc(100dvh - var(--topbar-h) - 64px);
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-top .site-search .search-field { transition: none; }
+}

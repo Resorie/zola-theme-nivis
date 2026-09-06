@@ -1,0 +1,3 @@
+{% if config.build_search_index %}
+<script type="module" src="{{ get_url(path='search.js', cachebust=true) }}"></script>
+{% endif %}

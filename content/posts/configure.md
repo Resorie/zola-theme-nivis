@@ -12,6 +12,30 @@ toc = true
 
 Nivis-specific options are placed below `[extra]` in the site's `config.toml`. Zola's own settings, including feeds, taxonomies, and Markdown highlighting, stay at the top level.
 
+## Search
+
+> **AIGC disclosure:** This section was written with AI assistance and checked against Zola's documentation and local builds.
+
+The example site's `config.toml` exposes Zola's native `build_search_index` switch, disabled by default. Enabling it adds a search button after the back button in the upper-right toolbar; the homepage has a standalone search button. The input expands horizontally and pushes the back button to the left, while results appear beneath it. On narrow screens the input uses a second toolbar row so every button remains accessible. CSS controls layout and transitions, including reduced-motion support. The following settings generate JSON containing titles, descriptions, and untruncated body text:
+
+```toml
+build_search_index = true
+
+[search]
+index_format = "fuse_json"
+include_title = true
+include_description = true
+include_content = true
+```
+
+Place `build_search_index` at the top level, before any table headers. Keep `truncate_content_length` unset to avoid dropping matches near the end of long articles. Set `in_search_index = false` in a page's front matter to exclude it. Ordinary builds also exclude drafts.
+
+[Zola's native search](https://www.getzola.org/documentation/content/search/) supplies the index, and Nivis uses its bundled Fuse.js 7.1.0 dependency to search it in the browser, giving title matches more weight than descriptions and body text. The index and search engine load only when search is first opened and are reused on that page. Disabling `build_search_index` removes the search controls and script reference. The interface requires `fuse_json`; other formats produce a configuration error at build time.
+
+Search supports Chinese input composition, keyboard navigation, matched-text excerpts, empty results, and retrying failed index requests. Escape closes search and returns focus to the button. The interface keeps the theme's existing English labels; `content_lang` does not translate them.
+
+The native index's body-text cleanup removes HTML markup and excludes fenced code blocks, scripts, and styles. Custom front-matter fields such as `extra.abstract` are not additional search fields; the indexed fields are title, description, and body. Indexing code blocks or extra front-matter fields requires a separate approach.
+
 ## Homepage Layout
 
 Nivis provides two homepage layouts:
@@ -197,6 +221,19 @@ The local page is still generated and keeps its own permalink.
 > **AIGC disclosure:** This subsection was written with AI assistance and checked against the theme templates and local builds.
 
 Set `[extra] content_lang = "zh-CN"` in the site's configuration to mark article pages and post-list entries as Chinese. A post can override this with its own `[extra] content_lang = "en"`. Empty or omitted values fall back to the site-level setting, then Zola's page language. This only changes the article container's HTML `lang` attribute; it does not change the surrounding navigation, `default_language`, URLs, feed languages or search configuration.
+
+The example configuration exposes both settings explicitly:
+
+```toml
+# Top-level Zola setting; also used for feed and search-index language.
+default_language = "en"
+
+[extra]
+# Empty inherits the page language. Set "zh-CN" for Chinese article text.
+content_lang = ""
+```
+
+The theme default in `theme.toml` is also empty. These settings declare languages; they do not translate navigation labels or other interface text.
 
 Article pages share the same plain-text description through `meta[name="description"]` and `og:description`, with the site title in `og:site_name`. The description uses `description`, then `summary`, then the article body, strips HTML, trims surrounding whitespace and truncates to 100 characters before HTML escaping. These metadata tags do not add a share button or preview image, and the receiving platform decides how to display a link preview.
 

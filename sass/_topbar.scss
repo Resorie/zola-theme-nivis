@@ -76,8 +76,9 @@
   .information {
     display: flex;
     align-items: center;
-    gap: 1.5em;
+    gap: 6px;
     height: 100%;
+    margin-left: auto;
 
     .back_btn, .theme_btn, .feed_btn, .avatar_btn {
       display: flex;
@@ -86,8 +87,8 @@
       color: var(--text-color-light);
       transition: color 0.2s ease;
       font-size: 1.1rem;
-      width: 1.4em;
-      flex-shrink: 0;
+      width: 44px;
+      flex: 0 0 44px;
 
       &:hover {
         color: var(--text-color);
@@ -121,7 +122,7 @@
       .feed-dropdown {
         position: absolute;
         top: calc(100% - 4px);
-        right: -8px;
+        right: 0;
         background-color: var(--bg-color);
         border: 1px solid var(--border-color);
         border-radius: 6px;
@@ -134,7 +135,7 @@
             content: "";
             position: absolute;
             top: -5px;
-            right: 12px;
+            right: 17px;
             width: 8px;
             height: 8px;
             background: var(--bg-color);

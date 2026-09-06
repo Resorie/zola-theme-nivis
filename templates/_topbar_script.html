@@ -9,6 +9,7 @@
 
     function setFeedOpen(open, restoreFocus = false) {
       if (!feedButton) return;
+      if (open && document.getElementById("search-toggle")?.getAttribute("aria-expanded") === "true") return;
       feedDropdown.hidden = !open;
       feedButton.setAttribute("aria-expanded", String(open));
       if (!open) feedPinned = false;

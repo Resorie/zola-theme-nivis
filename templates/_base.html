@@ -170,6 +170,10 @@
       </nav>
       {% include "_topbar_controls.html" %}
     </div>
+    {% elif config.build_search_index %}
+    <div class="page-top home-search-bar">
+      <div class="information">{% include "_search.html" %}</div>
+    </div>
     {% endif %}
     <div class="autopagerize_page_element">
       <div class="content animated fadeIn {% if current_path == '/' %}home-content{% endif %}">
@@ -191,6 +195,7 @@
   </div>
 
   {% include "_topbar_script.html" %}
+  {% include "_search_assets.html" %}
   <script>
 
     // Footnote Navigation & Code Block Processing

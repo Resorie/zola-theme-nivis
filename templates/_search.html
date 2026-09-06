@@ -1,0 +1,20 @@
+{% if config.build_search_index %}
+{% if config.search.index_format != "fuse_json" %}
+{{ throw(message="Nivis search requires [search] index_format = 'fuse_json'.") }}
+{% endif %}
+{% set search_language = lang | default(value=config.default_language) %}
+<div class="site-search" data-search-index="{{ get_url(path='search_index.' ~ search_language ~ '.json') }}" data-search-base="{{ config.base_url }}">
+  <button type="button" class="icon-button" id="search-toggle" aria-label="Search" title="Search" aria-expanded="false" aria-controls="search-field search-panel"><i class="fas fa-magnifying-glass search-open-icon" aria-hidden="true"></i><i class="fas fa-xmark search-close-icon" aria-hidden="true"></i></button>
+  <form id="search-field" class="search-field" role="search" aria-label="Site search" inert>
+    <input id="search-input" type="search" aria-label="Search articles" placeholder="Search..." autocomplete="off" spellcheck="false" maxlength="160" aria-controls="search-results">
+    <button type="button" class="icon-button search-clear" aria-label="Clear search" title="Clear search" hidden><i class="fas fa-circle-xmark" aria-hidden="true"></i></button>
+  </form>
+  <div id="search-panel" class="search-panel" hidden>
+    <div class="search-status-row">
+      <p class="search-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      <button type="button" class="icon-button search-retry" aria-label="Retry search" title="Retry search" hidden><i class="fas fa-rotate-right" aria-hidden="true"></i></button>
+    </div>
+    <ul id="search-results" class="search-results" aria-label="Search results"></ul>
+  </div>
+</div>
+{% endif %}
