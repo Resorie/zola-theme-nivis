@@ -4,7 +4,7 @@ Nivis is a clean, responsive [Zola](https://www.getzola.org/) theme for personal
 
 ![Nivis screenshot](screenshot.png)
 
-[Example site](https://resorie.xyz/zola-theme-nivis/) | [Resory's blog](https://resorie.xyz/blog/)
+[Example site](https://resorie.xyz/zola-theme-nivis/) | [Resory's blog](https://blog.resorie.xyz/)
 
 > **AIGC disclosure:** Parts of this documentation were drafted with AIGC assistance and subsequently checked against the theme source and a local Zola build.
 

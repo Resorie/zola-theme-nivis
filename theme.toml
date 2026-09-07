@@ -3,7 +3,7 @@ description = "A clean zola theme for bloggers"
 tags = ["Clean", "Blog", "Responsive"]
 license = "MIT"
 homepage = "https://github.com/Resorie/zola-theme-nivis"
-demo = "https://resorie.xyz/blog/"
+demo = "https://blog.resorie.xyz/"
 # The minimum version of Zola required
 min_version = "0.23.4"
 
@@ -38,4 +38,4 @@ links = true
 # The theme author info: you!
 [author]
 name = "Resory"
-homepage = "https://resorie.xyz/blog/"
+homepage = "https://blog.resorie.xyz/"
