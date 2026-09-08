@@ -305,6 +305,14 @@ The processor:
 
 Blank lines around display math keep their normal Markdown meaning. A blank line starts a new paragraph; omitting it keeps the formula and adjacent text in the same paragraph.
 
+Inside a blockquote, keep the `>` prefix on every formula line, including both delimiter lines. The processor and restoration command preserve these Markdown prefixes, including nested quotes; greater-than signs within the formula remain TeX content.
+
+```markdown
+> $$
+> x > y
+> $$
+```
+
 Check without rewriting files:
 
 ```bash

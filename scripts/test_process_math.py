@@ -10,6 +10,40 @@ def document(body: str) -> str:
 
 
 class ProcessMathTest(unittest.TestCase):
+    def test_quoted_display_preserves_markers_and_encodes_comparisons(self) -> None:
+        source = document(
+            '> before $x_y$\n> $$\n> x>y\n> > z\n> $$\n> after\n'
+        )
+        expected = document(
+            '> before $x&#95;y$\n> $$\n> x&#62;y\n> &#62; z\n> $$\n> after\n'
+        )
+        self.assertEqual(expected, process_content(source))
+        self.assertEqual(expected, process_content(expected))
+        self.assertEqual(source, process_content(expected, restore_only=True))
+
+    def test_nested_quote_prefixes_and_blank_lines_round_trip(self) -> None:
+        source = document('  > > before\r\n  > >\r\n  > > $$\r\n>> x_y\r\n  > > $$\r\n  > >\r\n')
+        expected = source.replace('x_y', 'x&#95;y')
+        self.assertEqual(expected, process_content(source))
+        self.assertEqual(source, process_content(expected, restore_only=True))
+
+    def test_unquoted_display_keeps_leading_greater_than_as_math(self) -> None:
+        source = document('$$\n> x\n$$\n')
+        self.assertEqual(document('$$\n&#62; x\n$$\n'), process_content(source))
+
+    def test_quoted_fenced_code_is_untouched(self) -> None:
+        for fence in ('```', '~~~'):
+            with self.subTest(fence=fence):
+                code = f'> > {fence}tex\n> > $$\n> > x_y\n> > $$\n> > {fence}\n'
+                source = document(code + '> $x_y$\n')
+                self.assertEqual(document(code + '> $x&#95;y$\n'), process_content(source))
+                self.assertEqual(source, process_content(source, restore_only=True))
+
+    def test_quote_end_terminates_unclosed_quoted_code_fence(self) -> None:
+        source = document('> ```tex\n> $a_b$\n\n$x_y$\n')
+        expected = document('> ```tex\n> $a_b$\n\n$x&#95;y$\n')
+        self.assertEqual(expected, process_content(source))
+
     def test_encodes_punctuation_but_keeps_dollar_delimiters(self) -> None:
         source = document("Value $a_b<c*d$ and\n$$\n\\begin{aligned}\nx&=y\\\\\n\\end{aligned}\n$$\n")
 

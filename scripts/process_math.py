@@ -18,6 +18,20 @@ LEGACY_DISPLAY_RE = re.compile(
     r'\s*(?P<math>\$\$[\s\S]*?\$\$)\s*</div>'
 )
 FENCE_OPEN_RE = re.compile(r"^(?P<indent> {0,3})(?P<fence>`{3,}|~{3,})(?P<info>[^\r\n]*)")
+QUOTE_MARKER_RE = re.compile(r" {0,3}>[ \t]?")
+
+
+def _quote_prefix(text: str, max_depth: int | None = None) -> tuple[str, int]:
+    """Read literal Markdown quote markers, never HTML-encoded TeX operators."""
+
+    end = depth = 0
+    while max_depth is None or depth < max_depth:
+        match = QUOTE_MARKER_RE.match(text, end)
+        if not match:
+            break
+        end = match.end()
+        depth += 1
+    return text[:end], depth
 
 
 def _is_escaped(text: str, index: int) -> bool:
@@ -72,11 +86,24 @@ def _encode_math_body(body: str) -> str:
     )
 
 
-def _transform_math_token(token: str, restore_only: bool) -> str:
+def _transform_math_token(
+    token: str, restore_only: bool, quote_depth: int = 0
+) -> str:
     delimiter_length = 2 if token.startswith("$$") else 1
     delimiter = "$" * delimiter_length
     body = token[delimiter_length:-delimiter_length]
-    body = _decode_math_body(body) if restore_only else _encode_math_body(body)
+    transform = _decode_math_body if restore_only else _encode_math_body
+    if quote_depth and delimiter_length == 2:
+        lines = body.splitlines(keepends=True)
+        for index, line in enumerate(lines):
+            # The opening line's prefix is outside the token. On subsequent
+            # lines, preserve only the enclosing quote depth: an additional
+            # leading '>' can be a TeX comparison and must still be encoded.
+            prefix = _quote_prefix(line, quote_depth)[0] if index else ""
+            lines[index] = prefix + transform(line[len(prefix):])
+        body = "".join(lines)
+    else:
+        body = transform(body)
     return f"{delimiter}{body}{delimiter}"
 
 
@@ -132,7 +159,9 @@ def _scan_plain_text(text: str, restore_only: bool) -> str:
             close = _find_display_end(text, index + 2)
             if close >= 0:
                 token = text[index:close + 2]
-                output.append(_transform_math_token(token, restore_only))
+                line_start = text.rfind("\n", 0, index) + 1
+                quote_depth = _quote_prefix(text[line_start:index])[1]
+                output.append(_transform_math_token(token, restore_only, quote_depth))
                 index = close + 2
                 continue
 
@@ -174,7 +203,8 @@ def process_body(body: str, restore_only: bool = False) -> str:
             prose.clear()
 
     while index < len(lines):
-        opening = FENCE_OPEN_RE.match(lines[index])
+        prefix, quote_depth = _quote_prefix(lines[index])
+        opening = FENCE_OPEN_RE.match(lines[index][len(prefix):])
         if not opening:
             prose.append(lines[index])
             index += 1
@@ -186,8 +216,12 @@ def process_body(body: str, restore_only: bool = False) -> str:
         block = [lines[index]]
         index += 1
         while index < len(lines):
+            prefix, depth = _quote_prefix(lines[index], quote_depth)
+            if depth < quote_depth:
+                # A fenced block ends when its enclosing blockquote ends.
+                break
             block.append(lines[index])
-            is_closing = closing_pattern.match(lines[index]) is not None
+            is_closing = closing_pattern.match(lines[index][len(prefix):]) is not None
             index += 1
             if is_closing:
                 break
