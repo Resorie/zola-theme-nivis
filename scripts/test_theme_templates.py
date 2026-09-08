@@ -6,6 +6,7 @@ import tomllib
 import unittest
 from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 
 THEME_ROOT = Path(__file__).resolve().parents[1]
@@ -252,6 +253,15 @@ class ThemeTemplatesTest(unittest.TestCase):
         self.assertEqual(image["decoding"], "async")
         self.assertEqual((image["width"], image["height"]), ("64", "64"))
 
+    def test_bold_text_keeps_the_chinese_serif_font_stack(self) -> None:
+        for filename in ("style.css", "404.css"):
+            with self.subTest(filename=filename):
+                css = (self.outputs["both"] / filename).read_text(encoding="utf-8")
+                self.assertRegex(
+                    css,
+                    r'''strong,\s*b\s*\{\s*font-family:\s*["']STIX Two Text["'],\s*["']Source Han Serif CN VF["'],\s*["']Noto Serif SC["'],\s*serif;\s*font-weight:\s*bold;?\s*\}''',
+                )
+
     def test_about_descriptions_are_decoded_once_and_attribute_safe(self) -> None:
         for slug, expected in (("about-description", 'A "quote" & emphasis.'), ("about-body", '<tag> and &lt; and "quoted".')):
             with self.subTest(slug=slug):
@@ -260,6 +270,20 @@ class ThemeTemplatesTest(unittest.TestCase):
                 for tag, attrs in head.elements:
                     if tag == "meta":
                         self.assertTrue(set(attrs) <= {"property", "name", "content", "charset"}, attrs)
+
+    def test_google_fonts_includes_fira_code_with_swap(self) -> None:
+        for path in ("index.html", "posts/index.html", "original/index.html"):
+            with self.subTest(path=path):
+                fonts = [
+                    urlsplit(attrs.get("href", ""))
+                    for tag, attrs in self.head("both", path).elements
+                    if tag == "link" and attrs.get("rel") == "stylesheet"
+                    and urlsplit(attrs.get("href", "")).hostname == "fonts.googleapis.com"
+                ]
+                self.assertEqual(len(fonts), 1)
+                query = parse_qs(fonts[0].query)
+                self.assertIn("Fira Code:wght@400;700", query["family"])
+                self.assertEqual(query["display"], ["swap"])
 
     def test_feed_links_match_generated_formats_and_base_path(self) -> None:
         expected = {
